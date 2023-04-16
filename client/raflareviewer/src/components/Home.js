@@ -1,24 +1,20 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import resService from '../services/restaurants'
 import RestaurantList from './RestaurantList'
 import AddNewForm from './AddNewForm'
-
-const baseUrl = 'http://localhost:3001/restaurants'
 
 function Home() {
   const [restaurants, setRestaurants] = useState([])
 
   useEffect(() => {
-    console.log('effect')
-
-    axios
-      .get(baseUrl)
+    resService
+      .getAll()
       .then(response => {
-          console.log(response.data.restaurants)
-          setRestaurants(response.data.restaurants)
+          console.log(response.restaurants)
+          setRestaurants(response.restaurants)
       })
       .catch(error => {
-        console.log('error')
+        console.log(error)
       })
     }, [])
 

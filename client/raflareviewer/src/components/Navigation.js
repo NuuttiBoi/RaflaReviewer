@@ -1,12 +1,16 @@
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 const Navigation = () => {
     return (
         <nav className="main-nav">
             <a href="/" className="title">RaflaReviewer</a>
             <ul>
-                <li><a href="/" className="navlink">Etusivu</a></li>
-                <li><a href="/Sivu2" className="navlink">Sivu2</a></li>
+                <li>
+                    <NavLink to="/" className="navlink">Etusivu</NavLink>
+                </li>
+                <li>
+                    <NavLink to="/Sivu2" className="navlink">Sivu2</NavLink>
+                </li>
             </ul>
         </nav>
     )

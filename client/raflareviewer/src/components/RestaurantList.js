@@ -10,7 +10,8 @@ const RestaurantList = ({ restaurants }) => {
         <li key={restaurant.name}>
           <Restaurant
             name={restaurant.name}
-            address={restaurant.address}/>
+            address={restaurant.address}
+            comment={restaurant.comment}/>
         </li>
       )
     })

@@ -4,9 +4,22 @@ import Navigation from './components/Navigation'
 import Footer from './components/Footer'
 import { Routes, Route } from 'react-router-dom'
 
+/*
+cd client/raflareviewer
+npm start
+
+toisessa terminaalissa:
+cd server
+npm run server <- käynnistää palvelimen
+
+http://localhost:3000 <- app
+http://localhost:3001/restaurants <- palvelin
+
+(muistakaa npm install)
+*/
+
 function App() {
 
-  // ei toimi vielä
   return (
     <div className="main-layout">
       <Navigation />

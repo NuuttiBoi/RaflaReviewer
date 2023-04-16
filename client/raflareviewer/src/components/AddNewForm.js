@@ -1,7 +1,15 @@
 import { useState } from 'react'
+import resService from '../services/restaurants'
 
 const AddNewForm = () => {
+    // Lomakkeen näkyvyys-class
     const [className, setClassName] = useState('addNewForm')
+
+    // Kenttien tiedot
+    const [newName, setNewName] = useState('')
+    const [newAddress, setNewAddress] = useState('')
+    const [newComment, setNewComment] = useState('')
+
 
     // Piilottaa lomakkeen näkyvistä
     function closeForm() {
@@ -11,10 +19,53 @@ const AddNewForm = () => {
     }
 
     // Tallentaa tiedot ja piilottaa lomakkeen
-    function saveForm() {
+    const saveForm = (event) => {
+        event.preventDefault()
         console.log('save')
         // tallenna tiedot (ei toimi vielä)
+
+        // Uusi tallennettava olio
+        const newRestaurant = {
+            name: newName,
+            address: newAddress,
+            comment: newComment
+        }
+
+        /* ei toimi vielä
+        resService
+            .create(newRestaurant)
+            .then(response => {
+                console.log('success')
+
+              })
+            .catch(error => {
+                console.log(error)
+        }) */
+        
+        console.log('saving ', newRestaurant)
+
         closeForm()
+    }
+
+
+
+    // Kenttien tilojen päivitys
+    // Nimi
+    const handleNameChange = (event) => {
+        console.log(event.target.value)
+        setNewName(event.target.value)
+    }
+
+    // Osoite
+    const handleAddressChange = (event) => {
+        console.log(event.target.value)
+        setNewAddress(event.target.value)
+    }
+
+    // Kommentti
+    const handleCommentChange = (event) => {
+        console.log(event.target.value)
+        setNewComment(event.target.value)
     }
 
     return (
@@ -23,23 +74,23 @@ const AddNewForm = () => {
                 <h2>Lisää ravintola</h2>
                 <button onClick={closeForm} className="closeButton">x</button>
             </header>
-            <form>
+            <form onSubmit={saveForm}>
                 <div>
                     <label>Nimi</label>
-                    <input className="formInput"/>
+                    <input onChange={handleNameChange} className="formInput"/>
                 </div>
                 <div>
                     <label>Osoite</label>
-                    <input className="formInput"/>
+                    <input onChange={handleAddressChange} className="formInput"/>
                 </div>
                 <div>
                     <label>Kommentti</label>
-                    <textarea className="formInput" rows="5"/>
+                    <textarea onChange={handleCommentChange} className="formInput" rows="5"/>
                 </div>
                 <input type="file" />
                 yms
+            <button type="submit" className="button center">Tallenna</button>
             </form>
-            <button onClick={saveForm} className="button center">Tallenna</button>
         </div>
     )
 }
