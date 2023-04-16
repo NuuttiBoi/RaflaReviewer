@@ -20,6 +20,16 @@ app.get('/restaurants', function(req,res) {
             "name": "ravintola2",
             "address": "esimerkkiosoite",
             "id": 2
+          },
+          {
+            "name": "ravintola 3",
+            "address": "djshdkasjhda",
+            "id": 3
+          },
+          {
+            "name": "ravintola 4",
+            "address": "djsdasdak",
+            "id": 4
           }
         ]
       })
