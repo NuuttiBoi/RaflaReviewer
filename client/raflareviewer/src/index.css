@@ -1,11 +1,14 @@
 :root {
-  --clr-light: #fff;
+  --clr-light: #fff; /* voi vaihtaa */
   --clr-dark: #181818;
+  --clr-primary: lightblue;
   
   --clr-h1: var(--clr-dark);
   --clr-text: var(--clr-dark);
   --clr-headerlink: var(--clr-light);
   --clr-headerbg: var(--clr-dark);
+  --clr-input-border: grey;
+  --clr-button: var(--clr-primary);
 
   --border-radius: 1.25rem;
 }
@@ -85,6 +88,13 @@ p:not(:last-child) {
   place-items: center;
 }
 
+button {
+  line-height: 0; /* keskittää tekstin pystysuunnassa */
+  min-height: 3rem;
+  border: 0;
+  cursor: pointer;
+}
+
 .container {
   flex-grow: 1;
   padding: 2rem;
@@ -121,13 +131,10 @@ h2 {
 }
 
 .button {
-  line-height: 0; /* keskittää tekstin pystysuunnassa */
   display: block;
   font-weight: bold;
   padding: 1.5em 2em;
-  border: 0;
   border-radius: 100vmax;
-  cursor: pointer;
 }
 
 .center {
@@ -190,12 +197,45 @@ h2 {
 .formInput {
   flex-grow: 1;
   border-radius: .25rem;
-  border: 1px solid gray;
+  border: 1px solid var(--clr-input-border);
   padding: .25rem .5rem;
 }
 
 textarea.formInput {
   resize: none;
+}
+
+.searchBar {
+  width: 25em;
+  display: flex;
+  flex-direction: row;
+  gap: .5rem;
+}
+
+/* Hakukenttä */
+.searchBar input {
+  border: 1px solid var(--clr-input-border);
+  flex-grow: 1;
+  border-radius: 100vmax;
+  padding: .5rem 1rem;
+  font-size: 1.2rem;
+}
+
+/* Hakukentän placeholder-teksti */
+.searchBar input:placeholder-shown {
+  font-style: italic;
+}
+
+/* Hakunappi */
+.searchButton {
+  flex-grow: 0;
+  border-radius: 100vmax;
+  height: 3rem;
+  aspect-ratio: 1 / 1;
+  border: 0;
+  background-color: var(--clr-button);
+  line-height: 0;
+  cursor: pointer;
 }
 
 /* Piilottaa elementin näkyvistä */
@@ -218,16 +258,20 @@ textarea.formInput {
   .restaurantArticle {
     max-width: none;
   }
+
+  .searchBar {
+    width: 30em;
+  }
 }
 
 @media only screen and (min-width: 72em) {
   .container {
-    padding: 1rem 0;
+    padding: 2rem 0;
   }
 }
 
 @media only screen and (min-width: 80em) {
   .restaurantList {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
   }
 }
