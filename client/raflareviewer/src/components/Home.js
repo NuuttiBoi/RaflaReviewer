@@ -12,8 +12,8 @@ function Home() {
     resService
       .getAll()
       .then(response => {
-          console.log(response.restaurants)
-          setRestaurants(response.restaurants)
+          console.log(response)
+          setRestaurants(response)
       })
       .catch(error => {
         console.log(error)

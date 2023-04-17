@@ -1,14 +1,19 @@
+/* Värien määrittely */
+
 :root {
-  --clr-light: #fff; /* voi vaihtaa */
+  --clr-light: #fff;
   --clr-dark: #181818;
-  --clr-primary: lightblue;
+  --clr-primary: rgb(91, 127, 88);
   
   --clr-h1: var(--clr-dark);
   --clr-text: var(--clr-dark);
   --clr-headerlink: var(--clr-light);
-  --clr-headerbg: var(--clr-dark);
+  --clr-header-bg: var(--clr-dark);
   --clr-input-border: grey;
-  --clr-button: var(--clr-primary);
+  --clr-button-bg: var(--clr-primary);
+  --clr-button-text: var(--clr-light);
+  --clr-green: rgb(23, 118, 16);
+  --clr-red: rgb(195, 0, 0);
 
   --border-radius: 1.25rem;
 }
@@ -47,7 +52,7 @@ p:not(:last-child) {
 
 /* Nav */
 .main-nav {
-  background-color: var(--clr-headerbg);
+  background-color: var(--clr-header-bg);
   padding: 3rem;
   display: flex;
   justify-content: space-between;
@@ -94,11 +99,25 @@ img, svg {
   max-height: 100%;
 }
 
+/* Kaikki buttonit */
 button {
   line-height: 0; /* keskittää tekstin pystysuunnassa */
-  min-height: 3rem;
   border: 0;
   cursor: pointer;
+}
+
+/* Tekstibuttonit ja "buttonin" näköiset NavLinkit */
+.button {
+  display: block;
+  line-height: 0;
+  font-weight: bold;
+  padding: 2em 2.5em;
+  border-radius: 100vmax;
+  min-height: 3rem;
+  text-align: center;
+  text-decoration: none;
+  background-color: var(--clr-button-bg);
+  color: var(--clr-button-text);
 }
 
 .container {
@@ -129,18 +148,20 @@ code {
   max-width: 30em;
   margin: 0 auto;
   box-shadow: 0 .5rem 1rem .1rem rgba(0 0 0 / .1);
+  min-height: 25rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.articleButton {
+  max-width: 70%;
+  flex-grow: 0;
+  align-self: flex-end;
 }
 
 h2 {
   font-size: 1.5rem;
   font-weight: bold;
-}
-
-.button {
-  display: block;
-  font-weight: bold;
-  padding: 1.5em 2em;
-  border-radius: 100vmax;
 }
 
 .center {
@@ -245,16 +266,30 @@ textarea.formInput {
   font-style: italic;
 }
 
-/* Hakunappi */
-.searchButton {
-  flex-grow: 0;
-  border-radius: 100vmax;
+.thumbsUpButtons {
+  display: flex;
+  gap: .5rem;
+}
+
+.thumbsUp, .thumbsDown {
+  display: inline-block;
+  width: 3rem;
   height: 3rem;
-  aspect-ratio: 1 / 1;
-  border: 0;
-  background-color: var(--clr-button);
-  line-height: 0;
   cursor: pointer;
+  background-color: transparent;
+  fill: none; /* täyttää kokonaan */
+  border: 1px solid var(--clr-input-border);
+  border-radius: .75rem;
+  padding: .5rem;
+}
+
+.thumbsUp {
+  color: var(--clr-green);
+}
+
+.thumbsDown {
+  rotate: 180deg;
+  color: var(--clr-red);
 }
 
 /* Piilottaa elementin näkyvistä */

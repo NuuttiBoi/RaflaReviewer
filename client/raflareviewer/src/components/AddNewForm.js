@@ -1,11 +1,10 @@
+// Lisää uusi arvostelu -lomake
+
 import { useState } from 'react'
 import resService from '../services/restaurants'
 import Icon from '../images/x'
 
 const AddNewForm = () => {
-    // Lomakkeen näkyvyys-class
-    const [className, setClassName] = useState('addNewForm')
-
     // Kenttien tiedot
     const [newName, setNewName] = useState('')
     const [newAddress, setNewAddress] = useState('')
@@ -32,23 +31,20 @@ const AddNewForm = () => {
             comment: newComment
         }
 
-        /* ei toimi vielä
+        // Lähetys palvelimelle
         resService
             .create(newRestaurant)
             .then(response => {
                 console.log('success')
-
               })
             .catch(error => {
                 console.log(error)
-        }) */
+        })
         
         console.log('saving ', newRestaurant)
 
         closeForm()
     }
-
-
 
     // Kenttien tilojen päivitys
     // Nimi
