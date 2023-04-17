@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import resService from '../services/restaurants'
+import Icon from '../images/x'
 
 const AddNewForm = () => {
     // Lomakkeen näkyvyys-class
@@ -68,11 +69,14 @@ const AddNewForm = () => {
         setNewComment(event.target.value)
     }
 
+
     return (
         <div id="addNewForm" className="visuallyhidden">
             <header className="formHeader">
                 <h2>Lisää ravintola</h2>
-                <button onClick={closeForm} className="closeButton">x</button>
+                <button onClick={closeForm} className="closeButton">
+                    <Icon />
+                </button>
             </header>
             <form onSubmit={saveForm}>
                 <div>

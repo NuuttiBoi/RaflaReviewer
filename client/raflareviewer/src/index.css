@@ -88,6 +88,12 @@ p:not(:last-child) {
   place-items: center;
 }
 
+img, svg {
+  display: inline-block;
+  max-width: 100%;
+  max-height: 100%;
+}
+
 button {
   line-height: 0; /* keskittää tekstin pystysuunnassa */
   min-height: 3rem;
@@ -183,14 +189,24 @@ h2 {
 /* x-nappi */
 .closeButton {
   display: inline-block;
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 2rem;
+  height: 2rem;
   border: 0;
   position: absolute;
   right: 0;
   top: 0;
   transform: translate(50%, -50%);
   cursor: pointer;
+  background-color: transparent;
+}
+
+/* x-iscon */
+.closeIcon {
+  color: var(--clr-input-border)
+}
+
+.closeButton:hover {
+  --clr-input-border: var(--clr-dark);
 }
 
 /* Input-kentät */
@@ -217,8 +233,11 @@ textarea.formInput {
   border: 1px solid var(--clr-input-border);
   flex-grow: 1;
   border-radius: 100vmax;
-  padding: .5rem 1rem;
+  padding: .5rem 1rem .5rem 3rem;
   font-size: 1.2rem;
+  background-image: url('./images/magnifying-glass.svg');
+  background-repeat: no-repeat;
+  background-position: center left .5rem;
 }
 
 /* Hakukentän placeholder-teksti */
