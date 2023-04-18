@@ -88,7 +88,6 @@ const AddNewForm = () => {
                     <textarea onChange={handleCommentChange} className="formInput" rows="5"/>
                 </div>
                 <input type="file" />
-                yms
             <button type="submit" className="button center">Tallenna</button>
             </form>
         </div>

@@ -9,10 +9,11 @@
   --clr-text: var(--clr-dark);
   --clr-headerlink: var(--clr-light);
   --clr-header-bg: var(--clr-dark);
-  --clr-input-border: grey;
+  --clr-input-border: rgb(100, 100, 100); /* Buttonien, input-kenttien yms. reunat */
   --clr-button-bg: var(--clr-primary);
   --clr-button-text: var(--clr-light);
-  --clr-green: rgb(23, 118, 16);
+  --clr-thumb-icon: var(--clr-input-border);
+  --clr-green: rgb(24, 137, 16);
   --clr-red: rgb(195, 0, 0);
 
   --border-radius: 1.25rem;
@@ -136,12 +137,14 @@ code {
     monospace;
 }
 
+/* Grid, jossa ravintolaboksit */
 .restaurantList {
   display: grid;
   gap: 2rem;
   list-style-type: none;
 }
 
+/* Ravintolaboksi */
 .restaurantArticle {
   padding: 1.5rem;
   border-radius: var(--border-radius);
@@ -149,8 +152,9 @@ code {
   margin: 0 auto;
   box-shadow: 0 .5rem 1rem .1rem rgba(0 0 0 / .1);
   min-height: 25rem;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: auto auto 1fr auto auto;
+  gap: 1rem;
 }
 
 .articleButton {
@@ -169,7 +173,8 @@ h2 {
 }
 
 .addNewForm {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   background-color: var(--clr-light);
   width: min(90vw, 30rem);
   min-height: 40rem;
@@ -181,13 +186,13 @@ h2 {
   border-radius: var(--border-radius);
   padding: 2rem;
   box-shadow: 0 1rem 3rem rgb(0 0 0 / .25), 0 0 0 100vmax rgb(0 0 0 / .3);
-  grid-auto-rows: auto 1fr auto;
 }
 
 .addNewForm form {
   display: flex;
   gap: .75rem;
   flex-direction: column;
+  flex-grow: 1;
 }
 
 .addNewForm form div {
@@ -219,9 +224,10 @@ h2 {
   transform: translate(50%, -50%);
   cursor: pointer;
   background-color: transparent;
+  flex-grow: 0;
 }
 
-/* x-iscon */
+/* x-icon */
 .closeIcon {
   color: var(--clr-input-border)
 }
@@ -266,30 +272,67 @@ textarea.formInput {
   font-style: italic;
 }
 
+/* Thumbs up-nappien container*/
 .thumbsUpButtons {
   display: flex;
   gap: .5rem;
 }
 
+/* Buttonit */
 .thumbsUp, .thumbsDown {
-  display: inline-block;
-  width: 3rem;
+  display: flex;
+  gap: .25rem;
   height: 3rem;
+  width: 5rem;
   cursor: pointer;
   background-color: transparent;
-  fill: none; /* täyttää kokonaan */
+  fill: none;
   border: 1px solid var(--clr-input-border);
   border-radius: .75rem;
   padding: .5rem;
+  align-items: center;
+  justify-content: center;
 }
 
-.thumbsUp {
+.thumbsUp > *, .thumbsDown > * {
+  display: inline-block;
+}
+
+/* Peukkuiconit */
+.icon-container {
+  color: var(--clr-thumb-icon);
+}
+
+.thumbsDown .icon-container {
+  rotate: 180deg;
+  padding-bottom: .2rem;
+}
+
+.thumbsUp p, .thumbsDown p {
+  min-width: 3ch;
+  text-align: center;
+  font-size: .9rem;
+}
+
+.thumbsUp p {
   color: var(--clr-green);
 }
 
-.thumbsDown {
-  rotate: 180deg;
+.thumbsDown p {
   color: var(--clr-red);
+}
+
+/* Klikattu */
+.thumbsUp.clicked > .icon-container > * {
+  --clr-thumb-icon: var(--clr-green);
+  fill: var(--clr-thumb-icon);
+  color: var(--clr-thumb-icon);
+}
+
+.thumbsDown.clicked > .icon-container > * {
+  --clr-thumb-icon: var(--clr-red);
+  fill: var(--clr-thumb-icon);
+  color: var(--clr-thumb-icon);
 }
 
 /* Piilottaa elementin näkyvistä */
