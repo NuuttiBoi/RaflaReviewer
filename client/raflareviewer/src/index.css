@@ -15,7 +15,7 @@
   --clr-button-effect: var(--clr-primary-light);
   --clr-button-text: var(--clr-light);
   --clr-thumb-icon: var(--clr-input-border);
-  --clr-title: var(var(--clr-light));
+  --clr-title: var(--clr-light);
 
   /* Punainen ja vihreä väri virheilmoituksiin yms. yksityiskohtiin */
   --clr-green: rgb(24, 137, 16);
@@ -164,7 +164,7 @@ code {
   min-height: 25rem;
   display: grid;
   grid-template-rows: auto auto 1fr auto auto;
-  gap: 1rem;
+  gap: 1.25rem;
 }
 
 .restaurantArticle__address {

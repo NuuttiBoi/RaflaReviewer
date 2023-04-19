@@ -11,7 +11,9 @@ npm start
 
 toisessa terminaalissa:
 cd server
-npm run server <- käynnistää palvelimen
+npm run server reviewer <- käynnistää palvelimen
+
+(reviewer = mongodb salasana, pitää lisätä komentoon loppuun)
 
 http://localhost:3000 <- app
 http://localhost:3001/restaurants <- palvelin
