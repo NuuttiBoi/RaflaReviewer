@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import ThumbsUpButtons from './ThumbsUpButtons'
+import Icon from '../images/Pin.js'
 
 function showReviews(event) {
   event.preventDefault()
@@ -10,9 +11,12 @@ const Restaurant = ({ name, address, comment }) => {
     return (
       <article className="restaurantArticle">
         <h2>{name}</h2>
-        <p>📍 {address}</p>
+        <div className="restaurantArticle__address">
+          <Icon />
+          <p>{address}</p>
+        </div>
         <p>{comment}</p>
-        <NavLink to="./RestaurantPage" className="button articleButton center">Katso arvostelut</NavLink>
+        <NavLink to="./RestaurantPage" className="button articleButton center"><span>Katso arvostelut</span> <span>(0)</span></NavLink>
         <ThumbsUpButtons />
       </article>
     )

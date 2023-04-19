@@ -3,7 +3,8 @@
 :root {
   --clr-light: #fff;
   --clr-dark: #181818;
-  --clr-primary: rgb(91, 127, 88);
+  --clr-primary: hsl(115, 18%, 44%);
+  --clr-primary-light: hsl(115, 18%, 65%);
   
   --clr-h1: var(--clr-dark);
   --clr-text: var(--clr-dark);
@@ -11,19 +12,23 @@
   --clr-header-bg: var(--clr-dark);
   --clr-input-border: rgb(100, 100, 100); /* Buttonien, input-kenttien yms. reunat */
   --clr-button-bg: var(--clr-primary);
+  --clr-button-effect: var(--clr-primary-light);
   --clr-button-text: var(--clr-light);
   --clr-thumb-icon: var(--clr-input-border);
+  --clr-title: var(var(--clr-light));
+
+  /* Punainen ja vihreä väri virheilmoituksiin yms. yksityiskohtiin */
   --clr-green: rgb(24, 137, 16);
   --clr-red: rgb(195, 0, 0);
 
-  --border-radius: 1.25rem;
+  --border-radius: 1.25rem; /* Lomakkeiden, boksien ym. reunat */
 }
 
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font: inherit;
+  font: inherit; /* resetoi h-otsikkojen fontin */
 }
 
 body {
@@ -78,9 +83,9 @@ p:not(:last-child) {
   text-decoration: none;
 }
 
-/* Sivun otsikko */
+/* RaflaReviewer-otsikko */
 .title {
-  color: var(--clr-headerlink);
+  color: var(--clr-title);
   font-size: 2.5rem;
   text-decoration: none;
 }
@@ -88,7 +93,6 @@ p:not(:last-child) {
 .main-footer {
   background-color: var(--clr-dark);
   color: var(--clr-light);
-  align-self: flex-end;
   padding: 4em;
   display: grid;
   place-items: center;
@@ -117,8 +121,14 @@ button {
   min-height: 3rem;
   text-align: center;
   text-decoration: none;
-  background-color: var(--clr-button-bg);
   color: var(--clr-button-text);
+  background: linear-gradient(145deg, var(--clr-button-effect), var(--clr-button-bg));
+  box-shadow: 0 1.25em 1em -1em var(--clr-button-bg);
+}
+
+.button:hover {
+  background: var(--clr-button-effect);
+  box-shadow: 0 1.25em 1em -1em var(--clr-button-effect);
 }
 
 .container {
@@ -157,10 +167,39 @@ code {
   gap: 1rem;
 }
 
+.restaurantArticle__address {
+  display: flex;
+  gap: .25em;
+}
+
+.restaurantArticle__address > * {
+  display: inline-block;
+}
+
+.pin-icon {
+  min-width: 1.25em;
+  display: inline-block;
+  padding-top: .2em;
+  color: var(--clr-input-border);
+}
+
+.pin-icon svg {
+  max-width: 100%;
+}
+
 .articleButton {
   max-width: 70%;
   flex-grow: 0;
   align-self: flex-end;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem .5rem;
+}
+
+/* Pienessä tilassa numero siirtyy tarvittaessa tekstin alle */
+.articleButton span {
+  display: inline-block;
 }
 
 h2 {
@@ -170,8 +209,10 @@ h2 {
 
 .center {
   margin: 0 auto;
+  text-align: center;
 }
 
+/* Uuden arvostelun lisäyslomake */
 .addNewForm {
   display: flex;
   flex-direction: column;
@@ -212,7 +253,7 @@ h2 {
   position: relative;
 }
 
-/* x-nappi */
+/* x-button */
 .closeButton {
   display: inline-block;
   width: 2rem;
@@ -236,7 +277,7 @@ h2 {
   --clr-input-border: var(--clr-dark);
 }
 
-/* Input-kentät */
+/* Lomakkeen input-kentät */
 .formInput {
   flex-grow: 1;
   border-radius: .25rem;
@@ -248,6 +289,7 @@ textarea.formInput {
   resize: none;
 }
 
+/* Hakukenttä */
 .searchBar {
   width: 25em;
   display: flex;
@@ -255,7 +297,6 @@ textarea.formInput {
   gap: .5rem;
 }
 
-/* Hakukenttä */
 .searchBar input {
   border: 1px solid var(--clr-input-border);
   flex-grow: 1;
