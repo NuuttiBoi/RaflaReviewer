@@ -23,7 +23,6 @@ function Home() {
     const openForm = (event) => {
       event.preventDefault() 
       document.getElementById('addNewForm').classList.remove('visuallyhidden')
-      document.getElementById('addNewForm').classList.add('addNewForm')
       console.log('open form')
     }
 

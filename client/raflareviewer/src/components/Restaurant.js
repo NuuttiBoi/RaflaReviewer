@@ -1,25 +1,24 @@
 import { NavLink } from 'react-router-dom'
 import ThumbsUpButtons from './ThumbsUpButtons'
-import Icon from '../images/Pin.js'
+import Address from './Address'
 
-function showReviews(event) {
-  event.preventDefault()
-  console.log('katso arvostelut ', )
-}
-
-const Restaurant = ({ name, address, comment }) => {
+const Restaurant = ({ restaurant }) => {
     return (
       <article className="restaurantArticle">
-        <h2>{name}</h2>
-        <div className="restaurantArticle__address">
-          <Icon />
-          <p>{address}</p>
+        <h2>{restaurant.name}</h2>
+        <div className="article-img">
+          <img src="https://placekitten.com/800/800" />
         </div>
-        <p>{comment}</p>
-        <NavLink to="./RestaurantPage" className="button articleButton center"><span>Katso arvostelut</span> <span>(0)</span></NavLink>
+        <Address address={restaurant.address} />
+        <NavLink
+          to={{ pathname: './RestaurantPage' }}
+          state={{ restaurant: restaurant }}
+          className="button articleButton center">
+            <span>Katso arvostelut</span> <span>(0)</span>
+        </NavLink>
         <ThumbsUpButtons />
       </article>
     )
-  }  
+  }
 
 export default Restaurant

@@ -8,10 +8,7 @@ const RestaurantList = ({ restaurants }) => {
         console.log('name ',restaurant.name)
       return (
         <li key={restaurant.name}>
-          <Restaurant
-            name={restaurant.name}
-            address={restaurant.address}
-            comment={restaurant.comment}/>
+          <Restaurant restaurant={restaurant}/>
         </li>
       )
     })

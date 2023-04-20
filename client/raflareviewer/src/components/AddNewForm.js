@@ -15,14 +15,12 @@ const AddNewForm = () => {
     function closeForm() {
         console.log('close')
         document.getElementById('addNewForm').classList.add('visuallyhidden')
-        document.getElementById('addNewForm').classList.remove('addNewForm')
     }
 
     // Tallentaa tiedot ja piilottaa lomakkeen
     const saveForm = (event) => {
         event.preventDefault()
         console.log('save')
-        // tallenna tiedot (ei toimi vielä)
 
         // Uusi tallennettava olio
         const newRestaurant = {
@@ -65,9 +63,8 @@ const AddNewForm = () => {
         setNewComment(event.target.value)
     }
 
-
     return (
-        <div id="addNewForm" className="visuallyhidden">
+        <div id="addNewForm" className="visuallyhidden popup addNewForm">
             <header className="formHeader">
                 <h2>Lisää ravintola</h2>
                 <button onClick={closeForm} className="closeButton">
