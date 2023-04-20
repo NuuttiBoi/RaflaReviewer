@@ -3,6 +3,8 @@ import Back from '../images/Back'
 import Address from './Address'
 import ThumbsUpButtons from './ThumbsUpButtons'
 import { NavLink } from 'react-router-dom'
+import CommentForm from './CommentForm.js'
+import Comments from './Comments'
 
 
 const RestaurantPage = (props) => {
@@ -13,8 +15,10 @@ const RestaurantPage = (props) => {
 
     return (
         <div className="container">
-            <NavLink to="/" className="back-icon"><Back /></NavLink>
-            <h1>{restaurant.name}</h1>
+            <section>
+                <NavLink to="/" className="back-icon"><Back /></NavLink>
+                <h1>{restaurant.name}</h1>
+            </section>
             <section>
                 <Address address={restaurant.address} />
                 <div className="hide-border">
@@ -26,6 +30,8 @@ const RestaurantPage = (props) => {
             </section>
             <section>
                 <h2>Arvostelut</h2>
+                <CommentForm />
+                <Comments />
             </section>
         </div>
     )
