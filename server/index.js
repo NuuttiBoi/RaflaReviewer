@@ -7,6 +7,15 @@ const Comment = require('./models/comment')
 
 app.use(express.json())
 
+/* CORS ongelman korjaamiseen */
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next();
+});
+
+
+
 app.get('/', function(request, response) {
     response.send('(^ _ ^)/')
 })

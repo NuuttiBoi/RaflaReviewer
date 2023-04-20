@@ -4,7 +4,7 @@ import Navigation from './components/Navigation'
 import Footer from './components/Footer'
 import RestaurantPage from './components/RestaurantPage'
 import Creators from './components/Creators'
-import Map from './components/Map'
+import Map2 from './components/Map2'
 import { Routes, Route } from 'react-router-dom'
 
 
@@ -33,7 +33,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/Sivu2" element={<Sivu2 />} />
         <Route path="/RestaurantPage" element={<RestaurantPage />} />
-        <Route path="/Map" element={<Map />} />
+        <Route path="/Map2" element={<Map2 />} />
         <Route path="/Creators" element={<Creators />} />
       </Routes>
       <Footer />
