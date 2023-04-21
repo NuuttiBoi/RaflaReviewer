@@ -20,7 +20,9 @@ app.get('/', function(request, response) {
     response.send('(^ _ ^)/')
 })
 
-/* Ravintolat */
+
+// Ravintolat
+
 app.get('/restaurants', (request, response) => {
     Restaurant.find({}).then(restaurants => {
         response.json(restaurants)
@@ -57,7 +59,7 @@ app.get('/restaurants/:id', (request, response) => {
 })
 
 
-/* Kommentit */
+// Kommentit
 
 app.get('/comments', (request, response) => {
     Comment.find({}).then(comments => {
