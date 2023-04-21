@@ -15,7 +15,7 @@ const RestaurantList = ({ restaurants }) => {
 
     console.log(restaurants.length)
 
-    if (restaurants.length === 0) return null;
+    if (restaurants.length === 0) return <p className="no-results">Haulla ei löytynyt tuloksia</p>
   
     return (
         <ul className="restaurantList">

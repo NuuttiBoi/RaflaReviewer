@@ -66,7 +66,7 @@ const AddNewForm = () => {
     return (
         <div id="addNewForm" className="visuallyhidden popup addNewForm">
             <header className="formHeader">
-                <h2>Lisää ravintola</h2>
+                <h2>Lisää arvostelu</h2>
                 <button onClick={closeForm} className="closeButton">
                     <Icon />
                 </button>

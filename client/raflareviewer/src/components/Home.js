@@ -46,7 +46,7 @@ function Home() {
     return (
     <div className="container">
         <SearchBar onChange={handleFilter}/>
-        <button onClick={openForm} className="button center">Lisää uusi</button>
+        <button onClick={openForm} className="button center">Lisää arvostelu</button>
         <RestaurantList restaurants={restaurantsToShow}/>
         <AddNewForm />
     </div>
