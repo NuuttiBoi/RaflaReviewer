@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 const Navigation = () => {
     return (
         <nav className="main-nav">
-             <div class="nav-wrapper">
+             <div className="nav-wrapper">
                 <NavLink to="/" className="title">RaflaReviewer</NavLink>
                 <ul>
                     <li>

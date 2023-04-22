@@ -40,8 +40,7 @@ app.post('/restaurants', (request, response) => {
     // Tallennettavan rivin "konstruktori"
     const restaurant = new Restaurant({
         name: body.name,
-        address: body.address,
-        comment: body.comment
+        address: body.address
     })
 
     // Tallennus tietokantaan
@@ -71,8 +70,8 @@ app.post('/comments', (request, response) => {
     const body = request.body
 
     const comment = new Comment({
-        userId: "anonyymi",
-        content: "kommentti"
+        userId: body.userId,
+        content: body.comment
     })
 
     comment.save().then(savedComment => {

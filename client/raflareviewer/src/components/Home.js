@@ -3,6 +3,7 @@ import resService from '../services/restaurants'
 import RestaurantList from './RestaurantList'
 import AddNewForm from './AddNewForm'
 import SearchBar from './SearchBar'
+import Tags from './Tags'
 
 function Home() {
   const [restaurants, setRestaurants] = useState([])
@@ -48,6 +49,7 @@ function Home() {
     <div className="container">
         <SearchBar onChange={handleFilter}/>
         <button onClick={openForm} className="button center">Lisää arvostelu</button>
+        <Tags />
         <RestaurantList restaurants={restaurantsToShow}/>
         <AddNewForm />
     </div>

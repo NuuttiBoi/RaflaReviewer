@@ -2,6 +2,8 @@
 
 import { useState } from 'react'
 import resService from '../services/restaurants'
+import commentService from '../services/comments'
+import Checkbox from './FormCheckbox'
 import Icon from '../images/x'
 
 const AddNewForm = () => {
@@ -9,6 +11,13 @@ const AddNewForm = () => {
     const [newName, setNewName] = useState('')
     const [newAddress, setNewAddress] = useState('')
     const [newComment, setNewComment] = useState('')
+    const [cafe, setCafe] = useState(false)
+    const [fastFood, setFastFood] = useState(false)
+    const [lunch, setLunch] = useState(false)
+    const [brunch, setBrunch] = useState(false)
+    const [vegetarian, setVegetarian] = useState(false)
+    const [accessible, setAccessible] = useState(false)
+    const [takeAway, setTakeAway] = useState(false)
 
     // Tyhjien kenttien tarkistus
     function checkFields() {
@@ -41,21 +50,43 @@ const AddNewForm = () => {
             const newRestaurant = {
                 name: newName,
                 address: newAddress,
-                comment: newComment
+                cafe: cafe,
+                fastFood: fastFood,
+                lunch: lunch,
+                brunch: brunch,
+                vegetarian: vegetarian,
+                accessible: accessible,
+                takeAway: takeAway
             }
+
+            console.log('saving ', newRestaurant)
+/* 
+            ///
 
             // Lähetys palvelimelle
             resService
                 .create(newRestaurant)
                 .then(response => {
                     console.log('success')
+
+                    // Jos arvostelussa mukana kommentti, tallennetaan se toiseen tauluun
+                    if (newComment.trim().length > 0) {
+                        const Comment = {
+                            restaurantId: response.id, // Ravintolan id = responsen palauttama id
+                            content: newComment
+                        }
+                        console.log(Comment)
+                    }
                 })
                 .catch(error => {
                     console.log(error)
             })
             
             console.log('saving ', newRestaurant)
-            closeForm()
+            closeForm() */
+
+
+            ///
         } else {
             document.getElementById('addNewForm').querySelector('.warningText').style.opacity = '1'
         }
@@ -80,6 +111,34 @@ const AddNewForm = () => {
         setNewComment(event.target.value)
     }
 
+    const handleCafeChange = (event) => {
+        setCafe(!cafe)
+    }
+
+    const handleFastFoodChange = (event) => {
+        setFastFood(!fastFood)
+    }
+
+    const handleLunchChange = (event) => {
+        setLunch(!lunch)
+    }
+
+    const handleBrunchChange = (event) => {
+        setBrunch(!brunch)
+    }
+
+    const handleVegetarianChange = (event) => {
+        setVegetarian(!vegetarian)
+    }
+
+    const handleAccessibleChange = (event) => {
+        setAccessible(!accessible)
+    }
+
+    const handleTakeAwayChange = (event) => {
+        setTakeAway(!takeAway)
+    }
+
     return (
         <div id="addNewForm" className="visuallyhidden popup addNewForm">
             <header className="formHeader">
@@ -99,12 +158,21 @@ const AddNewForm = () => {
                         <label><p>Osoite</p></label>
                         <input onChange={handleAddressChange} className="formInput"/>
                     </div>
+                    <div className="formCheckboxContainer">
+                        <Checkbox label="Kahvila" onChange={handleCafeChange} checked={cafe} />
+                        <Checkbox label="Pikaruoka" onChange={handleFastFoodChange} checked={fastFood} />
+                        <Checkbox label="Lounas" onChange={handleLunchChange} checked={lunch} />
+                        <Checkbox label="Brunssi" onChange={handleBrunchChange} checked={brunch} />
+                        <Checkbox label="Kasvisvaihtoehtoja" onChange={handleVegetarianChange} checked={vegetarian} />
+                        <Checkbox label="Liikuntaesteetön" onChange={handleAccessibleChange} checked={accessible} />
+                        <Checkbox label="Take away" onChange={handleTakeAwayChange} checked={takeAway} />
+                    </div>
                     <div>
                         <label><p>Kommentti</p></label>
-                        <textarea onChange={handleCommentChange} className="formInput" rows="5"/>
+                        <textarea onChange={handleCommentChange} className="formInput" rows="4"/>
                     </div>
                     <input type="file" />
-                    </div>
+                </div>
             <button type="submit" className="button center">Tallenna</button>
             </form>
         </div>

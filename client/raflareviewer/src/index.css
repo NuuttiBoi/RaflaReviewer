@@ -9,7 +9,8 @@
   --clr-primary-light: hsl(115, 18%, 65%);
   --clr-secondary: rgb(164, 164, 14);
   --clr-neutral: rgb(110, 110, 110); /* Buttonien, input-kenttien yms. reunat */
-  
+  --clr-neutral-light: rgb(233, 233, 233);
+
   --clr-h1: var(--clr-dark);
   --clr-text: var(--clr-dark);
   --clr-headerlink: var(--clr-dark);
@@ -22,6 +23,8 @@
   --clr-heading: var(--clr-primary);
   --clr-icon: var(--clr-neutral);
   --clr-footertext: var(--clr-light);
+  --clr-input-focus: var(--clr-primary);
+  --clr-checked: hsl(116, 36%, 84%);
 
   /* Punainen ja vihreä väri virheilmoituksiin yms. yksityiskohtiin */
   --clr-green: rgb(24, 137, 16);
@@ -297,12 +300,12 @@ h2 {
   gap: .75rem;
 }
 
-.addNewForm form div div {
+.addNewForm form div div:not(.formCheckboxContainer) {
   display: flex;
-  align-items: baseline;
+  align-items: flex-start;
 } 
 
-form label {
+form label:not(.formCheckboxContainer label) {
   width: 6rem;
   flex-grow: 0;
   font-weight: bold;
@@ -366,7 +369,24 @@ form label {
 
 textarea {
   resize: none;
-  border: 2px solid red;
+}
+
+/* Aktiivisten tekstikenttien reunojen väri */
+textarea:focus, input:focus {
+  outline: 2px solid var(--clr-input-focus);
+}
+
+.formCheckboxContainer {
+  columns: 2;
+  gap: 0;
+}
+
+.checkbox {
+  margin-bottom: .25rem;
+}
+
+.formCheckboxContainer span {
+  margin-left: .5rem;
 }
 
 /* Hakukenttä */
@@ -506,6 +526,37 @@ textarea {
   font-size: var(--text-small);
 }
 
+.tagContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  justify-content: center;
+  font-size: var(--text-small);
+}
+
+.tag {
+  background-color: var(--clr-neutral-light);
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  text-align: center;
+  padding: .25rem 1.5rem;
+  border-radius: 100vmax;
+}
+
+.tag label {
+  cursor: pointer;
+}
+
+.tag label input {
+  display: none;
+}
+
+.checked {
+  color: var(--clr-primary);
+  background-color: var(--clr-checked);
+}
+
 /* Piilottaa elementin näkyvistä */
 .visuallyhidden {
   position: absolute;
@@ -522,15 +573,14 @@ textarea {
   border: none;
 }
 
-@media only screen and (min-width: 32em) {
-
+@media only screen and (min-width: 32em) and (min-height: 42em) {
   .popup {
     max-width: 30rem;
     border-radius: var(--border-radius) var(--border-radius);
   }
 
   .addNewForm {
-    height: max(90vh, 40rem);
+    max-height: 40em;
     overflow-y: hidden;
   }
 
@@ -573,6 +623,10 @@ textarea {
 
   .commentForm button {
     grid-column: 2;
+  }
+
+  .tagContainer {
+    justify-content: flex-start;
   }
 }
 
