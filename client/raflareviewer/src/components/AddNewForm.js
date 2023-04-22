@@ -90,19 +90,21 @@ const AddNewForm = () => {
             </header>
             <p className="warningText">Täytä pakolliset kentät</p>
             <form onSubmit={saveForm}>
-                <div className="required">
-                    <label><p>Nimi</p></label>
-                    <input onChange={handleNameChange} className="formInput"/>
-                </div>
-                <div className="required">
-                    <label><p>Osoite</p></label>
-                    <input onChange={handleAddressChange} className="formInput"/>
-                </div>
-                <div>
-                    <label><p>Kommentti</p></label>
-                    <textarea onChange={handleCommentChange} className="formInput" rows="5"/>
-                </div>
-                <input type="file" />
+                <div className="formFields">
+                    <div className="required">
+                        <label><p>Nimi</p></label>
+                        <input onChange={handleNameChange} className="formInput"/>
+                    </div>
+                    <div className="required">
+                        <label><p>Osoite</p></label>
+                        <input onChange={handleAddressChange} className="formInput"/>
+                    </div>
+                    <div>
+                        <label><p>Kommentti</p></label>
+                        <textarea onChange={handleCommentChange} className="formInput" rows="5"/>
+                    </div>
+                    <input type="file" />
+                    </div>
             <button type="submit" className="button center">Tallenna</button>
             </form>
         </div>

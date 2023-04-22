@@ -8,7 +8,7 @@
   --clr-primary: hsl(115, 18%, 44%);
   --clr-primary-light: hsl(115, 18%, 65%);
   --clr-secondary: rgb(164, 164, 14);
-  --clr-neutral: rgb(100, 100, 100); /* Buttonien, input-kenttien yms. reunat */
+  --clr-neutral: rgb(110, 110, 110); /* Buttonien, input-kenttien yms. reunat */
   
   --clr-h1: var(--clr-dark);
   --clr-text: var(--clr-dark);
@@ -143,7 +143,7 @@ button {
   font-weight: bold;
   padding: 2em 2.5em;
   border-radius: 100vmax;
-  min-height: 3rem;
+  max-height: 3rem;
   text-align: center;
   text-decoration: none;
   color: var(--clr-button-text);
@@ -205,6 +205,7 @@ code {
 .address-box {
   display: flex;
   gap: .25em;
+  color: var(--clr-neutral);
 }
 
 .article-img {
@@ -223,7 +224,7 @@ code {
 .pin-icon {
   min-width: 1.25em;
   display: inline-block;
-  padding-top: .2em;
+  padding-top: .05em;
   color: var(--clr-icon);
 }
 
@@ -263,94 +264,43 @@ h2 {
 }
 
 /* Uuden arvostelun lisäyslomake */
+
 .popup {
-/*   animation: popup-anim 1.15s .1s ease-in-out forwards;
- */  background-color: var(--clr-light);
-  width: min(90vw, 30rem);
-  min-height: 20rem;
+  background-color: var(--clr-light);
   z-index: 100;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  border-radius: var(--border-radius);
   padding: 2rem;
-}
-
-/* Popup-animaatio */
-@keyframes popup-anim {
-  0% {
-      opacity: 0;
-      transform: translate(-50%, 200%);
-      box-shadow: 0 1rem 3rem rgb(0 0 0 / .25), 0 0 0 100vmax rgb(0 0 0 / 0);
-  }
-  25% {
-    box-shadow: 0 1rem 3rem rgb(0 0 0 / .25), 0 0 0 100vmax rgb(0 0 0 / .75);
-  }
-  70% {
-      opacity: 1;
-      transform: translate(-50%, -50%);
-      box-shadow: 0 1rem 3rem rgb(0 0 0 / .25), 0 0 0 100vmax rgb(0 0 0 / .75);
-  }
-  80% {
-      transform: translate(-50%, -47%);
-      box-shadow: 0 1rem 3rem rgb(0 0 0 / .25), 0 0 0 100vmax rgb(0 0 0 / .75);
-  }
-  100% {
-      transform: translate(-50%, -50%);
-      opacity: 1;
-      box-shadow: 0 1rem 3rem rgb(0 0 0 / .25), 0 0 0 100vmax rgb(0 0 0 / .75);
-  }
+  box-shadow: 0 1rem 3rem rgb(0 0 0 / .25), 0 0 0 100vmax rgb(0 0 0 / .75);
 }
 
 /* Lomake mobiilissa */
 .addNewForm {
-  min-height: 100vh; /* fallback */
-  min-width: 100vw;
-  min-height: 100dvh;
-  min-width: 100dvw;
-  border-radius: var(--border-radius) var(--border-radius) 0 0;
-  margin-top: 1.5rem;
-  padding-bottom: 3.5rem;
-  animation: mobile-open-anim 1.75s .1s ease-in-out forwards;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
-
-/* Popup-animaatio mobiilissa */
-@keyframes mobile-open-anim {
-  0% {
-      opacity: 0;
-      transform: translate(-50%, 200%);
-      box-shadow: 0 1rem 3rem rgb(0 0 0 / .25), 0 0 0 100vmax rgb(0 0 0 / 0);
-  }
-  25% {
-    box-shadow: 0 1rem 3rem rgb(0 0 0 / .25), 0 0 0 100vmax rgb(0 0 0 / .75);
-  }
-  70% {
-      opacity: 1;
-      transform: translate(-50%, -50%);
-      box-shadow: 0 1rem 3rem rgb(0 0 0 / .25), 0 0 0 100vmax rgb(0 0 0 / .75);
-  }
-  100% {
-      transform: translate(-50%, -50%);
-      opacity: 1;
-      box-shadow: 0 1rem 3rem rgb(0 0 0 / .25), 0 0 0 100vmax rgb(0 0 0 / .75);
-  }
+  height: 100vh; /* fallback */
+  width: 100vw;
+  height: 100dvh;
+  width: 100dvw;
+  overflow-y: scroll;
+  display: grid;
+  grid-auto-rows: auto auto 1fr auto;
 }
 
 .addNewForm form {
   display: grid;
-  gap: .75rem;
-  flex-grow: 1;
-  grid-auto-rows: auto auto auto 1fr auto;
+  gap: 1rem;
 }
 
-.addNewForm form div {
+.formFields {
+  display: grid;
+  gap: .75rem;
+}
+
+.addNewForm form div div {
   display: flex;
   align-items: baseline;
-}
+} 
 
 form label {
   width: 6rem;
@@ -572,19 +522,22 @@ textarea {
   border: none;
 }
 
-@media only screen and (min-width: 30em) {
-  .addNewForm {
-    min-height: 40rem;
-    min-width: 0;
-    max-height: 90vh;
+@media only screen and (min-width: 32em) {
+
+  .popup {
     max-width: 30rem;
     border-radius: var(--border-radius) var(--border-radius);
-    margin-top: 0;
-    padding-bottom: 2rem;
-    animation: popup-anim 1.15s .1s ease-in-out forwards;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+  }
+
+  .addNewForm {
+    height: max(90vh, 40rem);
+    overflow-y: hidden;
+  }
+
+  .formFields {
+    overflow-y: scroll;
+    max-height: 26rem;
+    padding-right: 1rem;
   }
 }
 
