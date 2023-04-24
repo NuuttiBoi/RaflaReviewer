@@ -3,6 +3,7 @@ import resService from '../services/restaurants'
 import RestaurantList from './RestaurantList'
 import AddNewForm from './AddNewForm'
 import SearchBar from './SearchBar'
+import Tags from './Tags'
 
 function Home() {
   const [restaurants, setRestaurants] = useState([])
@@ -23,6 +24,7 @@ function Home() {
     const openForm = (event) => {
       event.preventDefault() 
       document.getElementById('addNewForm').classList.remove('visuallyhidden')
+      document.querySelector('body').classList.add('locked')
       console.log('open form')
     }
 
@@ -34,11 +36,10 @@ function Home() {
     console.log("searching ", searchWord)
     const restaurantsToShow = restaurants.filter(findWord)
 
-    // Etsii sanaa kaikista ravintola-olion kentistä (pitää päivittää jos lisätään kenttiä)
+    // Etsii sanaa ravintolan nimestä- ja osoitteesta
     function findWord(res) {
       if (res.name.toLowerCase().includes(searchWord.toLowerCase()) ||
-      res.address.toLowerCase().includes(searchWord.toLowerCase()) ||
-      res.comment.toLowerCase().includes(searchWord.toLowerCase())) {
+      res.address.toLowerCase().includes(searchWord.toLowerCase())) {
         return true;
       }
     }
@@ -46,7 +47,8 @@ function Home() {
     return (
     <div className="container">
         <SearchBar onChange={handleFilter}/>
-        <button onClick={openForm} className="button center">Lisää uusi</button>
+        <button onClick={openForm} className="button center">Lisää arvostelu</button>
+        <Tags />
         <RestaurantList restaurants={restaurantsToShow}/>
         <AddNewForm />
     </div>

@@ -3,7 +3,7 @@
 const express = require('express')
 const app = express()
 const Restaurant = require('./models/restaurant')
-const Comment = require('./models/comment')
+const Comment = require('./models/comment');
 
 app.use(express.json())
 
@@ -14,20 +14,21 @@ app.use(function(req, res, next) {
     next();
 });
 
-
-
-app.get('/', function(request, response) {
+app.get('/', (request, response) => {
     response.send('(^ _ ^)/')
 })
 
-/* Ravintolat */
+
+// Ravintolat
+
+// Hakee kaikki ravintolat
 app.get('/restaurants', (request, response) => {
     Restaurant.find({}).then(restaurants => {
         response.json(restaurants)
     })
 })
 
-// Hakee kaikki ravintolat
+// Ravintolan tallennus
 app.post('/restaurants', (request, response) => {
     const body = request.body
 
@@ -38,8 +39,7 @@ app.post('/restaurants', (request, response) => {
     // Tallennettavan rivin "konstruktori"
     const restaurant = new Restaurant({
         name: body.name,
-        address: body.address,
-        comment: body.comment
+        address: body.address
     })
 
     // Tallennus tietokantaan
@@ -49,16 +49,23 @@ app.post('/restaurants', (request, response) => {
     })
 })
 
-// Yksittäisen ravintolan hakeminen
+// Hakee yksittäisen ravintolan
 app.get('/restaurants/:id', (request, response) => {
     Restaurant.findById(request.params.id).then(restaurant => {
       response.json(restaurant)
     })
 })
 
+app.get('/restaurants/comment/:comment', (request, response) => {
+    Restaurant.find({ comment: request.params.comment} ).then(restaurant => {
+      response.json(restaurant)
+    })
+})
 
-/* Kommentit */
 
+// Kommentit
+
+// Hakee kaikki kommentit
 app.get('/comments', (request, response) => {
     Comment.find({}).then(comments => {
         response.json(comments)
@@ -69,8 +76,10 @@ app.post('/comments', (request, response) => {
     const body = request.body
 
     const comment = new Comment({
-        userId: "anonyymi",
-        content: "kommentti"
+        restaurantId: body.restaurantId,
+        userId: body.userId,
+        content: body.content,
+        date: new Date()
     })
 
     comment.save().then(savedComment => {
@@ -79,12 +88,19 @@ app.post('/comments', (request, response) => {
     })
 })
 
+// Hakee yksittäisen kommentin
 app.get('/comments/:id', (request, response) => {
     Comment.findById(request.params.id).then(comment => {
       response.json(comment)
     })
 })
 
+// Hakee kaikki ravintolan kommentit
+app.get('/comments/restaurantId/:restaurantId', (request, response) => {
+    Comment.find({ restaurantId: request.params.restaurantId } ).then(comments => {
+      response.json(comments)
+    })
+})
 
 app.listen(3001)
 console.log('Server running on port 3001')
