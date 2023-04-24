@@ -590,10 +590,44 @@ textarea:focus, input:focus {
   max-width: 10rem;
 }
 
+.commentButton {
+  width: 1.35em;
+  border: 1px solid var(--clr-icon);
+  border-radius: var(--border-small);
+}
+
+.commentButton:hover {
+  background-color: transparent;
+  --clr-icon: var(--clr-text);
+}
+
+.commentIcon {
+  padding: .1em;
+  position: relative;
+}
+
+.commentIcon path {
+  stroke: var(--clr-icon);
+}
+
 .username {
   color: var(--clr-secondary);
   font-weight: bold;
   font-size: var(--text-small);
+}
+
+.comment__info {
+  max-width: 50%;
+  display: inline-block;
+}
+
+.comment__buttons {
+  max-width: calc(50% - .5rem);
+  position: absolute;
+  right: .5rem;
+  bottom: .5rem;
+  display: flex;
+  gap: .25rem
 }
 
 .comment__info > * {
@@ -603,8 +637,6 @@ textarea:focus, input:focus {
 .comment__date {
   font-size: var(--text-extra-small);
 }
-
-
 
 .tagContainer {
   display: flex;
@@ -652,6 +684,7 @@ textarea:focus, input:focus {
   padding: .5rem;
   border-radius: var(--border-small);
   background-color: var(--clr-neutral-light);
+  position: relative;
 }
 
 /* Piilottaa elementin näkyvistä */
@@ -740,15 +773,26 @@ textarea:focus, input:focus {
     gap: .5rem;
   }
 
+  .comment__buttons {
+    bottom: 1rem;
+    right: 1rem;
+  }
+
   .commentItem:nth-child(even) {
     flex-direction: row;
     justify-self: flex-end;
   }
 
+  .commentItem:nth-child(even) .comment__buttons {
+    bottom: 1rem;
+    right: 11.3rem;
+    color: red;
+  }
+
   .commentItem .comment__content {
     background-color: var(--clr-neutral-light);
     border-radius: var(--border-small);
-    padding: 1em;
+    padding: 1em 1em 2em 1em;
     flex-grow: 1;
   }
 }
