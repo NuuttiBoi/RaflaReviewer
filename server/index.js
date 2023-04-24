@@ -4,8 +4,17 @@ const express = require('express')
 const app = express()
 const Restaurant = require('./models/restaurant')
 const Comment = require('./models/comment');
+const User = require('./models/user')
+const session = require('express-session')
 
 app.use(express.json())
+
+// Tällä katotaan onko käyttäjä kirjautunut sisään
+app.use(session ({
+    secret: "7g1klpLLmAkdad031Sf", //Avain
+    resave: false,
+    saveUninitialized: false
+}))
 
 /* CORS ongelman korjaamiseen */
 app.use(function(req, res, next) {
@@ -99,6 +108,57 @@ app.get('/comments/:id', (request, response) => {
 app.get('/comments/restaurantId/:restaurantId', (request, response) => {
     Comment.find({ restaurantId: request.params.restaurantId } ).then(comments => {
       response.json(comments)
+    })
+})
+
+// Käyttäjän rekisteröinti ja kirjautuminen
+app.post('/users', async (request, response) => {
+    try {
+        const { username, firstname, lastname, password } = request.body
+        const existingUser = await User.findOne({username})
+        if (existingUser){
+            return response.status(409).json({message: "Username taken"})
+        }
+
+        const user = new User({username, firstname, lastname, password})
+        await user.save()
+        request.session.user = user // Käyttäjä sessioon
+        response.status(201).json({message: "User made successfully"})
+    } catch (error) {
+        response.status(500).json({message: error.message})
+    }
+})
+
+app.post('/login', async (request, response) => {
+    try {
+        const { username, password} = request.body
+        const user = await User.findOne({username})
+        if (!user) {
+            return response.status(401).json({message: "Wrong username or password"})
+        }
+
+        const passwordCorrect = await user.comparePassword(password)
+        if (!passwordCorrect) {
+            return response.status(401).json({message: "Wrong username or password"})
+        }
+
+        request.session.user = user
+        response.status(200).json({message: "Login successful"})
+    } catch (error) {
+        response.status(500).json({message: error.message})
+    }
+})
+
+app.get('/users', (request,response) => {
+    User.find({}).then(users => {
+        response.json(users)
+    })
+})
+
+app.get('/login', (request,response) => {
+
+    User.find({}).then(users => {
+        response.json(users)
     })
 })
 
