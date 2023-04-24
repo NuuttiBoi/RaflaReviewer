@@ -146,6 +146,7 @@ h2, h3 {
     padding: 1rem 0;
   }
 
+  /* Menulinkit tyyliltään samanlaisiksi */
   .main-nav ul .navlink, .main-nav ul .button {
     background-color: transparent;
     max-height: fit-content;
