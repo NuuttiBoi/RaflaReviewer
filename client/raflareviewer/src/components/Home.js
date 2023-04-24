@@ -44,14 +44,19 @@ function Home() {
       }
     }
 
+    const filterResults = () => {
+      document.getElementById('tagContainer').classList.toggle('visuallyhidden')
+      // näytä vain filtteröidyt ravintolat
+    }
+
     return (
-    <div className="container">
-        <SearchBar onChange={handleFilter}/>
-        <button onClick={openForm} className="button center">Lisää arvostelu</button>
-        <Tags />
-        <RestaurantList restaurants={restaurantsToShow}/>
-        <AddNewForm />
-    </div>
+      <div className="container">
+          <button onClick={openForm} className="button center">Lisää arvostelu</button>
+          <SearchBar onChange={handleFilter} filterResults={filterResults}/>
+          <Tags />
+          <RestaurantList restaurants={restaurantsToShow}/>
+          <AddNewForm />
+      </div>
   );
 }
 

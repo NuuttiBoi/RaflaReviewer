@@ -8,7 +8,7 @@ const Tags = ({ }) => {
     })
 
     return (
-        <div className="tagContainer">
+        <div id="tagContainer" className="tagContainer visuallyhidden">
           {tags}
         </div>
     )
