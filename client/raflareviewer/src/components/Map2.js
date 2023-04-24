@@ -1,7 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
-import './Map/mapStyle.css';
-import 'https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoibnV1dHRpYm9pIiwiYSI6ImNsMmFldDVkcjAyNTQzbm1sN3Z5aHhjcDgifQ.p7gsmnhjnFhVU5yezIdGgA';
 
@@ -18,13 +16,12 @@ export default function App() {
   useEffect(() => {
     if (map.current) return; // initialize map only once
     map.current = new mapboxgl.Map({
-        container: mapContainer.current,
-        style: 'mapbox://styles/mapbox/light-v10',
-        center: [24.937631515858612,60.16371731453643],
-        zoom: 13,
-        scrollZoom: true
-      });
+      container: mapContainer.current,
+      style: 'mapbox://styles/mapbox/streets-v12',
+      center: [24.937631515858612,60.16371731453643],
+      zoom: zoom,
     });
+  });
 
   useEffect(() => {
     if (!map.current) return; // wait for map to initialize
@@ -133,16 +130,16 @@ export default function App() {
     });
 
 
-    map.current.on('load', () => {
+    map.on('load', () => {
       // Lisätään data kartalle layeriksi
-      map.current.addSource('places', {
+      map.addSource('places', {
         type: 'geojson',
         data: restaurants
       });
       addMarkers();
     })
     // Lisätään nappi, joka paikantaa käyttäjän sijainnin
-    map.current.addControl(
+    map.addControl(
         new mapboxgl.GeolocateControl({
           positionOptions: {
             enableHighAccuracy: true
@@ -172,15 +169,15 @@ export default function App() {
           const listing = document.getElementById(`listing-${marker.properties.id}`);
           listing.classList.add('active');
         });
-        new mapboxgl.Marker(el, {offset: [0, -23]}).setLngLat(marker.geometry.coordinates).addTo(map.current);
+        new mapboxgl.Marker(el, {offset: [0, -23]}).setLngLat(marker.geometry.coordinates).addTo(map);
       }
     }
 
     buildLocationList(restaurants);
 
-    map.current.on('click', (event) => {
+    map.on('click', (event) => {
       // Määrittelee onko feature "locations" layerissa
-      const features = map.current.queryRenderedFeatures(event.point, {
+      const features = map.queryRenderedFeatures(event.point, {
         layers: ['locations']
       });
 
@@ -252,7 +249,7 @@ export default function App() {
 
     // Funktio, joka keskittää kartan ravintolan kohdalle
     function flyToRestaurant(currentFeature) {
-      map.current.flyTo({
+      map.flyTo({
         center: currentFeature.geometry.coordinates,
         zoom: 15
       });
@@ -270,13 +267,13 @@ export default function App() {
                 <h4><a href=" ${currentFeature.properties.website} ">Nettisivu</a></h4>
                 <h4><a href=" ${currentFeature.properties.directions}" target="_blank">Reittiohjeet</a></h4>
                 <h4>${currentFeature.properties.description}</h4> `).
-          addTo(map.current);
+          addTo(map);
     }
 
   }
 
   return (
-      <div className="countainer">
+      <div>
         <div className="sidebar">
           Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
         </div>
