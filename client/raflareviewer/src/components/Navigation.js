@@ -23,7 +23,7 @@ const Navigation = () => {
                         <NavLink to="/" className="navlink">Etusivu</NavLink>
                     </li>
                     <li>
-                        <NavLink to="/Map2" className="navlink">Kartta</NavLink>
+                        <NavLink to="/Map" className="navlink">Kartta</NavLink>
                     </li>
                     <li>
                         <button onClick={openUser} className="button center"> Rekistöröidy</button>

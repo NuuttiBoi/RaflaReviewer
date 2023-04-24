@@ -1,6 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Rubik:wght@600&display=swap");
-
 /* Värien määrittely */
 
 :root {
@@ -69,7 +68,7 @@ h2, h3 {
   display: grid;
   grid-template-rows: auto 1fr auto;
   min-height: 100vh; /* fallback */
-  min-height: 100dvh;
+  min-height: 100vh;
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
 }

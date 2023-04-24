@@ -1,5 +1,11 @@
-* {
-    box-sizing: border-box;
+
+.mapboxgl-canvas {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
 body {
@@ -41,13 +47,6 @@ a:hover {
 }
 
 
-.map {
-    position: absolute;
-    left: 33.3333%;
-    width: 66.6666%;
-    top: 0;
-    bottom: 0;
-}
 
 .heading {
     background: #fff;
@@ -149,4 +148,8 @@ a:hover {
     height: 56px;
     width: 56px;
     background-image: url(marker.png);
+}
+
+.map-container{
+    height: 100vh;
 }
