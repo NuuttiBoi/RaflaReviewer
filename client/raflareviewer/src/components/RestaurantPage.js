@@ -6,6 +6,7 @@ import ThumbsUpButtons from './ThumbsUpButtons'
 import { NavLink } from 'react-router-dom'
 import commentService from '../services/comments'
 import Comments from './Comments'
+import Confirm from './Confirm'
 
 const RestaurantPage = (props) => {
     let location = useLocation();
@@ -87,6 +88,7 @@ const RestaurantPage = (props) => {
                 </div>
                 <Comments comments={comments} />
             </section>
+            <Confirm />
         </div>
     )
 }

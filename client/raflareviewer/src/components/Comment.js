@@ -4,25 +4,31 @@ import Confirm from './Confirm'
 
 const Comment = ({ userId, id, content, date }) => {  
 
-    // Kommentin poistaminen
-    function confirmDelete() {
-        console.log('delete? ', id)
-        document.getElementById('confirmDeleteComment').classList.remove('visuallyhidden')
+    // Avaa popupin, jossa kysytään haluaako varmasti poistaa kommentin
+    const confirmDelete = () => {
+        console.log(id)
+        document.getElementById(id).classList.remove('visuallyhidden')
         document.querySelector('body').classList.add('locked')
+    }
+
+    // Poistaa kommentin
+    function deleteComment() {
+        console.log('poistetaan ', id)
+        //sulje popup
     }
 
     function reportComment() {
         console.log('report ', id)
     }
 
-    function deleteComment() {
-        console.log('id??? ', id)
-        console.log('deleting ', id, ' ', content)
+    // Sulkee popupin
+    function closePopup() {
+        document.getElementById('confirmDeleteComment').classList.add('visuallyhidden')
+        document.querySelector('body').classList.remove('locked')
     }
     
     return (
         <div className="commentItem">
-            <p>id {id}</p>
             <p className="comment__content">{content}</p>
             <div className="comment__info">
                 <p className="username">{userId}</p>
@@ -36,7 +42,7 @@ const Comment = ({ userId, id, content, date }) => {
                     <Delete />
                 </button>
             </div>
-            <Confirm onClick={deleteComment}/>
+            <Confirm id={id} onClick={deleteComment} />
         </div>
     )
 }
