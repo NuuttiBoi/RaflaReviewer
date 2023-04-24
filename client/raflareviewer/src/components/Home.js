@@ -36,11 +36,10 @@ function Home() {
     console.log("searching ", searchWord)
     const restaurantsToShow = restaurants.filter(findWord)
 
-    // Etsii sanaa kaikista ravintola-olion kentistä (pitää päivittää jos lisätään kenttiä)
+    // Etsii sanaa ravintolan nimestä- ja osoitteesta
     function findWord(res) {
       if (res.name.toLowerCase().includes(searchWord.toLowerCase()) ||
-      res.address.toLowerCase().includes(searchWord.toLowerCase()) ||
-      res.comment.toLowerCase().includes(searchWord.toLowerCase())) {
+      res.address.toLowerCase().includes(searchWord.toLowerCase())) {
         return true;
       }
     }

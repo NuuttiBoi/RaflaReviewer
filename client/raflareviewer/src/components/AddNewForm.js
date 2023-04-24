@@ -60,7 +60,7 @@ const AddNewForm = () => {
             }
 
             console.log('saving ', newRestaurant)
-/* 
+
             ///
 
             // Lähetys palvelimelle
@@ -71,19 +71,29 @@ const AddNewForm = () => {
 
                     // Jos arvostelussa mukana kommentti, tallennetaan se toiseen tauluun
                     if (newComment.trim().length > 0) {
+                        // Kommentti-olio
                         const Comment = {
                             restaurantId: response.id, // Ravintolan id = responsen palauttama id
+                            userId: "Anonyymi", // käyttäjä
                             content: newComment
                         }
-                        console.log(Comment)
+                        console.log('comment ', Comment)
+
+                        // Kommentin tallennus palvelimelle
+                        commentService.create(Comment)
+                            .then(response => {
+                                console.log('comment saved ', response)
+                            })
+                            .catch(error => {
+                                console.log('comment error ', error)
+                            })
                     }
                 })
                 .catch(error => {
                     console.log(error)
             })
-            
             console.log('saving ', newRestaurant)
-            closeForm() */
+            closeForm()
 
 
             ///
@@ -150,14 +160,32 @@ const AddNewForm = () => {
             <p className="warningText">Täytä pakolliset kentät</p>
             <form onSubmit={saveForm}>
                 <div className="formFields">
+
                     <div className="required">
-                        <label><p>Nimi</p></label>
+                        <label><p>Ravintolan nimi</p></label>
                         <input onChange={handleNameChange} className="formInput"/>
                     </div>
                     <div className="required">
                         <label><p>Osoite</p></label>
                         <input onChange={handleAddressChange} className="formInput"/>
                     </div>
+                    
+                    <section>
+                        <div className="sliderContainer">
+                            <label>Ruoka</label>
+                            <input type="range" min="1" max="5" value="2.5" className="slider" onChange={() => {}} />
+                        </div>
+                        <div className="sliderContainer">
+                            <label>Hinta-laatu-suhde</label>
+                            <input type="range" min="1" max="5" value="2.5" className="slider" onChange={() => {}} />
+                        </div>
+                        <div className="sliderContainer">
+                            <label>Kokemus</label>
+                            <input type="range" min="1" max="5" value="2.5" className="slider" onChange={() => {}} />
+                        </div>
+                    </section>
+
+                    <section>
                     <div className="formCheckboxContainer">
                         <Checkbox label="Kahvila" onChange={handleCafeChange} checked={cafe} />
                         <Checkbox label="Pikaruoka" onChange={handleFastFoodChange} checked={fastFood} />
@@ -167,11 +195,15 @@ const AddNewForm = () => {
                         <Checkbox label="Liikuntaesteetön" onChange={handleAccessibleChange} checked={accessible} />
                         <Checkbox label="Take away" onChange={handleTakeAwayChange} checked={takeAway} />
                     </div>
+                    </section>
+
                     <div>
                         <label><p>Kommentti</p></label>
                         <textarea onChange={handleCommentChange} className="formInput" rows="4"/>
                     </div>
-                    <input type="file" />
+                    <section>
+                        <input type="file" />
+                    </section>
                 </div>
             <button type="submit" className="button center">Tallenna</button>
             </form>

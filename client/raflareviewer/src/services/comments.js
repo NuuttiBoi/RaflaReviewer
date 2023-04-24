@@ -8,6 +8,11 @@ const getAll = () => {
     return request.then(response => response.data)
 }
 
+const getByRestaurant = restaurantId => {
+    const request = axios.get(`${baseUrl}/restaurantId/${restaurantId}`)
+    return request.then(response => response.data)
+}
+
 const create = newObject => {
     const request = axios.post(baseUrl, newObject)
     console.log('axios success')
@@ -25,4 +30,4 @@ const deletePerson = id => {
     return request.then(response => response)
 } */
 
-export default { getAll, create }
+export default { getAll, getByRestaurant, create }

@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@600&display=swap");
 
 /* Värien määrittely */
 
@@ -19,12 +20,13 @@
   --clr-button-effect: var(--clr-primary-light);
   --clr-button-text: var(--clr-light);
   --clr-thumb-icon: var(--clr-icon);
-  --clr-title: var(--clr-dark);
+  --clr-title: var(--clr-primary);
   --clr-heading: var(--clr-primary);
   --clr-icon: var(--clr-neutral);
   --clr-footertext: var(--clr-light);
   --clr-input-focus: var(--clr-primary);
   --clr-checked: hsl(116, 36%, 84%);
+  --clr-link-hover: var(--clr-secondary);
 
   /* Punainen ja vihreä väri virheilmoituksiin yms. yksityiskohtiin */
   --clr-green: rgb(24, 137, 16);
@@ -34,6 +36,7 @@
   --border-small: .35rem;
   --icon-width: 2rem;
   --text-small: .9rem;
+  --text-extra-small: .8rem;
 }
 
 *, *::before, *::after {
@@ -49,8 +52,9 @@ body {
   line-height: 1.7;
 }
 
-h1, h2 {
+h1, h2, h3 {
   color: var(--clr-heading);
+  font-family: 'Rubik', sans-serif;
 }
 
 h2, h3 {
@@ -103,11 +107,26 @@ h2, h3 {
   text-decoration: none;
 }
 
-/* RaflaReviewer-otsikko */
-.title {
-  color: var(--clr-title);
-  font-size: 2.5rem;
+.container a:not(.button), .container a:visited:not(.button),
+.footerlink, .footerlink:visited {
+  text-decoration: underline 0.2rem var(--clr-link-hover);
+}
+
+.container a:hover:not(.button), .footerlink:hover {
+  color: var(--clr-link-hover);
   text-decoration: none;
+}
+
+/* RaflaReviewer-otsikko */
+.title, .title:visited {
+  color: var(--clr-title);
+  font-size: 2rem;
+  text-decoration: none;
+  font-family: 'Rubik', sans-serif;
+}
+
+.title:hover {
+  color: var(--clr-title);
 }
 
 .main-footer {
@@ -115,15 +134,15 @@ h2, h3 {
   padding: 4em;
   display: grid;
   place-items: center;
+  gap: 2rem;
+}
+
+footer p {
+  font-size: var(--text-small);
 }
 
 footer p, .footerlink {
   color: var(--clr-footertext);
-}
-
-.footerlink:hover {
-  color: var(--clr-footertext);
-  text-decoration: underline;
 }
 
 img, svg {
@@ -251,14 +270,14 @@ code {
   display: inline-block;
 }
 
-h1 {
-  font-size: 2rem;
+.main-layout h1 {
+  font-size: 3rem;
   font-weight: bold;
+  font-style: normal;
 }
 
 h2 {
   font-size: 1.5rem;
-  font-weight: bold;
 }
 
 .center {
@@ -295,9 +314,14 @@ h2 {
   gap: 1rem;
 }
 
-.formFields {
+.formFields section {
   display: grid;
   gap: .75rem;
+}
+
+.formFields {
+  display: grid;
+  gap: 2rem;
 }
 
 .addNewForm form div div:not(.formCheckboxContainer) {
@@ -409,6 +433,45 @@ textarea:focus, input:focus {
   color: var(--clr-neutral);
 }
 
+.sliderContainer {
+  display: flex;
+  flex-basis: 1;
+  gap: 4rem;
+}
+
+.sliderContainer label {
+  min-width: 20%;
+}
+
+/* The slider itself */
+.slider {
+  margin: auto;
+  appearance: none;
+  width: 100%; /* Full-width */
+  height: .2rem;
+  background: var(--clr-neutral-light); /* Grey background */
+  outline: none; /* Remove outline */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  background: var(--clr-neutral-light); /* Green background */
+  cursor: pointer; /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+  background: var(--clr-neutral-light); /* Green background */
+  cursor: pointer; /* Cursor on hover */
+  border: 0;
+}
+
+.slider:focus {
+  outline: none;
+}
+
+
+
 .no-results {
   font-size: 1.2rem;
   color: var(--clr-neutral);
@@ -419,6 +482,11 @@ textarea:focus, input:focus {
 /* Estää scrollauksen popupin ollessa auki */
 .locked {
   overflow-y: hidden;
+}
+
+.unclickable {
+  opacity: .5;
+  pointer-events: none;
 }
 
 /* Estää buttonien klikkauksen  */
@@ -507,6 +575,7 @@ textarea:focus, input:focus {
   gap: .5rem;
   max-width: 40em;
   margin: 0 auto;
+  padding-bottom: 2rem;
 }
 
 .commentForm label {
@@ -523,8 +592,19 @@ textarea:focus, input:focus {
 
 .username {
   color: var(--clr-secondary);
+  font-weight: bold;
   font-size: var(--text-small);
 }
+
+.comment__info > * {
+  line-height: 1.5;
+}
+
+.comment__date {
+  font-size: var(--text-extra-small);
+}
+
+
 
 .tagContainer {
   display: flex;
@@ -557,6 +637,23 @@ textarea:focus, input:focus {
   background-color: var(--clr-checked);
 }
 
+/* Kommenttiboksi */
+.commentsContainer {
+  display: grid;
+  gap: 1rem;
+  margin: 0 auto;
+  max-width: 40em; /* ? */
+}
+
+.commentItem {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: .5rem;
+  border-radius: var(--border-small);
+  background-color: var(--clr-neutral-light);
+}
+
 /* Piilottaa elementin näkyvistä */
 .visuallyhidden {
   position: absolute;
@@ -573,6 +670,7 @@ textarea:focus, input:focus {
   border: none;
 }
 
+/* Pienemmillä näytöillä lomake täyttää koko sivun */
 @media only screen and (min-width: 32em) and (min-height: 42em) {
   .popup {
     max-width: 30rem;
@@ -586,7 +684,7 @@ textarea:focus, input:focus {
 
   .formFields {
     overflow-y: scroll;
-    max-height: 26rem;
+    max-height: 28rem;
     padding-right: 1rem;
   }
 }
@@ -627,6 +725,31 @@ textarea:focus, input:focus {
 
   .tagContainer {
     justify-content: flex-start;
+  }
+
+  .commentsContainer {
+    max-width: 90%;
+    gap: 0;
+  }
+
+  .commentItem {
+    background-color: transparent;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    width: 70%;
+    gap: .5rem;
+  }
+
+  .commentItem:nth-child(even) {
+    flex-direction: row;
+    justify-self: flex-end;
+  }
+
+  .commentItem .comment__content {
+    background-color: var(--clr-neutral-light);
+    border-radius: var(--border-small);
+    padding: 1em;
+    flex-grow: 1;
   }
 }
 
