@@ -1,8 +1,6 @@
 import { useState } from 'react'
 
 const CommentForm = ({ onSubmit }) => {
-    const [newComment, setNewComment] = useState('')
-
     return (
         <div>
             <form className="commentForm" onSubmit={onSubmit}>

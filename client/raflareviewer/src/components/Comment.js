@@ -1,6 +1,7 @@
 import Delete from '../images/Trash'
 import Flag from '../images/Flag'
 import Confirm from './Confirm'
+import commentService from '../services/comments'
 
 const Comment = ({ userId, id, content, date }) => {  
 
@@ -14,7 +15,16 @@ const Comment = ({ userId, id, content, date }) => {
     // Poistaa kommentin
     function deleteComment() {
         console.log('poistetaan ', id)
-        //sulje popup
+
+        commentService
+              .deleteComment(id)
+              .then(response => {
+                  console.log('deleted comment ', response)
+              })
+              .catch(error => {
+                console.log(error)
+              })
+        closePopup()
     }
 
     function reportComment() {
@@ -23,7 +33,7 @@ const Comment = ({ userId, id, content, date }) => {
 
     // Sulkee popupin
     function closePopup() {
-        document.getElementById('confirmDeleteComment').classList.add('visuallyhidden')
+        document.getElementById(id).classList.add('visuallyhidden')
         document.querySelector('body').classList.remove('locked')
     }
     

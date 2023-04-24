@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Rubik:wght@600&display=swap");
 /* Värien määrittely */
 
@@ -67,7 +67,6 @@ h2, h3 {
 .main-layout {
   display: grid;
   grid-template-rows: auto 1fr auto;
-  min-height: 100vh; /* fallback */
   min-height: 100vh;
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
@@ -76,9 +75,12 @@ h2, h3 {
 /* Nav */
 .main-nav {
   background-color: var(--clr-header-bg);
-  padding: 1.5em 3rem;
+  padding: 1em 3rem;
+  width: 100vw;
   color: var(--clr-headerlink);
   box-shadow: 0 0 1em rgba(0,0,0,.1);
+  position: fixed;
+  z-index: 10;
 }
 
 .nav-wrapper {
@@ -89,6 +91,15 @@ h2, h3 {
   margin: auto;
 }
 
+/* Otsikko ja hamburger-button */
+.nav-header {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Linkit */
 .main-nav ul {
   list-style-type: none;
   max-width: fit-content;
@@ -99,6 +110,67 @@ h2, h3 {
 
 .main-nav li {
   display: inline-block;
+}
+
+.mobileMenu {
+  display: none;
+  padding: .25rem;
+  background-color: transparent;
+  color: var(--clr-icon);
+}
+
+.mobileMenu:hover {
+  color: var(--clr-text);
+}
+
+.hamburgerButton {
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+/* Mobiilimenu */
+@media (max-width: 62em) {
+  .mobileMenu {
+    display: inline-block;
+  }
+
+  .nav-wrapper {
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+  .main-nav ul {
+    width: 100%;
+    margin: 0 auto;
+    flex-direction: column;
+    padding: 1rem 0;
+  }
+
+  .main-nav ul .navlink, .main-nav ul .button {
+    background-color: transparent;
+    max-height: fit-content;
+    padding: 0;
+    line-height: 2.5;
+    box-shadow: none;
+    text-align: center;
+    margin: 0 auto;
+    display: block;
+    max-width: fit-content;
+    font-weight: 400;
+    color: var(--clr-text);
+  }
+
+  /* Ei vaikutusta suuremmilla näytöillä */
+  .hideMenu {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      border: 0;
+      padding: 0;
+      clip: rect(0 0 0 0);
+      overflow: hidden;
+  }
 }
 
 .navlink {
@@ -119,7 +191,7 @@ h2, h3 {
 /* RaflaReviewer-otsikko */
 .title, .title:visited {
   color: var(--clr-title);
-  font-size: 1.75rem;
+  font-size: 1.6rem;
   text-decoration: none;
   font-family: 'Rubik', sans-serif;
 }
@@ -192,6 +264,7 @@ button {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  margin-top: 5em;
 }
 
 code {
@@ -345,13 +418,6 @@ form label:not(.formCheckboxContainer label) {
   content: '*';
 }
 
-.warningText {
-  font-size: var(--text-small);
-  color: var(--clr-red);
-  text-align: center;
-  opacity: 0;
-}
-
 .formHeader {
   display: flex;
   justify-content: space-between;
@@ -457,12 +523,23 @@ textarea:focus, input:focus {
 
 .sliderContainer {
   display: flex;
-  flex-basis: 1;
-  gap: 4rem;
+  flex-basis: 100%;
+  gap: 3rem;
+}
+
+.sliderWrapper {
+  width: 100%;
+  display: flex;
+  gap: .75rem;
+  margin: auto;
 }
 
 .sliderContainer label {
   min-width: 20%;
+}
+
+.sliderValue {
+  font-size: var(--text-small);
 }
 
 /* The slider itself */
@@ -743,7 +820,7 @@ textarea:focus, input:focus {
 
 @media only screen and (min-width: 62em) {
   .title {
-    font-size: 2rem;
+    font-size: 1.75rem;
   }
 
   .restaurantList {
@@ -817,6 +894,15 @@ textarea:focus, input:focus {
     border-radius: var(--border-small);
     padding: 1em 1em 2em 1em;
     flex-grow: 1;
+  }
+
+  .main-nav {
+    position: relative;
+    padding: 1.5rem 3rem;
+  }
+
+  .container {
+    margin-top: 0;
   }
 }
 

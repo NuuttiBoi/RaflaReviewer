@@ -20,16 +20,18 @@ const AddNewForm = () => {
     const [takeAway, setTakeAway] = useState(false)
 
     // Tyhjien kenttien tarkistus
-    function checkFields() {
+    const checkFields = () => {
         const requiredFields = document.getElementById('addNewForm').querySelectorAll('.required > input')
 
         let ok = true;
         requiredFields.forEach(input => {
+            console.log('input value: ',input.value)
             if (input.value.trim().length === 0) {
                 ok = false
             }
         })
-        return ok
+        // Estä napin painaminen, jos joku pakollisista kentistä on tyhjä
+        ok ? document.getElementById('formSubmitButton').classList.remove('unclickable') : document.getElementById('formSubmitButton').classList.add('unclickable')
     }
 
     // Piilottaa lomakkeen näkyvistä
@@ -44,10 +46,7 @@ const AddNewForm = () => {
         event.preventDefault()
         console.log('save')
 
-        // Jos pakolliset kentät ok
-        if (checkFields()) {
-            // Uusi tallennettava olio
-            const newRestaurant = {
+        const newRestaurant = {
                 name: newName,
                 address: newAddress,
                 cafe: cafe,
@@ -60,8 +59,6 @@ const AddNewForm = () => {
             }
 
             console.log('saving ', newRestaurant)
-
-            ///
 
             // Lähetys palvelimelle
             resService
@@ -94,25 +91,25 @@ const AddNewForm = () => {
             })
             console.log('saving ', newRestaurant)
             closeForm()
-
-
-            ///
-        } else {
-            document.getElementById('addNewForm').querySelector('.warningText').style.opacity = '1'
-        }
     }
 
     // Kenttien tilojen päivitys
-    // Nimi
+    // Nimi (pakollinen kenttä)
     const handleNameChange = (event) => {
         console.log(event.target.value)
         setNewName(event.target.value)
+
+        // Tarkista muut pakolliset kentät
+        checkFields()
     }
 
-    // Osoite
+    // Osoite (pakollinen kenttä)
     const handleAddressChange = (event) => {
         console.log(event.target.value)
         setNewAddress(event.target.value)
+
+        // Tarkista muut pakolliset kentät
+        checkFields()
     }
 
     // Kommentti
@@ -157,7 +154,6 @@ const AddNewForm = () => {
                     <Icon />
                 </button>
             </header>
-            <p className="warningText">Täytä pakolliset kentät</p>
             <form onSubmit={saveForm}>
                 <div className="formFields">
 
@@ -173,16 +169,26 @@ const AddNewForm = () => {
                     <section>
                         <div className="sliderContainer">
                             <label>Ruoka</label>
-                            <input type="range" min="1" max="5" value="2.5" className="slider" onChange={() => {}} />
+                            <div className="sliderWrapper">
+                                <span className="sliderValue">0</span>
+                                <input type="range" min="1" max="5" value="2.5" className="slider" onChange={() => {}} />
+                                <span className="sliderValue">5</span>
+                            </div>
                         </div>
                         <div className="sliderContainer">
                             <label>Hinta-laatu-suhde</label>
-                            <input type="range" min="1" max="5" value="2.5" className="slider" onChange={() => {}} />
-                        </div>
+                            <div className="sliderWrapper">
+                                <span className="sliderValue">0</span>
+                                <input type="range" min="1" max="5" value="2.5" className="slider" onChange={() => {}} />
+                                <span className="sliderValue">5</span>
+                            </div>                        </div>
                         <div className="sliderContainer">
                             <label>Kokemus</label>
-                            <input type="range" min="1" max="5" value="2.5" className="slider" onChange={() => {}} />
-                        </div>
+                            <div className="sliderWrapper">
+                                <span className="sliderValue">0</span>
+                                <input type="range" min="1" max="5" value="2.5" className="slider" onChange={() => {}} />
+                                <span className="sliderValue">5</span>
+                            </div>                        </div>
                     </section>
 
                     <section>
@@ -205,7 +211,7 @@ const AddNewForm = () => {
                         <input type="file" />
                     </section>
                 </div>
-            <button type="submit" className="button center">Tallenna</button>
+            <button type="submit" className="button center unclickable" id="formSubmitButton">Tallenna</button>
             </form>
         </div>
     )

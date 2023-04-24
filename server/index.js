@@ -111,6 +111,15 @@ app.get('/comments/restaurantId/:restaurantId', (request, response) => {
     })
 })
 
+// Kommentin poistaminen
+app.delete('/comments/:id', (request, response, next) => {
+    Comment.findByIdAndRemove(request.params.id)
+      .then(result => {
+        response.status(204).end()
+      })
+      .catch(error => next(error))
+})
+
 // Käyttäjän rekisteröinti ja kirjautuminen
 app.post('/users', async (request, response) => {
     try {
