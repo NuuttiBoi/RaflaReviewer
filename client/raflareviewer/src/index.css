@@ -916,3 +916,14 @@ textarea:focus, input:focus {
     grid-template-columns: repeat(3, 1fr);
   }
 }
+
+.loginButton {
+  display: flex;
+  align-items: center;
+}
+
+.userIcon {
+  width: 2rem;
+  height: 2rem;
+  margin-right: 5px;
+}

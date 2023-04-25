@@ -23,8 +23,7 @@ mongoose.connect(url)
         username: {type: String, required: true, unique: true},
         password: {type: String, required: true},
         firstname: String,
-        lastname: String,
-        avatar: String
+        lastname: String
     })
 
     userSchema.pre("save", async function (next){

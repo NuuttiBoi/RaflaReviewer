@@ -6,6 +6,8 @@ const Restaurant = require('./models/restaurant')
 const Comment = require('./models/comment');
 const User = require('./models/user')
 const session = require('express-session')
+const {request, response} = require("express");
+const {requireAuth} = require('./models/authentication')
 
 app.use(express.json())
 
@@ -169,6 +171,16 @@ app.get('/login', (request,response) => {
     User.find({}).then(users => {
         response.json(users)
     })
+})
+
+app.get('/profile', requireAuth,async (request, response) => {
+    try {
+        const user = request.session.user
+        const userData = await User.findOne({ _id: user._id }, { password: 0 })
+        response.json(userData)
+    } catch (error) {
+        response.status(500).json({message: error.message})
+    }
 })
 
 app.listen(3001)

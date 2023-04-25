@@ -2,8 +2,9 @@ import { NavLink } from 'react-router-dom'
 import AddNewUser from "./AddNewUser"
 import AddNewLogin from "./AddNewLogin"
 import Hamburger from '../images/Hamburger'
+import UserIcon from "../images/UserIcon"
 
-const Navigation = () => {
+const Navigation = ({ isLoggedIn, setIsLoggedIn }) => {
 
     const openLogin = (event) => {
         event.preventDefault()
@@ -32,8 +33,10 @@ const Navigation = () => {
                     </li>
 
                     <li>
-                        <button onClick={openLogin} className="button center"> Kirjaudu</button>
-                        <AddNewLogin />
+                        <NavLink to="/AddNewLogin" className="loginButton" role="button" onClick={openLogin}>
+                            {isLoggedIn ? <><UserIcon/>Kirjaudu ulos</> : <><UserIcon/>Kirjaudu</>}
+                        </NavLink>
+                        <AddNewLogin setIsLoggedIn={setIsLoggedIn}/>
                         <AddNewUser />
                     </li>
                 </ul>

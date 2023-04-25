@@ -3,11 +3,10 @@ import userService from "../services/users"
 import Icon from '../images/x'
 import AddNewUser from "./AddNewUser"
 
-const AddNewLogin = () => {
+const AddNewLogin = (setIsLoggedIn) => {
     const [newUsername, setNewUsername] = useState("")
     const [newPassword, setNewPassword] = useState("")
     const [userExists, setUserExists] = useState(false)
-    const [loggedIn, setLoggedIn] = useState(false)
 
     function closeForm() {
         console.log("close")
@@ -34,12 +33,12 @@ const AddNewLogin = () => {
                 setNewUsername("")
                 setNewPassword("")
                 setUserExists(false)
-                setLoggedIn(true)
+                setIsLoggedIn(true)
             })
             .catch(error => {
                 console.log(error)
                 if (error.response && error.response.status === 401){
-                    alert("Username already taken.")
+                    alert("Wrong username/password.")
                     setUserExists(true)
                 }
             })
@@ -68,7 +67,6 @@ const AddNewLogin = () => {
         console.log("open form")
         closeForm()
     }
-
 
     return (
         <div id="addNewLogin" className="visuallyhidden popup addNewForm">
@@ -106,6 +104,7 @@ const AddNewLogin = () => {
                 <button type="submit" className="button center">Tallenna</button>
             </form>
         </div>
+
     )
 }
 
