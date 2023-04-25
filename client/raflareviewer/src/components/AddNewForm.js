@@ -5,6 +5,7 @@ import resService from '../services/restaurants'
 import commentService from '../services/comments'
 import Checkbox from './FormCheckbox'
 import Icon from '../images/x'
+import tagList from '../sources/tagList'
 
 const AddNewForm = () => {
     // Kenttien tiedot
@@ -46,16 +47,49 @@ const AddNewForm = () => {
         event.preventDefault()
         console.log('save')
 
+        const tags = [
+            {
+                title: tagList.cafeTitle,
+                value: cafe
+            },
+            {
+                title: tagList.fastFoodTitle,
+                value: fastFood
+            },
+            {
+                title: tagList.lunchTitle,
+                value: lunch
+            },
+            {
+                title: tagList.brunchTitle,
+                value: brunch
+            },
+            {
+                title: tagList.vegetarianTitle,
+                value: vegetarian
+            },
+            {
+                title: tagList.accessibleTitle,
+                value: accessible
+            },
+            {
+                title: tagList.takeAwayTitle,
+                value: takeAway
+            }
+        ]
+
+        // Valitut tagit taulukkoon
+        let tagsApply = []
+        tags.map(tag => {
+            if (tag.value) {
+                tagsApply.push(tag.title)
+            }
+        })
+
         const newRestaurant = {
                 name: newName,
                 address: newAddress,
-                cafe: cafe,
-                fastFood: fastFood,
-                lunch: lunch,
-                brunch: brunch,
-                vegetarian: vegetarian,
-                accessible: accessible,
-                takeAway: takeAway
+                tags: tagsApply
             }
 
             console.log('saving ', newRestaurant)

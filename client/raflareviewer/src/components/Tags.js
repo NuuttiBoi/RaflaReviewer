@@ -1,9 +1,8 @@
 import Tag from './Tag'
+import tagList from '../sources/tagList'
 
-const Tags = ({ }) => {
-    const tagLabels = ['Kahvila', 'Pikaruoka', 'Lounas', 'Brunssi', 'Kasvisvaihtoehtoja', 'Liikuntaesteetön', 'Take away']
-    
-    const tags = tagLabels.map(tag => {
+const Tags = () => {    
+    const tags = Object.values(tagList).map(tag => {
         return <Tag key={tag} label={tag} />
     })
 

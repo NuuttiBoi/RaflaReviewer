@@ -22,7 +22,10 @@ mongoose.connect(url)
     const resSchema = new mongoose.Schema({
         name: String,
         address: String,
-        comment: String
+        foodScore: Number,
+        qualityPriceScore: Number,
+        experienceScore: Number,
+        tags: [String]
     })
 
     resSchema.set('toJSON', {

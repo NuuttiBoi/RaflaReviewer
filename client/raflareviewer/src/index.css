@@ -398,6 +398,7 @@ h2 {
 .formFields {
   display: grid;
   gap: 2rem;
+  padding: .15em;
 }
 
 .addNewForm form div div:not(.formCheckboxContainer) {
@@ -738,12 +739,20 @@ textarea:focus, input:focus {
   font-size: var(--text-extra-small);
 }
 
+/* Etusivun tagit */
 .tagContainer {
   display: flex;
   flex-wrap: wrap;
   gap: .5rem;
   justify-content: center;
   font-size: var(--text-small);
+}
+
+/* Arvostelusivujen tagit (ei klikattavia) */
+.unclickableTags {
+  justify-content: flex-start;
+  width: fit-content;
+  pointer-events: none;
 }
 
 .tag {

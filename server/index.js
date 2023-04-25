@@ -50,7 +50,11 @@ app.post('/restaurants', (request, response) => {
     // Tallennettavan rivin "konstruktori"
     const restaurant = new Restaurant({
         name: body.name,
-        address: body.address
+        address: body.address,
+        foodScore: 4.5,
+        qualityPriceScore: 1.2,
+        experienceScore: 3.4,
+        tags: body.tags
     })
 
     // Tallennus tietokantaan

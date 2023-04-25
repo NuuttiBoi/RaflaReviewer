@@ -7,6 +7,7 @@ import { NavLink } from 'react-router-dom'
 import commentService from '../services/comments'
 import Comments from './Comments'
 import Confirm from './Confirm'
+import RestaurantPageTags from './RestaurantPageTags'
 
 const RestaurantPage = (props) => {
     let location = useLocation();
@@ -71,6 +72,7 @@ const RestaurantPage = (props) => {
                 <h1>{state.restaurant.name}</h1>
             </section>
             <section>
+                <RestaurantPageTags tags={state.restaurant.tags} />
                 <Address address={state.restaurant.address} />
                 <div className="hide-border">
                     <ThumbsUpButtons />
