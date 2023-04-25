@@ -284,8 +284,16 @@ export default function Map() {
 
 
   return (
+  <div>
       <div>
         <div ref={mapContainer} className="map-container" />
       </div>
+      <div className='sidebar'>
+      <div className='heading'>
+        <h1>Ravintolat</h1>
+      </div>
+        <div id='listings' className='listings'></div>
+      </div>
+  </div>
   );
 }
