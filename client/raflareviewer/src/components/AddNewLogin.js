@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState } from "react"
 import userService from "../services/users"
 import Icon from '../images/x'
+import AddNewUser from "./AddNewUser"
 
 const AddNewLogin = () => {
     const [newUsername, setNewUsername] = useState("")
@@ -61,11 +62,19 @@ const AddNewLogin = () => {
         }
     }
 
+    const openUser = (event) => {
+        event.preventDefault()
+        document.getElementById("addNewUser").classList.remove("visuallyhidden")
+        console.log("open form")
+        closeForm()
+    }
+
+
     return (
         <div id="addNewLogin" className="visuallyhidden popup addNewForm">
             <header className="formHeader">
-                <h2>Rekistöröidy</h2>
-                <button onClick={closeForm} className="closeButton">
+                <h2>Kirjaudu Sisään</h2>
+                <button type="button" onClick={closeForm} className="closeButton">
                     <Icon/>
                 </button>
             </header>
@@ -91,6 +100,9 @@ const AddNewLogin = () => {
                         className="formInput"
                     />
                 </div>
+                <button type="button" onClick={openUser} > Luo tili</button>
+
+
                 <button type="submit" className="button center">Tallenna</button>
             </form>
         </div>

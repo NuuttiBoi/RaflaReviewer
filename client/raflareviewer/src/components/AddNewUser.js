@@ -77,8 +77,8 @@ const AddNewUser = () => {
         <div id="addNewUser" className="visuallyhidden popup addNewForm">
             <header className="formHeader">
                 <h2>Rekistöröidy</h2>
-                <button onClick={closeForm} className="closeButton">
-                    <Icon/>
+                <button type="button" onClick={closeForm} className="closeButton">
+                    <Icon />
                 </button>
             </header>
             <form onSubmit={saveForm}>

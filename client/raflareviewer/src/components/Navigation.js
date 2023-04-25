@@ -4,11 +4,6 @@ import AddNewLogin from "./AddNewLogin"
 import Hamburger from '../images/Hamburger'
 
 const Navigation = () => {
-    const openUser = (event) => {
-        event.preventDefault()
-        document.getElementById("addNewUser").classList.remove("visuallyhidden")
-        console.log("open form")
-    }
 
     const openLogin = (event) => {
         event.preventDefault()
@@ -35,13 +30,11 @@ const Navigation = () => {
                     <li>
                         <NavLink to="/Map" className="navlink">Kartta</NavLink>
                     </li>
-                    <li>
-                        <button onClick={openUser} className="button center"> Rekistöröidy</button>
-                        <AddNewUser/>
-                    </li>
+
                     <li>
                         <button onClick={openLogin} className="button center"> Kirjaudu</button>
-                        <AddNewLogin/>
+                        <AddNewLogin />
+                        <AddNewUser />
                     </li>
                 </ul>
             </div>
