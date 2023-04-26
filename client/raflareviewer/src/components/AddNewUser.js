@@ -81,6 +81,7 @@ const AddNewUser = () => {
                     <Icon />
                 </button>
             </header>
+            <div className="userFormCont">
             <form onSubmit={saveForm}>
                 <div>
                     <label htmlFor="username">Käyttäjänimi</label>
@@ -125,6 +126,7 @@ const AddNewUser = () => {
                 </div>
                 <button type="submit" className="button center">Tallenna</button>
             </form>
+            </div>
         </div>
     )
 }

@@ -981,7 +981,7 @@ textarea:focus, input:focus {
     grid-template-columns: repeat(3, 1fr);
   }
 }
-
+/* Kirjauttuminen ja rekistöröityminen*/
 .loginButton {
   display: flex;
   align-items: center;
@@ -992,3 +992,74 @@ textarea:focus, input:focus {
   height: 2rem;
   margin-right: 5px;
 }
+
+.loginFields {
+  justify-content: center;
+  margin: 5px;
+}
+
+.userBtn {
+  background-color: #ccc;
+  line-height: 2;
+  width: 200px;
+  margin-top: 1vh;
+}
+
+.loginFormCont {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+#addNewLogin button {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#addNewLogin #submitBtn {
+  margin-top: 3vh;
+}
+
+#addNewLogin {
+  height: 45vh;
+  width: 100%;
+  padding: 2rem;
+}
+
+.usernameInput input {
+  margin-left: 1vh;
+  margin-bottom: 1vh;
+}
+
+.passwordInput input {
+  margin-left: 4.4vh;
+  margin-top: 1vh;
+}
+
+#addNewUser {
+  height: 45vh;
+}
+
+.userFormCont {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.userFormCont input {
+  margin-left: 5vh;
+
+}
+
+.userFormCont label {
+  float: left;
+  display: block;
+  margin-right: 2vh;
+}
+
+
+

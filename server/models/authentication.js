@@ -1,12 +1,21 @@
+const User = require('../models/user')
+const jwt = require('jsonwebtoken')
 
-const requireAuth = (req, res, next) => {
-    if (req.session && req.session.user) {
-        // If the user is authenticated, proceed with the request
-        return next();
-    } else {
-        // If the user is not authenticated, redirect to the login page
-        return res.redirect('/login');
+const requireAuth = async (req, res, next) => {
+    try {
+        const token = req.headers.authorization.split(' ')[1];
+        const decodedToken = jwt.verify(token, "avain");
+        const user = await User.findOne({ _id: decodedToken.userId });
+
+        if (user) {
+            req.user = user;
+            next();
+        } else {
+            res.status(401).json({ message: 'Not authorized' });
+        }
+    } catch (error) {
+        res.status(401).json({ message: 'Not authorized' });
     }
 }
 
-module.exports = { requireAuth };
+module.exports = { requireAuth }

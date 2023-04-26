@@ -5,20 +5,14 @@ const app = express()
 const Restaurant = require('./models/restaurant')
 const Comment = require('./models/comment');
 const User = require('./models/user')
-const session = require('express-session')
+const jwt = require('jsonwebtoken')
+const jwtSecret = "avain";
 const {request, response} = require("express");
 const {requireAuth} = require('./models/authentication')
 
 
 app.use(express.json())
 
-
-// Tällä katotaan onko käyttäjä kirjautunut sisään
-app.use(session ({
-    secret: "7g1klpLLmAkdad031Sf", //Avain
-    resave: false,
-    saveUninitialized: false
-}))
 
 /* CORS ongelman korjaamiseen */
 app.use(function(req, res, next) {
@@ -130,45 +124,54 @@ app.delete('/comments/:id', (request, response, next) => {
 // Käyttäjän rekisteröinti ja kirjautuminen
 app.post('/users', async (request, response) => {
     try {
-        const { username, firstname, lastname, password } = request.body
-        const existingUser = await User.findOne({username})
-        if (existingUser){
-            return response.status(409).json({message: "Username taken"})
+        const { username, password, firstname, lastname } = request.body;
+        const existingUser = await User.findOne({ username });
+        if (existingUser) {
+            return response.status(409).json({ message: "Username taken" });
         }
 
-        const user = new User({username, firstname, lastname, password})
-        await user.save()
-        request.session.user = user // Käyttäjä sessioon
-        response.status(201).json({message: "User made successfully"})
+        const user = new User({ username, password, firstname, lastname });
+        await user.save();
+        const token = jwt.sign({ userId: user._id }, jwtSecret, { expiresIn: '1h' });
+
+        console.log(token)
+
+        response.status(201).json({ token: token});
     } catch (error) {
-        response.status(500).json({message: error.message})
+        response.status(500).json({ message: error.message });
     }
 })
 
 app.post('/login', async (request, response) => {
     try {
-        const { username, password} = request.body
-        const user = await User.findOne({username})
+        const { username, password } = request.body;
+        const user = await User.findOne({ username });
         if (!user) {
-            return response.status(401).json({message: "Wrong username or password"})
+            return response.status(401).json({ message: "Wrong username or password" });
         }
 
-        const passwordCorrect = await user.comparePassword(password)
+        const passwordCorrect = await user.comparePassword(password);
         if (!passwordCorrect) {
-            return response.status(401).json({message: "Wrong username or password"})
+            return response.status(401).json({ message: "Wrong username or password" });
         }
 
-        request.session.user = user
-        response.status(200).json({message: "Login successful"})
+        const token = jwt.sign({ userId: user._id }, jwtSecret, { expiresIn: '1h' });
+
+        console.log(token)
+
+        response.cookie('token', token, { httpOnly: true }).json({ token: token });
     } catch (error) {
-        response.status(500).json({message: error.message})
+        response.status(500).json({ message: error.message });
     }
 })
 
-app.get('/users', (request,response) => {
-    User.find({}).then(users => {
-        response.json(users)
-    })
+app.get('/users', async (request,response) => {
+    try {
+        const users = await User.find({});
+        response.json(users);
+    } catch (error) {
+        response.status(500).json({ message: error.message });
+    }
 })
 
 app.get('/login', (request,response) => {
@@ -178,14 +181,29 @@ app.get('/login', (request,response) => {
     })
 })
 
-app.get('/profile', requireAuth,async (request, response) => {
+app.get('/profile',requireAuth, async (request, response) => {
     try {
-        const user = request.session.user
-        const userData = await User.findOne({ _id: user._id }, { password: 0 })
-        response.json(userData)
+        const user = request.user;
+        const userData = await User.findOne({ username: user.username }, { password: 0 });
+
+        response.json(userData);
     } catch (error) {
-        response.status(500).json({message: error.message})
+        response.status(500).json({ message: error.message });
     }
+})
+
+app.post('/logout', (request, response) => {
+    localStorage.removeItem('token');
+    response.clearCookie('token');
+    response.json({ message: 'Logged out' });
+})
+
+app.delete('/login/:id', async (request, response) => {
+    User.findByIdAndRemove(request.params.id)
+        .then(result => {
+            response.status(204).end()
+        })
+        .catch(error => next(error))
 })
 
 app.listen(3001)

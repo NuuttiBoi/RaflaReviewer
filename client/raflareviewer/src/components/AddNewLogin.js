@@ -1,9 +1,8 @@
 import { useState } from "react"
 import userService from "../services/users"
 import Icon from '../images/x'
-import AddNewUser from "./AddNewUser"
 
-const AddNewLogin = (setIsLoggedIn) => {
+const AddNewLogin = ({ setIsLoggedIn }) => {
     const [newUsername, setNewUsername] = useState("")
     const [newPassword, setNewPassword] = useState("")
     const [userExists, setUserExists] = useState(false)
@@ -29,7 +28,7 @@ const AddNewLogin = (setIsLoggedIn) => {
         userService
             .login(newUser)
             .then(response => {
-                console.log("success", response.data)
+                console.log("success", response)
                 setNewUsername("")
                 setNewPassword("")
                 setUserExists(false)
@@ -76,8 +75,9 @@ const AddNewLogin = (setIsLoggedIn) => {
                     <Icon/>
                 </button>
             </header>
+            <div className="loginFormCont">
             <form onSubmit={saveForm}>
-                <div>
+                <div className="usernameInput">
                     <label htmlFor="username">Käyttäjänimi</label>
                     <input
                         id="username"
@@ -88,7 +88,7 @@ const AddNewLogin = (setIsLoggedIn) => {
                     />
                     {userExists && <div style={{color: 'red'}}> Username already taken</div>}
                 </div>
-                <div>
+                <div className="passwordInput">
                     <label htmlFor="password">Salasana</label>
                     <input
                         id="password"
@@ -98,11 +98,10 @@ const AddNewLogin = (setIsLoggedIn) => {
                         className="formInput"
                     />
                 </div>
-                <button type="button" onClick={openUser} > Luo tili</button>
-
-
-                <button type="submit" className="button center">Tallenna</button>
+                <button type="button" onClick={openUser} className="userBtn"> Luo tili</button>
+                <button id="submitBtn" type="submit" className="button center">Tallenna</button>
             </form>
+            </div>
         </div>
 
     )

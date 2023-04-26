@@ -5,7 +5,7 @@ import Footer from './components/Footer'
 import RestaurantPage from './components/RestaurantPage'
 import Creators from './components/Creators'
 import Map from './components/Map/Map'
-import { Routes, Route } from 'react-router-dom'
+import {Routes, Route, Navigate} from 'react-router-dom'
 import Profile from "./components/Profile"
 import {useState} from "react"
 import AddNewLogin from "./components/AddNewLogin";
@@ -33,14 +33,14 @@ function App() {
   return (
 
     <div className="main-layout">
-      <Navigation isLoggedIn={isLoggedIn} />
+      <Navigation isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/Sivu2" element={<Sivu2 />} />
         <Route path="/RestaurantPage" element={<RestaurantPage />} />
         <Route path="/Map" element={<Map />} />
         <Route path="/Creators" element={<Creators />} />
-          <Route path="/Profile" element={<Profile />} />
+          <Route path="/profile" element={isLoggedIn ? <Profile /> : <Navigate to="/" />} />
           <Route
               path="/AddNewLogin"
               element={<AddNewLogin setIsLoggedIn={setIsLoggedIn} />}

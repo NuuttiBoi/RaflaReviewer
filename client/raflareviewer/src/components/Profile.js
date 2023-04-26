@@ -6,7 +6,15 @@ const Profile = () => {
     const [user, setUser] = useState(null)
 
     useEffect(() => {
-        users.getProfile().then(data => setUser(data))
+        async function fetchData() {
+            try {
+                const data = await users.getProfile();
+                setUser(data);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        fetchData();
     }, [])
 
     if (!user) {
@@ -15,7 +23,7 @@ const Profile = () => {
 
     return (
         <div>
-            <h1>{users.username}</h1>
+            <h1>{user.username}</h1>
         </div>
     )
 }
