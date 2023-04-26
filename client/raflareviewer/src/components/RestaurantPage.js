@@ -8,6 +8,7 @@ import commentService from '../services/comments'
 import Comments from './Comments'
 import Confirm from './Confirm'
 import RestaurantPageTags from './RestaurantPageTags'
+import Scores from './Scores'
 
 const RestaurantPage = (props) => {
     let location = useLocation();
@@ -15,6 +16,8 @@ const RestaurantPage = (props) => {
 
     const [newComment, setNewComment] = useState('')
     const [comments, setComments] = useState([])
+
+    console.log('scoreinfo? ', state.scoreInfo)
 
     useEffect(() => {
         commentService
@@ -77,6 +80,9 @@ const RestaurantPage = (props) => {
                 <div className="hide-border">
                     <ThumbsUpButtons />
                 </div>
+            </section>
+            <section>
+                <Scores scores={state.scoreInfo} />
             </section>
             <section>
                 <h2>Kartalla</h2>

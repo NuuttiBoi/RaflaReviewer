@@ -6,6 +6,7 @@ import commentService from '../services/comments'
 import Checkbox from './FormCheckbox'
 import Icon from '../images/x'
 import tagList from '../sources/tagList'
+import scores from '../sources/scores'
 
 const AddNewForm = () => {
     // Kenttien tiedot
@@ -225,26 +226,26 @@ const AddNewForm = () => {
         
                     <section>
                         <div className="sliderContainer">
-                            <label>Ruoka</label>
+                            <label>{scores.food.title}</label>
                             <div className="sliderWrapper">
                                 <span className="sliderValue">0</span>
                                 <input type="range" min="0" max="100" value={foodScore} className="slider" onChange={handleFoodScoreChange} />
-                                <span className="sliderValue">5</span>
+                                <span className="sliderValue">{scores.food.max}</span>
                             </div>
                         </div>
                         <div className="sliderContainer">
-                            <label>Hinta-laatu-suhde</label>
+                            <label>{scores.qualityPrice.title}</label>
                             <div className="sliderWrapper">
                                 <span className="sliderValue">0</span>
                                 <input type="range" min="0" max="100" value={qualityPriceScore} className="slider" onChange={handlequalityPriceScoreChange} />
-                                <span className="sliderValue">5</span>
+                                <span className="sliderValue">{scores.qualityPrice.max}</span>
                             </div>                        </div>
                         <div className="sliderContainer">
-                            <label>Kokemus</label>
+                            <label>{scores.experience.title}</label>
                             <div className="sliderWrapper">
                                 <span className="sliderValue">0</span>
                                 <input type="range" min="0" max="100" value={experienceScore} className="slider" onChange={handleExperienceScoreChange} />
-                                <span className="sliderValue">5</span>
+                                <span className="sliderValue">{scores.experience.max}</span>
                             </div>
                         </div>
                     </section>
