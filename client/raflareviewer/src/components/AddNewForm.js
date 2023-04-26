@@ -19,6 +19,9 @@ const AddNewForm = () => {
     const [vegetarian, setVegetarian] = useState(false)
     const [accessible, setAccessible] = useState(false)
     const [takeAway, setTakeAway] = useState(false)
+    const [foodScore, setFoodScore] = useState(50)
+    const [qualityPriceScore, setqualityPriceScore] = useState(50)
+    const [experienceScore, setExperienceScore] = useState(50)
 
     // Tyhjien kenttien tarkistus
     const checkFields = () => {
@@ -89,7 +92,10 @@ const AddNewForm = () => {
         const newRestaurant = {
                 name: newName,
                 address: newAddress,
-                tags: tagsApply
+                tags: tagsApply,
+                foodScore: foodScore,
+                qualityPriceScore: qualityPriceScore,
+                experienceScore: experienceScore
             }
 
             console.log('saving ', newRestaurant)
@@ -152,6 +158,7 @@ const AddNewForm = () => {
         setNewComment(event.target.value)
     }
 
+    // Checkboxit
     const handleCafeChange = (event) => {
         setCafe(!cafe)
     }
@@ -180,6 +187,22 @@ const AddNewForm = () => {
         setTakeAway(!takeAway)
     }
 
+    // Sliderit
+    const handleFoodScoreChange = (event) => {
+        console.log('food ', event.target.value)
+        setFoodScore(event.target.value)
+    }
+
+    const handlequalityPriceScoreChange = (event) => {
+        console.log('quality price ', event.target.value)
+        setqualityPriceScore(event.target.value)
+    }
+
+    const handleExperienceScoreChange = (event) => {
+        console.log('experience ', event.target.value)
+        setExperienceScore(event.target.value)
+    }
+
     return (
         <div id="addNewForm" className="visuallyhidden popup addNewForm">
             <header className="formHeader">
@@ -199,13 +222,13 @@ const AddNewForm = () => {
                         <label><p>Osoite</p></label>
                         <input onChange={handleAddressChange} className="formInput"/>
                     </div>
-                    
+        
                     <section>
                         <div className="sliderContainer">
                             <label>Ruoka</label>
                             <div className="sliderWrapper">
                                 <span className="sliderValue">0</span>
-                                <input type="range" min="1" max="5" value="2.5" className="slider" onChange={() => {}} />
+                                <input type="range" min="0" max="100" value={foodScore} className="slider" onChange={handleFoodScoreChange} />
                                 <span className="sliderValue">5</span>
                             </div>
                         </div>
@@ -213,16 +236,17 @@ const AddNewForm = () => {
                             <label>Hinta-laatu-suhde</label>
                             <div className="sliderWrapper">
                                 <span className="sliderValue">0</span>
-                                <input type="range" min="1" max="5" value="2.5" className="slider" onChange={() => {}} />
+                                <input type="range" min="0" max="100" value={qualityPriceScore} className="slider" onChange={handlequalityPriceScoreChange} />
                                 <span className="sliderValue">5</span>
                             </div>                        </div>
                         <div className="sliderContainer">
                             <label>Kokemus</label>
                             <div className="sliderWrapper">
                                 <span className="sliderValue">0</span>
-                                <input type="range" min="1" max="5" value="2.5" className="slider" onChange={() => {}} />
+                                <input type="range" min="0" max="100" value={experienceScore} className="slider" onChange={handleExperienceScoreChange} />
                                 <span className="sliderValue">5</span>
-                            </div>                        </div>
+                            </div>
+                        </div>
                     </section>
 
                     <section>

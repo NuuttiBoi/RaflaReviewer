@@ -540,38 +540,40 @@ textarea:focus, input:focus {
   min-width: 20%;
 }
 
-.sliderValue {
-  font-size: var(--text-small);
-}
-
-/* The slider itself */
 .slider {
   margin: auto;
   appearance: none;
-  width: 100%; /* Full-width */
+  width: 100%;
   height: .2rem;
-  background: var(--clr-neutral-light); /* Grey background */
-  outline: none; /* Remove outline */
+  background: var(--clr-neutral-light);
+  outline: none;
 }
 
-/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
 .slider::-webkit-slider-thumb {
   appearance: none;
-  background: var(--clr-neutral-light); /* Green background */
-  cursor: pointer; /* Cursor on hover */
+  background: var(--clr-primary);
+  cursor: pointer;
+  height: .75rem;
+  width: .75rem;
+  border-radius: 100vmax;
 }
 
 .slider::-moz-range-thumb {
-  background: var(--clr-neutral-light); /* Green background */
-  cursor: pointer; /* Cursor on hover */
+  background: var(--clr-primary);
+  cursor: pointer;
+  height: .75rem;
+  width: .75rem;
+  border-radius: 100vmax;
   border: 0;
+}
+
+.sliderValue {
+  font-size: var(--text-small);
 }
 
 .slider:focus {
   outline: none;
 }
-
-
 
 .no-results {
   font-size: 1.2rem;
