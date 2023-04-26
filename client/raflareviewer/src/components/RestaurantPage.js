@@ -17,8 +17,6 @@ const RestaurantPage = (props) => {
     const [newComment, setNewComment] = useState('')
     const [comments, setComments] = useState([])
 
-    console.log('scoreinfo? ', state.scoreInfo)
-
     useEffect(() => {
         commentService
           .getByRestaurant(state.restaurant.id)
@@ -31,11 +29,7 @@ const RestaurantPage = (props) => {
           })
     }, [])
 
-
-    console.log('comments: ', comments)
-
     function saveComment() {
-        console.log(state.restaurant)
 
         // Kommentti-olio
         const Comment = {
@@ -84,10 +78,7 @@ const RestaurantPage = (props) => {
             <section>
                 <Scores scores={state.scoreInfo} />
             </section>
-            <section>
-                <h2>Kartalla</h2>
-            </section>
-            <section>
+            <section id="comments">
                 <h2>Arvostelut</h2>
                 <div className="commentForm">
                     <label className="username">käyttäjä</label>

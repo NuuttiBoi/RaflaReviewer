@@ -9,7 +9,7 @@ const Scores = ({ scores }) => {
             formattedValue = parseInt((score.value/20).toFixed(1));
         }
 
-        return <Score label={score.title} score={formattedValue} max={score.max} />
+        return <Score key={score.title} label={score.title} score={formattedValue} max={score.max} />
     })
 
     return (

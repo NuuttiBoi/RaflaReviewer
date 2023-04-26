@@ -38,9 +38,7 @@ const Restaurant = ({ restaurant }) => {
         max: scores.experience.max
       }
     ]
-
-    console.log('info: ', scoreInfo)
-
+    
     return (
       <article className="restaurantArticle">
         <h2>{restaurant.name}</h2>
