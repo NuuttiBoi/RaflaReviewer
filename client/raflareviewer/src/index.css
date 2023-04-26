@@ -1126,7 +1126,6 @@ textarea:focus, input:focus {
   width: 2rem;
   height: 2rem;
   margin-right: 5px;
-<<<<<<< Updated upstream
 }
 
 .loginFields {
@@ -1196,9 +1195,3 @@ textarea:focus, input:focus {
   display: block;
   margin-right: 2vh;
 }
-
-
-
-=======
-}
->>>>>>> Stashed changes
