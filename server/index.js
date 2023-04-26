@@ -9,7 +9,9 @@ const session = require('express-session')
 const {request, response} = require("express");
 const {requireAuth} = require('./models/authentication')
 
+
 app.use(express.json())
+
 
 // Tällä katotaan onko käyttäjä kirjautunut sisään
 app.use(session ({
@@ -28,7 +30,6 @@ app.use(function(req, res, next) {
 app.get('/', (request, response) => {
     response.send('(^ _ ^)/')
 })
-
 
 // Ravintolat
 
@@ -193,3 +194,6 @@ console.log('Server running on port 3001')
 // npm run server reviewer
 
 // node index.js reviewer <- yhdistää vaan db:een
+
+
+

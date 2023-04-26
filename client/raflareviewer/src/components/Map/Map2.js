@@ -2,16 +2,9 @@ import React, { useRef, useEffect, useState } from 'react';
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 import 'mapbox-gl/dist/mapbox-gl.css';
 import './mapStyle.css';
-import Restaurant from '../Restaurant';
-import axios from 'axios'
-import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
-import Geocoder from './Geocoder';
-
+import Restaurant from './../Restaurant.js'
 
 mapboxgl.accessToken = 'pk.eyJ1IjoibnV1dHRpYm9pIiwiYSI6ImNsMmFldDVkcjAyNTQzbm1sN3Z5aHhjcDgifQ.p7gsmnhjnFhVU5yezIdGgA';
-
-
-
 
 
 export default function Map() {
@@ -65,6 +58,8 @@ export default function Map() {
       makeSearch(proxyApiQuery);
     }
 
+
+
     // Tekee haun API:sta
     function makeSearch(apiQuery)  {
 
@@ -84,7 +79,6 @@ export default function Map() {
       let jsonData = JSON.parse(proxynData.contents);
       console.log(jsonData.data);
       console.log(jsonData.data[0].description.intro);
-
 
       // Luodaan muuttuja ravintoloille
       const restaurants = {
@@ -214,8 +208,6 @@ export default function Map() {
           listing.id = `listing-${restaurant.properties.id}`;
           listing.className = 'item';
 
-          // Hakee yksittäisen ravintolan
-
 
           const link = listing.appendChild(document.createElement('a'));
           link.href = '#';
@@ -277,10 +269,6 @@ export default function Map() {
       // Add navigation control (the +/- zoom buttons)
       map.current.addControl(new mapboxgl.NavigationControl(), "top-right");
 
-      map.current.addControl(new MapboxGeocoder({
-        accessToken: mapboxgl.accessToken,
-        mapboxgl: mapboxgl
-      }));
 
     }
   });
