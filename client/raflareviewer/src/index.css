@@ -6,15 +6,6 @@
 /* Värien määrittely */
 
 :root {
-  /* Teemabuttoneissa näkyvät värit  */
-  --clr-light-primary:hsl(115, 18%, 44%);
-  --clr-light-secondary:#f3f3f3;
-  --clr-dark-primary: #1f1f1f;
-  --clr-dark-secondary: #4b4298;
-  --clr-secret-primary: green;
-  --clr-secret-secondary: blue;
-
-
   --clr-light: #f3f3f3;
   --clr-dark: #363636;
   --clr-primary: hsl(115, 18%, 44%);
@@ -34,13 +25,10 @@
   --clr-title: var(--clr-primary);
   --clr-heading: var(--clr-primary);
   --clr-icon: var(--clr-neutral);
-  --clr-footer-bg: var(--clr-dark);
   --clr-footertext: var(--clr-light);
   --clr-input-focus: var(--clr-primary);
   --clr-checked: hsl(116, 36%, 84%);
   --clr-link-hover: var(--clr-secondary);
-  --clr-bg: var(--clr-light);
-  --clr-tags: var(--clr-neutral-light);
 
   /* Punainen ja vihreä väri virheilmoituksiin yms. yksityiskohtiin */
   --clr-green: rgb(24, 137, 16);
@@ -51,69 +39,6 @@
   --icon-width: 2rem;
   --text-small: .9rem;
   --text-extra-small: .8rem;
-}
-
-/* Värit tummassa teemassa */
-.darkTheme {
-  --clr-light: #dddddd;
-  --clr-dark: #1f1f1f;
-  --clr-primary: #473bb0;
-  --clr-primary-light: #2b2847;
-  --clr-secondary: var(--clr-light);
-  --clr-neutral: var(--clr-light); /* Buttonien, input-kenttien yms. reunat */
-  --clr-neutral-light: rgb(233, 233, 233);
-
-  --clr-h1: var(--clr-dark);
-  --clr-text: var(--clr-light);
-  --clr-headerlink: var(--clr-light);
-  --clr-header-bg: var(--clr-dark);
-  --clr-button-bg: var(--clr-primary);
-  --clr-button-effect: var(--clr-primary-light);
-  --clr-button-text: var(--clr-light);
-  --clr-thumb-icon: var(--clr-icon);
-  --clr-title: var(--clr-light);
-  --clr-heading: var(--clr-light);
-  --clr-icon: var(--clr-light);
-  --clr-footer-bg: var(--clr-dark);
-  --clr-footertext: var(--clr-light);
-  --clr-input-focus: var(--clr-light);
-  --clr-checked: hsl(116, 36%, 84%);
-  --clr-link-hover: var(--clr-secondary);
-  --clr-bg: var(--clr-dark);
-  --clr-tags: var(--clr-primary-light);
-}
-
-.darkTheme .button {
-  box-shadow: none;
-}
-
-.darkTheme .restaurantArticle {
-  background: linear-gradient(var(--clr-primary-light), var(--clr-dark));
-  box-shadow: none;
-}
-
-.darkTheme .thumbsUpButtons button {
-  border: 0;
-}
-
-.darkTheme .searchBar input {
-  background-image: url('./images/magnifying-glass-dark.svg');
-}
-
-.darkTheme .tag {
-  border: 1px solid var(--clr-light);
-  background-color: transparent;
-}
-
-.darkTheme .checked {
-  background-color: var(--clr-light);
-  color: var(--clr-dark);
-}
-
-/* Värit kolmannessa teemassa */
-.secretTheme {
-  --clr-dark: blue;
-  --clr-light: lightblue;
 }
 
 *, *::before, *::after {
@@ -127,7 +52,7 @@ body {
   font-family: 'Roboto', sans-serif;
   color: var(--clr-text);
   line-height: 1.7;
-  background-color: var(--clr-bg);
+  background-color: var(--clr-light);
 }
 
 h1, h2, h3 {
@@ -149,7 +74,7 @@ h2, h3 {
   min-height: 100vh;
   font-family: 'Montserrat', sans-serif;
   font-size: 16px;
-  color: var(--clr-text);
+  color: var(--clr-dark);
 }
 
 /* Nav */
@@ -381,7 +306,6 @@ code {
   display: flex;
   gap: .25em;
   color: var(--clr-neutral);
-  min-height: 3rem;
 }
 
 .article-img {
@@ -471,11 +395,6 @@ h2 {
   gap: 1rem;
 }
 
-section:not(#comments) {
-  display: grid;
-  gap: 1rem;
-}
-
 .formFields section {
   display: grid;
   gap: .75rem;
@@ -548,9 +467,8 @@ form label:not(.formCheckboxContainer label) {
 }
 
 input, textarea {
-  background-color: var(--clr-bg);
+  background-color: var(--clr-light);
   accent-color: var(--clr-primary);
-  color: var(--clr-text);
 }
 
 input[type="checkbox"]:focus, input[type="checkbox"].selected {
@@ -853,8 +771,7 @@ textarea:focus, input:focus {
 }
 
 .tag {
-  background-color: var(--clr-tags);
-  color: var(--clr-text);
+  background-color: var(--clr-neutral-light);
   position: relative;
   display: inline-block;
   cursor: pointer;
@@ -933,59 +850,6 @@ textarea:focus, input:focus {
   background-color: transparent;
   padding: .5rem 0;
   font-size: inherit;
-}
-
-/* Väriteema-buttonit */
-.themeButtons {
-  display: flex;
-  gap: .5rem;
-  min-height: 1.5rem;
-}
-.themeButton {
-  display: block;
-  position: relative;
-  padding-left: 2rem;
-  cursor: pointer;
-  font-size: 22px;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-.themeButton input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
-}
-
-/* Create a custom checkbox */
-.checkmark {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 25px;
-  width: 25px;
-  border-radius: 100vmax;
-  border: 1px solid #fff;
-}
-
-.themeButton input:checked ~ .checkmark {
-  box-shadow: 0 0 0 .15rem #fff;
-}
-
-.checkmark.light {
-  background: linear-gradient(325deg, var(--clr-light-primary), var(--clr-light-secondary));
-}
-
-.checkmark.dark {
-  background: linear-gradient(325deg, var(--clr-dark-primary), var(--clr-dark-secondary));
-}
-
-.checkmark.secret {
-  background: linear-gradient(325deg, var(--clr-secret-primary), var(--clr-secret-secondary));
 }
 
 /* Piilottaa elementin näkyvistä */
@@ -1088,6 +952,7 @@ textarea:focus, input:focus {
   .commentItem:nth-child(even) .comment__buttons {
     bottom: 1rem;
     right: 11.3rem;
+    color: red;
   }
 
   .commentItem .comment__content {
@@ -1195,3 +1060,56 @@ textarea:focus, input:focus {
   display: block;
   margin-right: 2vh;
 }
+
+/* Profiili */
+.profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.avatar-container {
+  margin-right: 2rem;
+}
+
+.userDefaultAvatar {
+  width: 10rem;
+  height: 10rem;
+  object-fit: cover;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.logoutIcon {
+  width: 2rem;
+}
+
+.logoutBtn {
+  display: flex;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0);
+  padding: 5px;
+}
+
+.logoutBtn span {
+  margin-left: 5px;
+
+}
+
+.logoutBtn:hover{
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+
+

@@ -9,7 +9,6 @@ import {Routes, Route, Navigate} from 'react-router-dom'
 import Profile from "./components/Profile"
 import {useState} from "react"
 import AddNewLogin from "./components/AddNewLogin";
-import React, { useRef, useEffect} from 'react';
 
 
 /*
@@ -40,7 +39,7 @@ function App() {
         <Route path="/RestaurantPage" element={<RestaurantPage />} />
         <Route path="/Map" element={<Map />} />
         <Route path="/Creators" element={<Creators />} />
-          <Route path="/profile" element={isLoggedIn ? <Profile /> : <Navigate to="/" />} />
+          <Route path="/profile" element={isLoggedIn ? <Profile setIsLoggedIn={setIsLoggedIn} /> : <Navigate to="/" />} />
           <Route
               path="/AddNewLogin"
               element={<AddNewLogin setIsLoggedIn={setIsLoggedIn} />}
