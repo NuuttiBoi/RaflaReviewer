@@ -81,7 +81,7 @@ const RestaurantPage = (props) => {
             <section id="comments">
                 <h2>Arvostelut</h2>
                 <div className="commentForm">
-                    <label className="username">käyttäjä</label>
+                    <label className="username">Anonyymi</label>
                     <textarea id="commentField" onChange={handleCommentChange} className="formInput" rows="5"/>
                     <button className="button submitButton unclickable" onClick={saveComment}>Lähetä</button>
                 </div>
