@@ -7,7 +7,7 @@ const tagList = {
     brunchTitle: "Brunssi",
     vegetarianTitle: "Kasvisvaihtoehtoja",
     accessibleTitle: "Liikuntaesteetön",
-    takeAwayTitle: "Take away",
+    takeAwayTitle: "Takeaway",
 }
 
 export default tagList

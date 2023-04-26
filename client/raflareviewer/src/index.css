@@ -750,7 +750,6 @@ textarea:focus, input:focus {
 
 /* Arvostelusivujen tagit (ei klikattavia) */
 .unclickableTags {
-  justify-content: flex-start;
   width: fit-content;
   pointer-events: none;
 }

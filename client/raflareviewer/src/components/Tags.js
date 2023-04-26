@@ -1,14 +1,19 @@
 import Tag from './Tag'
-import tagList from '../sources/tagList'
 
-const Tags = () => {    
-    const tags = Object.values(tagList).map(tag => {
-        return <Tag key={tag} label={tag} />
-    })
+const Tags = ({ cafeLabel, onCafeChange, fastFoodLabel, onFastFoodChange,
+    lunchLabel, onLunchChange, brunchLabel, onBrunchChange,
+    vegetarianLabel, onVegetarianChange, accessibleLabel, onAccessibleChange,
+    takeAwayLabel, onTakeAwayChange }) => {    
 
     return (
         <div id="tagContainer" className="tagContainer visuallyhidden">
-          {tags}
+          <Tag label={cafeLabel} onChange={onCafeChange} />
+          <Tag label={fastFoodLabel} onChange={onFastFoodChange} />
+          <Tag label={lunchLabel} onChange={onLunchChange} />
+          <Tag label={brunchLabel} onChange={onBrunchChange} />
+          <Tag label={vegetarianLabel} onChange={onVegetarianChange} />
+          <Tag label={accessibleLabel} onChange={onAccessibleChange} />
+          <Tag label={takeAwayLabel} onChange={onTakeAwayChange} />
         </div>
     )
 }
