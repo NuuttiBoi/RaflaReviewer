@@ -51,9 +51,9 @@ app.post('/restaurants', (request, response) => {
     const restaurant = new Restaurant({
         name: body.name,
         address: body.address,
-        foodScore: 4.5,
-        qualityPriceScore: 1.2,
-        experienceScore: 3.4,
+        foodScore: body.foodScore,
+        qualityPriceScore: body.qualityPriceScore,
+        experienceScore: body.experienceScore,
         tags: body.tags
     })
 
