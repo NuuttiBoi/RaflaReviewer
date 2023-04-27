@@ -6,11 +6,27 @@ import UserIcon from "../images/UserIcon"
 // import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap' sori tää import crashas koko apin :'D
 import {useState} from "react";
 import {useEffect} from "react"
-import users from "../services/users"
 import userData from './UserData'
+import React from 'react';
 
 const Navigation = ({ isLoggedIn, setIsLoggedIn }) => {
     const user = userData() || {}
+
+    const [darkMode, setDarkMode] = useState(true);
+
+    const [theme, setTheme] = useState('light');
+    const toggleTheme = () => {
+        if (theme === 'light') {
+            setTheme('dark');
+        } else {
+            setTheme('light');
+        }
+    };
+    useEffect(() => {
+        document.body.className = theme;
+    }, [theme]);
+
+
 
     const openLogin = (event) => {
         event.preventDefault()
@@ -49,6 +65,12 @@ const Navigation = ({ isLoggedIn, setIsLoggedIn }) => {
                         )}
                         <AddNewLogin setIsLoggedIn={setIsLoggedIn}/>
                         <AddNewUser />
+                    </li>
+                    <li>
+                        <div className={`App ${theme}`}>
+                            <button id="darkmodeBtn" onClick={toggleTheme}>
+                                Darkmode</button>
+                        </div>
                     </li>
                 </ul>
             </div>

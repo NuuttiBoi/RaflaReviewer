@@ -7,8 +7,10 @@ import Creators from './components/Creators'
 import Map from './components/Map/Map'
 import {Routes, Route, Navigate} from 'react-router-dom'
 import Profile from "./components/Profile"
-import {useState} from "react"
+import {useState, useEffect} from "react"
 import AddNewLogin from "./components/AddNewLogin";
+import './components/Darkmode/darkmode.css'
+import DarkMode from './components/Darkmode/DarkMode'
 
 
 /*
@@ -29,10 +31,11 @@ http://localhost:3001/restaurants <- palvelin
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
-  return (
+    const [darkMode, setDarkMode] = useState(true);
 
+  return (
     <div className="main-layout">
-      <Navigation isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
+      <Navigation isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}  darkMode={darkMode} setDarkMode={setDarkMode}/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/Sivu2" element={<Sivu2 />} />
@@ -51,3 +54,5 @@ function App() {
 }
 
 export default App;
+
+//
