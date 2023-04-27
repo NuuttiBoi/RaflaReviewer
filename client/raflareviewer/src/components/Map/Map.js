@@ -12,8 +12,6 @@ mapboxgl.accessToken = 'pk.eyJ1IjoibnV1dHRpYm9pIiwiYSI6ImNsMmFldDVkcjAyNTQzbm1sN
 
 
 
-
-
 export default function Map() {
   // Tuo kartan
   const mapContainer = useRef(null);

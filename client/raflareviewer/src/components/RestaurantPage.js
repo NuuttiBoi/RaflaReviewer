@@ -9,6 +9,7 @@ import Comments from './Comments'
 import Confirm from './Confirm'
 import RestaurantPageTags from './RestaurantPageTags'
 import Scores from './Scores'
+import MapBoxMap from './Map/MapBoxMap';
 
 const RestaurantPage = (props) => {
     let location = useLocation();
@@ -86,6 +87,13 @@ const RestaurantPage = (props) => {
                     <button className="button submitButton unclickable" onClick={saveComment}>Lähetä</button>
                 </div>
                 <Comments comments={comments} />
+            </section>
+            <section>
+              <h2>Kartalla</h2>
+              <div>
+                <MapBoxMap></MapBoxMap>
+                <Address address={state.restaurant.address} />
+              </div>
             </section>
             <Confirm />
         </div>
