@@ -4,22 +4,11 @@ import { useState, useEffect } from "react"
 import UserDefaultAvatar from "../images/UserDefaultAvatar"
 import userService from "../services/users";
 import Logout from "../images/Logout";
+import userData from './UserData'
 
 
 const Profile = ({setIsLoggedIn}) => {
-    const [user, setUser] = useState(null)
-
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const data = await users.getProfile()
-                setUser(data)
-            } catch (error) {
-                console.error(error)
-            }
-        }
-        fetchData()
-    }, [])
+    const user = userData()
 
     if (!user) {
         return (

@@ -33,19 +33,16 @@ const AddNewLogin = ({ setIsLoggedIn }) => {
                 setNewPassword("")
                 setUserExists(false)
                 setIsLoggedIn(true)
+                closeForm()
             })
             .catch(error => {
                 console.log(error)
                 if (error.response && error.response.status === 401){
-                    alert("Wrong username/password.")
                     setUserExists(true)
                 }
             })
 
         console.log("saving login")
-
-        closeForm()
-
     }
 
     const handleChange = (event) => {
@@ -77,6 +74,7 @@ const AddNewLogin = ({ setIsLoggedIn }) => {
             </header>
             <div className="loginFormCont">
             <form onSubmit={saveForm}>
+                {userExists && <div style={{color: 'red'}}> Väärä käyttäjänimi/salasana</div>}
                 <div className="usernameInput">
                     <label htmlFor="username">Käyttäjänimi</label>
                     <input
@@ -86,7 +84,6 @@ const AddNewLogin = ({ setIsLoggedIn }) => {
                         onChange={handleChange}
                         className="formInput"
                     />
-                    {userExists && <div style={{color: 'red'}}> Username already taken</div>}
                 </div>
                 <div className="passwordInput">
                     <label htmlFor="password">Salasana</label>

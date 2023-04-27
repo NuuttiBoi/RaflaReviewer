@@ -7,10 +7,10 @@ import UserIcon from "../images/UserIcon"
 import {useState} from "react";
 import {useEffect} from "react"
 import users from "../services/users"
-
+import userData from './UserData'
 
 const Navigation = ({ isLoggedIn, setIsLoggedIn }) => {
-    const [user, setUser] = useState(null)
+    const user = userData() || {}
 
     const openLogin = (event) => {
         event.preventDefault()
@@ -22,18 +22,6 @@ const Navigation = ({ isLoggedIn, setIsLoggedIn }) => {
         event.preventDefault()
         document.getElementById('main-nav-links').classList.toggle('hideMenu')
     }
-
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const data = await users.getProfile();
-                setUser(data);
-            } catch (error) {
-                console.error(error);
-            }
-        }
-        fetchData();
-    }, [])
 
     return (
         <nav className="main-nav">

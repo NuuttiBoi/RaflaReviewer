@@ -41,18 +41,17 @@ const AddNewUser = () => {
                 setNewFirstname("")
                 setNewLastname("")
                 setUserExists(false)
+                closeForm()
+
             })
             .catch(error => {
                 console.log(error)
                 if (error.response && error.response.status === 409){
-                    alert("Username already taken.")
                     setUserExists(true)
                 }
             })
 
         console.log("saving user")
-
-        closeForm()
     }
 
     const handleChange = (event) => {
@@ -82,6 +81,7 @@ const AddNewUser = () => {
                 </button>
             </header>
             <div className="userFormCont">
+                {userExists && <div style={{color: 'red'}}> Username already taken</div>}
             <form onSubmit={saveForm}>
                 <div>
                     <label htmlFor="username">Käyttäjänimi</label>
@@ -92,7 +92,6 @@ const AddNewUser = () => {
                         onChange={handleChange}
                         className="formInput"
                     />
-                    {userExists && <div style={{color: 'red'}}> Username already taken</div>}
                 </div>
                 <div>
                     <label htmlFor="firstname">Etunimi</label>
