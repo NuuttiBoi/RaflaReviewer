@@ -23,7 +23,6 @@ const MapboxMap = () => {
   const [lat, setLat] = useState(42.35);
   const [zoom, setZoom] = useState(9);
 
-  let addresses = [];
 
   /*
   const resList = restaurants.map(restaurant => {
@@ -63,7 +62,7 @@ const MapboxMap = () => {
           showUserHeading: true
         })
     );
-    // Add navigation control (the +/- zoom buttons)
+    // Lisää navigaatiokontrollia
     map.current.addControl(new mapboxgl.NavigationControl(),"top-left");
 
     const geocoder = new MapboxGeocoder({
@@ -72,7 +71,8 @@ const MapboxMap = () => {
     });
     map.current.addControl(geocoder);
 
-    geocoder.setInput(state.restaurant.address);
+    // Hakee kyseisen ravintolan sijainnin
+    geocoder.query(state.restaurant.address);
   });
 
   useEffect(() => {
