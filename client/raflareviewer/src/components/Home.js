@@ -155,6 +155,11 @@ function Home() {
       filterWords = showFilters.concat(searchWord)
     }
 
+    const updatePage = (newRestaurant) => {
+      console.log(newRestaurant)
+      setRestaurants(restaurants.concat(newRestaurant))
+    }
+
     return (
       <div className="container">
           <button onClick={openForm} className="button center">Lisää arvostelu</button>
@@ -170,7 +175,7 @@ function Home() {
           />
           <ResultsAmount number={restaurantsToShow.length} filterWords={filterWords} />
           <RestaurantList restaurants={restaurantsToShow}/>
-          <AddNewForm />
+          <AddNewForm update={updatePage} />
       </div>
   );
 }

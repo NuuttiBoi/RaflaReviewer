@@ -8,7 +8,7 @@
 :root {
   /* Teemabuttoneissa näkyvät värit  */
   --clr-light-primary:hsl(115, 18%, 44%);
-  --clr-light-secondary:#f3f3f3;
+  --clr-light-secondary:rgb(164, 164, 14);
   --clr-dark-primary: #1f1f1f;
   --clr-dark-secondary: #4b4298;
   --clr-secret-primary: hsl(244, 24%, 40%);
@@ -16,9 +16,9 @@
 
   --clr-light: #f3f3f3;
   --clr-dark: #363636;
-  --clr-primary: hsl(115, 18%, 44%);
+  --clr-primary: var(--clr-light-primary);
   --clr-primary-light: hsl(116, 28%, 79%);
-  --clr-secondary: rgb(164, 164, 14);
+  --clr-secondary: var(--clr-light-secondary);
   --clr-neutral: rgb(110, 110, 110); /* Buttonien, input-kenttien yms. reunat */
   --clr-neutral-light: rgb(233, 233, 233);
 
@@ -611,6 +611,7 @@ form label:not(.formCheckboxContainer label) {
 input, textarea {
   background-color: var(--clr-bg);
   accent-color: var(--clr-primary);
+  color: var(--clr-text);
 }
 
 input[type="checkbox"]:focus, input[type="checkbox"].selected {

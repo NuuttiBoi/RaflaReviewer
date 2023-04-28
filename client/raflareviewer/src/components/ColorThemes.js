@@ -1,18 +1,30 @@
 import { useState, useEffect } from 'react'
 
 const ColorThemes = () => {
-    const [lightTheme, setLightTheme] = useState(true)
+    const [lightTheme, setLightTheme] = useState(false)
     const [darkTheme, setDarkTheme] = useState(false)
     const [secretTheme, setSecretTheme] = useState(false)
 
-    const handleLightThemeChange = () => {
+    useEffect(() => {
+        const preference = localStorage.getItem('theme');
+
+        if (preference === 'light' || preference === null) {
+            changeLightTheme()
+        } else if (preference === 'dark') {
+            changeDarkTheme()
+        } else {
+            changeSecretTheme()
+        }
+    }, []);
+
+    const changeLightTheme = () => {
         setLightTheme(true)
         setDarkTheme(false)
         setSecretTheme(false)
         document.querySelector('body').classList.remove('darkTheme', 'secretTheme')
     }
 
-    const handleDarkThemeChange = () => {
+    const changeDarkTheme = () => {
         setDarkTheme(true)
         setLightTheme(false)
         setSecretTheme(false)
@@ -20,12 +32,27 @@ const ColorThemes = () => {
         document.querySelector('body').classList.remove('secretTheme')
     }
 
-    const handleSecretThemeChange = () => {
+    const changeSecretTheme = () => {
         setSecretTheme(true)
         setDarkTheme(false)
         setLightTheme(false)
         document.querySelector('body').classList.add('secretTheme')
         document.querySelector('body').classList.remove('darkTheme')
+    }
+
+    const handleLightThemeChange = () => {
+        changeLightTheme()
+        localStorage.setItem('theme', 'light')
+    }
+
+    const handleDarkThemeChange = () => {
+        changeDarkTheme()
+        localStorage.setItem('theme', 'dark')
+    }
+
+    const handleSecretThemeChange = () => {
+        changeSecretTheme()
+        localStorage.setItem('theme', 'secret')
     }
 
     return (

@@ -8,7 +8,7 @@ import Icon from '../images/x'
 import tagList from '../sources/tagList'
 import scores from '../sources/scores'
 
-const AddNewForm = () => {
+const AddNewForm = ({ update }) => {
     // Kenttien tiedot
     const [newName, setNewName] = useState('')
     const [newAddress, setNewAddress] = useState('')
@@ -132,6 +132,7 @@ const AddNewForm = () => {
             })
             console.log('saving ', newRestaurant)
             closeForm()
+            update(newRestaurant)
     }
 
     // Kenttien tilojen päivitys

@@ -8,10 +8,10 @@ const getAll = () => {
     return request.then(response => response.data)
 }
 
-const create = newObject => {
-    const request = axios.post(baseUrl, newObject)
+const create = async (newObject) => {
+    const response = await axios.post(baseUrl, newObject)
     console.log('axios success')
-    return request.then(response => response.data)
+    return await response.data
 }
 
 /*
