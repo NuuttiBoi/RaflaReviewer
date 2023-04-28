@@ -1,6 +1,6 @@
 import Icon from '../images/x'
 
-const Confirm = ({ id, onClick }) => {
+const Confirm = ({ id, onClick, update }) => {
 
     function closePopup() {
         document.getElementById(id).classList.add('visuallyhidden')

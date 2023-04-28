@@ -3,7 +3,7 @@ import Flag from '../images/Flag'
 import Confirm from './Confirm'
 import commentService from '../services/comments'
 
-const Comment = ({ userId, id, content, date }) => {  
+const Comment = ({ userId, id, content, date, update }) => {  
 
     // Avaa popupin, jossa kysytään haluaako varmasti poistaa kommentin
     const confirmDelete = () => {
@@ -20,6 +20,9 @@ const Comment = ({ userId, id, content, date }) => {
               .deleteComment(id)
               .then(response => {
                   console.log('deleted comment ', response)
+                  
+                  // Kutsuu RestaurantPage-komponentista funktiota ja välittää poistetun id:n
+                  update(id)
               })
               .catch(error => {
                 console.log(error)

@@ -15,7 +15,7 @@ const ResultsAmount = ({ number, filterWords }) => {
     }
 
     return (
-        <p>{number} {tulos} hakusanoilla {filterWordsText}</p>
+        <p>{number} {tulos} haulla {filterWordsText}</p>
     )
 }
 

@@ -7,8 +7,8 @@
 
 :root {
   /* Teemabuttoneissa näkyvät värit  */
-  --clr-light-primary:hsl(115, 18%, 44%);
-  --clr-light-secondary:rgb(164, 164, 14);
+  --clr-light-primary:hsl(114, 20%, 32%);
+  --clr-light-secondary:rgb(169, 155, 123);
   --clr-dark-primary: #1f1f1f;
   --clr-dark-secondary: #4b4298;
   --clr-secret-primary: hsl(244, 24%, 40%);
@@ -17,7 +17,7 @@
   --clr-light: #f3f3f3;
   --clr-dark: #363636;
   --clr-primary: var(--clr-light-primary);
-  --clr-primary-light: hsl(116, 28%, 79%);
+  --clr-primary-light: hsl(116, 14%, 57%);
   --clr-secondary: var(--clr-light-secondary);
   --clr-neutral: rgb(110, 110, 110); /* Buttonien, input-kenttien yms. reunat */
   --clr-neutral-light: rgb(233, 233, 233);
@@ -37,6 +37,7 @@
   --clr-input-focus: var(--clr-primary);
   --clr-checked: hsl(116, 36%, 84%);
   --clr-link-hover: var(--clr-secondary);
+  --clr-score: var(--clr-secondary);
 
   --clr-bg: var(--clr-light);
   --clr-tags: var(--clr-neutral-light);
@@ -81,6 +82,7 @@
   --clr-link-hover: var(--clr-secondary);
   --clr-bg: var(--clr-dark);
   --clr-tags: var(--clr-primary-light);
+  --clr-score: var(--clr-light);
 }
 
 .darkTheme .button {
@@ -166,6 +168,7 @@
   --clr-bg: var(--clr-light);
   --clr-tags: var(--clr-light);
   --clr-comment-bg: var(--clr-neutral-light);
+  --clr-score: var(--clr-primary);
 }
 
 .secretTheme .tag {
@@ -444,6 +447,7 @@ code {
   display: flex;
   gap: .25em;
   color: var(--clr-neutral);
+  min-height: 3rem;
 }
 
 .article-img {
@@ -957,19 +961,25 @@ textarea:focus, input:focus {
 /* Arvosanaboksit */
 .scoresContainer {
   display: grid;
+  background-color: var(--clr-primary-light);
   gap: .75rem;
   width: min(38em, 100%);
   margin: 0 auto;
   font-weight: 500;
+  padding: .5rem;
+  border-radius: var(--border-small);
+  --clr-score: var(--clr-primary);
 }
 
 .scoreBox {
-  background-color: var(--clr-primary-light);
   border-radius: var(--border-radius);
-  padding: 1.25rem;
   display: flex;
   justify-content: space-between;
   font-size: 1.15rem;
+  color: var(--clr-text);
+  /* background-color: var(--clr-primary-light);
+  border-radius: var(--border-radius);
+  padding: 1.25rem; */
 }
 
 .scoreBox > * {
@@ -977,22 +987,24 @@ textarea:focus, input:focus {
 }
 
 .scoreNumber {
-  color: var(--clr-secondary);
+  color: var(--clr-score);
   font-weight: 600;
   font-style: italic;
-  font-size: 1.9rem;
+  font-size: 1.7rem;
   padding-right: .5rem;
 }
 
 /* Arviot articlessa etusivulla */
 .restaurantArticle .scoresContainer {
-  gap: 0;
+  background-color: transparent;
+  padding: .5rem;
+  font-size: inherit;
+  --clr-score: var(--clr-secondary);
 }
 
-.restaurantArticle .scoreBox {
-  background-color: transparent;
-  padding: .5rem 0;
-  font-size: inherit;
+.darkTheme .scoresContainer {
+  background-color: rgb(0 0 0 / .3);
+  --clr-score: var(--clr-light);
 }
 
 .themeButtons {

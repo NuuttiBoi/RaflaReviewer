@@ -44,7 +44,8 @@ const RestaurantPage = (props) => {
         commentService.create(Comment)
             .then(response => {
                 console.log('comment saved ', response)
-                document.getElementById('commentField').value = ''
+                document.getElementById('commentField').value = '' // Kentän tyhjennys
+                setComments(comments.concat(response)) // Päivitys sivulle
             })
             .catch(error => {
                 console.log('comment error ', error)
@@ -61,6 +62,12 @@ const RestaurantPage = (props) => {
         } else {
             document.querySelector('.submitButton').classList.remove('unclickable')
         }
+    }
+
+    const updatePage = (deletedComment) => {
+        console.log('update page w/o: ', deletedComment)
+        //setRestaurants(restaurants.concat(newRestaurant))
+        setComments(comments.filter(comment => comment.id !== deletedComment))
     }
 
     return (
@@ -86,7 +93,7 @@ const RestaurantPage = (props) => {
                     <textarea id="commentField" onChange={handleCommentChange} className="formInput" rows="5"/>
                     <button className="button submitButton unclickable" onClick={saveComment}>Lähetä</button>
                 </div>
-                <Comments comments={comments} />
+                <Comments comments={comments} update={updatePage} />
             </section>
             <section>
               <h2>Kartalla</h2>

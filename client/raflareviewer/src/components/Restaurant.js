@@ -45,8 +45,10 @@ const Restaurant = ({ restaurant }) => {
         <div className="article-img">
           <img src="https://placekitten.com/800/800" />
         </div>
-        <Address address={restaurant.address} />
-        <Scores scores={scoreInfo} />
+        <div>
+          <Address address={restaurant.address} />
+          <Scores scores={scoreInfo} />
+        </div>
         <NavLink
           to={{ pathname: './RestaurantPage' }}
           state={{ restaurant: restaurant,
