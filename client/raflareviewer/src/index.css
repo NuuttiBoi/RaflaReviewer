@@ -189,7 +189,7 @@ body {
   font-family: 'Roboto', sans-serif;
   color: var(--clr-text);
   line-height: 1.7;
-  background-color: var(--clr-light);
+  background-color: var(--clr-bg);
 }
 
 h1, h2, h3 {
@@ -211,7 +211,8 @@ h2, h3 {
   min-height: 100vh;
   font-family: 'Montserrat', sans-serif;
   font-size: 16px;
-  color: var(--clr-dark);
+  color: var(--clr-text);
+  background-color: var(--clr-bg);
 }
 
 /* Nav */
@@ -608,7 +609,7 @@ form label:not(.formCheckboxContainer label) {
 }
 
 input, textarea {
-  background-color: var(--clr-light);
+  background-color: var(--clr-bg);
   accent-color: var(--clr-primary);
 }
 
@@ -991,6 +992,63 @@ textarea:focus, input:focus {
   background-color: transparent;
   padding: .5rem 0;
   font-size: inherit;
+}
+
+.themeButtons {
+  display: flex;
+  justify-content: space-between;
+  gap: .5rem;
+  min-height: 1.5rem;
+}
+
+ /* Customize the label (the container) */
+ .themeButton {
+  display: block;
+  position: relative;
+  min-width: 1.6rem;
+  min-height: 1.6rem;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.themeButton input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom radio button */
+.themeButton .checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1.5rem;
+  width: 1.5rem;
+  border-radius: 100vmax;
+  border: 1px solid #fff;
+}
+
+.themeButton .checkmark.light {
+  background: linear-gradient(-50deg, var(--clr-light-primary), var(--clr-light-secondary));
+}
+
+.themeButton .checkmark.dark {
+  background: linear-gradient(-50deg, var(--clr-dark-primary), var(--clr-dark-secondary));
+}
+
+.themeButton .checkmark.secret {
+  background: linear-gradient(-50deg, var(--clr-secret-primary), var(--clr-secret-secondary));
+}
+
+/* When the radio button is checked, add a blue background */
+.themeButton input:checked ~ .checkmark {
+  box-shadow: 0 0 0 .15rem #fff;
 }
 
 /* Piilottaa elementin näkyvistä */
