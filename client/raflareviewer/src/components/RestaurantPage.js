@@ -90,7 +90,6 @@ const RestaurantPage = ({isLoggedIn}) => {
     /* const handleThumbsUpClick = () => {
         if (isLoggedIn) {
             console.log('thumbs up')
-            console.log('gave thumbs up:', state.restaurant.thumbsUp)
             if (!state.restaurant.thumbsUp.includes(user.id)) {
 
             }
@@ -102,7 +101,6 @@ const RestaurantPage = ({isLoggedIn}) => {
     const handleThumbsDownClick = () => {
         if (isLoggedIn) {
             console.log('thumbs down')
-            console.log('gave thumbs down:', state.restaurant.thumbsDown)
         } else {
             console.log('log in')
         }

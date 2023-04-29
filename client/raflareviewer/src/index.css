@@ -231,7 +231,7 @@ h2, h3 {
   color: var(--clr-headerlink);
   box-shadow: 0 0 1em rgba(0,0,0,.1);
   position: fixed;
-  z-index: 10;
+  z-index: 100;
 }
 
 .nav-wrapper {
@@ -667,6 +667,10 @@ textarea:focus, input:focus {
 
 .formCheckboxContainer span {
   margin-left: .5rem;
+}
+
+.searchContainer {
+  display: grid;
 }
 
 /* Hakukenttä */
@@ -1117,6 +1121,28 @@ textarea:focus, input:focus {
 }
 
 @media only screen and (min-width: 62em) {
+
+  .searchContainer {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    position: relative;
+  }
+
+  .searchBar {
+    grid-column: 2 / 4;
+    grid-row: 1;
+  }
+
+  #addReviewMobile {
+    position: absolute;
+    top: -100%;
+  }
+
+  #addReview {
+    grid-column: 4;
+    margin-right: 0;
+  }
+
   .title {
     font-size: 1.75rem;
   }
@@ -1225,6 +1251,8 @@ textarea:focus, input:focus {
   .restaurantList {
     grid-template-columns: repeat(3, 1fr);
   }
+
+  
 }
 /* Kirjauttuminen ja rekistöröityminen*/
 .loginButton {

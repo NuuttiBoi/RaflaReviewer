@@ -170,9 +170,11 @@ function Home({isLoggedIn}) {
     return (
       <div className="container">
         <h1>Ravintolahaku</h1>
-          <button id="addReviewMobile" onClick={openForm} className="button mobileOnly">+</button>
-          <button onClick={openForm} className="button center hideOnMobile">Lisää arvostelu</button>
-          <SearchBar onChange={handleFilter} filterResults={filterResults}/>
+        <button id="addReviewMobile" onClick={openForm} className="button mobileOnly">+</button>
+        <div className="searchContainer">
+            <button id="addReview" onClick={openForm} className="button center hideOnMobile">Lisää arvostelu</button>
+            <SearchBar onChange={handleFilter} filterResults={filterResults}/>
+          </div>
           <Tags
             cafeLabel={tagList.cafeTitle} onCafeChange={handleCafeChange}
             fastFoodLabel={tagList.fastFoodTitle} onFastFoodChange={handleFastFoodChange}
