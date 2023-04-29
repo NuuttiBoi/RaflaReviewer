@@ -55,7 +55,9 @@ app.post('/restaurants', (request, response) => {
         foodScore: body.foodScore,
         qualityPriceScore: body.qualityPriceScore,
         experienceScore: body.experienceScore,
-        tags: body.tags
+        tags: body.tags,
+        thumbsUp: [],
+        thumbsDown: []
     })
 
     // Tallennus tietokantaan
@@ -72,12 +74,28 @@ app.get('/restaurants/:id', (request, response) => {
     })
 })
 
+// Hakee kaikki ravintolan kommentit
 app.get('/restaurants/comment/:comment', (request, response) => {
     Restaurant.find({ comment: request.params.comment} ).then(restaurant => {
       response.json(restaurant)
     })
 })
 
+// Ravintolan muokkaus
+app.patch('/restaurants/:id', (request, response, next) => {
+    const body = request.body
+    console.log('req body: ', body)
+    /* const note = {
+      name: "name",
+      address: "address",
+    }
+  
+    Restaurant.findByIdAndUpdate(request.params.id, note)
+      .then(updatedNote => {
+        response.json(updatedNote)
+      })
+      .catch(error => next(error)) */
+  })
 
 // Kommentit
 
@@ -219,6 +237,3 @@ console.log('Server running on port 3001')
 // npm run server reviewer
 
 // node index.js reviewer <- yhdistää vaan db:een
-
-
-

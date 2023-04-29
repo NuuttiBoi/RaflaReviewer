@@ -1,9 +1,9 @@
 import Icon from '../images/thumbsUp.js'
 
-const ThumbsUpButtons = () => {
+const ThumbsUpButtons = ({ up, down, handleUp, handleDown }) => {
     return (
         <div className="thumbsUpButtons">
-            <button className="thumbsUp"><Icon /><p>0</p></button><button className="thumbsDown"><Icon /><p>0</p></button>
+            <button className="thumbsUp" onClick={handleUp}><Icon /><p>{up}</p></button><button className="thumbsDown" onClick={ handleDown }><Icon /><p>{down}</p></button>
         </div>
     )
 }

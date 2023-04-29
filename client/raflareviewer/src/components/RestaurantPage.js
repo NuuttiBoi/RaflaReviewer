@@ -18,6 +18,8 @@ const RestaurantPage = ({isLoggedIn}) => {
 
     const [newComment, setNewComment] = useState('')
     const [comments, setComments] = useState([])
+    const [thumbsUp, setThumbsUp] = useState([])
+    const [thumbsDown, setThumbsDown] = useState([])
 
     const user = useData() || {}
 
@@ -26,6 +28,7 @@ const RestaurantPage = ({isLoggedIn}) => {
         username = user.username
     }
 
+    // Kommenttien asetus
     useEffect(() => {
         commentService
           .getByRestaurant(state.restaurant.id)
@@ -36,6 +39,12 @@ const RestaurantPage = ({isLoggedIn}) => {
           .catch(error => {
             console.log(error)
           })
+    }, [])
+
+    // Thumbs up/down asetus
+    useEffect(() => {
+        setThumbsUp(state.restaurant.thumbsUp)
+        setThumbsDown(state.restaurant.thumbsDown)
     }, [])
 
     function saveComment() {
@@ -78,6 +87,27 @@ const RestaurantPage = ({isLoggedIn}) => {
         setComments(comments.filter(comment => comment.id !== deletedComment))
     }
 
+    const handleThumbsUpClick = () => {
+        if (isLoggedIn) {
+            console.log('thumbs up')
+            console.log('gave thumbs up:', state.restaurant.thumbsUp)
+            if (!state.restaurant.thumbsUp.includes(user.id)) {
+
+            }
+        } else {
+            console.log('log in')
+        }
+    }
+
+    const handleThumbsDownClick = () => {
+        if (isLoggedIn) {
+            console.log('thumbs down')
+            console.log('gave thumbs down:', state.restaurant.thumbsDown)
+        } else {
+            console.log('log in')
+        }
+    }
+
     return (
         <div className="container">
             <section>
@@ -88,7 +118,7 @@ const RestaurantPage = ({isLoggedIn}) => {
                 <RestaurantPageTags tags={state.restaurant.tags} />
                 <Address address={state.restaurant.address} />
                 <div className="hide-border">
-                    <ThumbsUpButtons />
+                <ThumbsUpButtons up={thumbsUp.length} down={thumbsDown.length} handleUp={handleThumbsUpClick} handleDown={handleThumbsDownClick} />
                 </div>
             </section>
             <section>
