@@ -42,10 +42,10 @@ const RestaurantPage = ({isLoggedIn}) => {
     }, [])
 
     // Thumbs up/down asetus
-    useEffect(() => {
+    /* useEffect(() => {
         setThumbsUp(state.restaurant.thumbsUp)
         setThumbsDown(state.restaurant.thumbsDown)
-    }, [])
+    }, []) */
 
     function saveComment() {
 
@@ -87,7 +87,7 @@ const RestaurantPage = ({isLoggedIn}) => {
         setComments(comments.filter(comment => comment.id !== deletedComment))
     }
 
-    const handleThumbsUpClick = () => {
+    /* const handleThumbsUpClick = () => {
         if (isLoggedIn) {
             console.log('thumbs up')
             console.log('gave thumbs up:', state.restaurant.thumbsUp)
@@ -106,7 +106,7 @@ const RestaurantPage = ({isLoggedIn}) => {
         } else {
             console.log('log in')
         }
-    }
+    } */
 
     return (
         <div className="container">
@@ -118,7 +118,6 @@ const RestaurantPage = ({isLoggedIn}) => {
                 <RestaurantPageTags tags={state.restaurant.tags} />
                 <Address address={state.restaurant.address} />
                 <div className="hide-border">
-                <ThumbsUpButtons up={thumbsUp.length} down={thumbsDown.length} handleUp={handleThumbsUpClick} handleDown={handleThumbsDownClick} />
                 </div>
             </section>
             <section>

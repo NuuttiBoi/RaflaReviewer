@@ -2,7 +2,7 @@
 
 import Restaurant from './Restaurant'
 
-const RestaurantList = ({ restaurants }) => {
+const RestaurantList = ({ restaurants, isLoggedIn }) => {
   if (restaurants === null) return <p className="no-results">Ladataan...</p>
 
   if (restaurants.length === 0) return <p className="no-results">Haulla ei löytynyt tuloksia</p>
@@ -10,7 +10,7 @@ const RestaurantList = ({ restaurants }) => {
   const resList = restaurants.map(restaurant => {
     return (
       <li key={restaurant.name}>
-        <Restaurant restaurant={restaurant}/>
+        <Restaurant restaurant={restaurant} isLoggedIn={isLoggedIn} />
       </li>
     )
   })

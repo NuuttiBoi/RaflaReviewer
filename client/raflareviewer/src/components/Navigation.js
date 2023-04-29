@@ -34,7 +34,7 @@ const Navigation = ({isLoggedIn, setIsLoggedIn}) => {
 
     const toggleMenu = (event) => {
         event.preventDefault()
-        document.getElementById('main-nav-links').classList.toggle('hideMenu')
+        document.getElementById('main-nav-links').classList.toggle('hideOnMobile')
     }
 
     //Jos ei saada username näkyy "Ladataan"
@@ -58,12 +58,15 @@ const Navigation = ({isLoggedIn, setIsLoggedIn}) => {
                     <NavLink to="/" className="title">RaflaReviewer</NavLink>
                     <button id="mobileMenu" className="mobileMenu" onClick={toggleMenu}><Hamburger /></button>
                 </div>
-                <ul id="main-nav-links" className="hideMenu">
+                <ul id="main-nav-links" className="hideOnMobile">
                     <li>
                         <NavLink to="/" className="navlink">Hae ravintoloita</NavLink>
                     </li>
                     <li>
                         <NavLink to="/Map" className="navlink">Kartta</NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/Creators" className="navlink mobileOnly">Tekijät</NavLink>
                     </li>
                     <li>
                         {isLoggedIn ? (

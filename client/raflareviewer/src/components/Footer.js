@@ -5,7 +5,7 @@ const Footer = () => {
     return (
         <footer className="main-footer">
             <ColorThemes />
-            <NavLink to='./Creators' className="footerlink">Tekijät</NavLink>
+            <NavLink to='./Creators' className="footerlink hideOnMobile">Tekijät</NavLink>
             <p>© RaflaReviewer 2023</p>
         </footer>
     )

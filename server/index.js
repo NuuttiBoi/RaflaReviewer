@@ -82,20 +82,20 @@ app.get('/restaurants/comment/:comment', (request, response) => {
 })
 
 // Ravintolan muokkaus
+/*
 app.patch('/restaurants/:id', (request, response, next) => {
     const body = request.body
-    console.log('req body: ', body)
-    /* const note = {
-      name: "name",
-      address: "address",
+    console.log('patch req: ', body)
+    const note = {
+      thumbsUp: []
     }
   
     Restaurant.findByIdAndUpdate(request.params.id, note)
       .then(updatedNote => {
         response.json(updatedNote)
       })
-      .catch(error => next(error)) */
-  })
+      .catch(error => next(error))
+  }) */
 
 // Kommentit
 

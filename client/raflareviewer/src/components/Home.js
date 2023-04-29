@@ -170,7 +170,8 @@ function Home({isLoggedIn}) {
     return (
       <div className="container">
         <h1>Ravintolahaku</h1>
-          <button onClick={openForm} className="button center">Lisää arvostelu</button>
+          <button id="addReviewMobile" onClick={openForm} className="button mobileOnly">+</button>
+          <button onClick={openForm} className="button center hideOnMobile">Lisää arvostelu</button>
           <SearchBar onChange={handleFilter} filterResults={filterResults}/>
           <Tags
             cafeLabel={tagList.cafeTitle} onCafeChange={handleCafeChange}
@@ -182,7 +183,7 @@ function Home({isLoggedIn}) {
             takeAwayLabel={tagList.takeAwayTitle} onTakeAwayChange={handleTakeAwayChange}
           />
           <ResultsAmount number={restaurantsToShow.length} filterWords={filterWords} />
-          <RestaurantList restaurants={restaurantData}/>
+          <RestaurantList restaurants={restaurantData} isLoggedIn={isLoggedIn}/>
           <AddNewForm update={updatePage} isLoggedIn={isLoggedIn}/>
       </div>
   );
