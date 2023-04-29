@@ -10,7 +10,7 @@ import useData from '../hooks/useData'
 import React from 'react';
 
 const Navigation = ({isLoggedIn, setIsLoggedIn}) => {
-    const user = useData() || {}
+    const user = useData()
 
     const [darkMode, setDarkMode] = useState(true);
 
@@ -54,7 +54,7 @@ const Navigation = ({isLoggedIn, setIsLoggedIn}) => {
                     <li>
                         {isLoggedIn ? (
                             <NavLink to="/profile" className="loginButton">
-                                <UserIcon/>{user.username}
+                                <UserIcon/>{user?.username || ""}
                             </NavLink>
                         ) : (
                             <NavLink to="/AddNewLogin" className="loginButton" role="button" onClick={openLogin}>
