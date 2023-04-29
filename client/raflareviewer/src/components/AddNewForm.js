@@ -7,8 +7,9 @@ import Checkbox from './FormCheckbox'
 import Icon from '../images/x'
 import tagList from '../sources/tagList'
 import scores from '../sources/scores'
+import useData from "../hooks/useData";
 
-const AddNewForm = ({ update }) => {
+const AddNewForm = ({ update, isLoggedIn }) => {
     // Kenttien tiedot
     const [newName, setNewName] = useState('')
     const [newAddress, setNewAddress] = useState('')
@@ -23,6 +24,14 @@ const AddNewForm = ({ update }) => {
     const [foodScore, setFoodScore] = useState(50)
     const [qualityPriceScore, setqualityPriceScore] = useState(50)
     const [experienceScore, setExperienceScore] = useState(50)
+
+    const user = useData() || {}
+
+    let username = "Anonyymi"
+    if (isLoggedIn) {
+        username = user.username
+    }
+
 
     // Tyhjien kenttien tarkistus
     const checkFields = () => {
@@ -112,7 +121,7 @@ const AddNewForm = ({ update }) => {
                         // Kommentti-olio
                         const Comment = {
                             restaurantId: response.id, // Ravintolan id = responsen palauttama id
-                            userId: "Anonyymi", // käyttäjä
+                            userId: username, // käyttäjä
                             content: newComment
                         }
                         console.log('comment ', Comment)

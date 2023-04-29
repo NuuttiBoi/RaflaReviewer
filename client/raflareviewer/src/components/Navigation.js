@@ -10,7 +10,7 @@ import useData from '../hooks/useData'
 import React from 'react';
 
 const Navigation = ({isLoggedIn, setIsLoggedIn}) => {
-    const user = useData()
+    const user = useData() || {}
 
     const [darkMode, setDarkMode] = useState(true);
 
@@ -37,6 +37,20 @@ const Navigation = ({isLoggedIn, setIsLoggedIn}) => {
         document.getElementById('main-nav-links').classList.toggle('hideMenu')
     }
 
+    //Jos ei saada username näkyy "Ladataan"
+    const renderUsername = () => {
+        if (user.username && user.username.length > 0) {
+            return (
+                <>
+                    <UserIcon />
+                    {user.username}
+                </>
+            )
+        } else {
+            return 'Ladataan..'
+        }
+    }
+
     return (
         <nav className="main-nav">
              <div className="nav-wrapper">
@@ -54,7 +68,7 @@ const Navigation = ({isLoggedIn, setIsLoggedIn}) => {
                     <li>
                         {isLoggedIn ? (
                             <NavLink to="/profile" className="loginButton">
-                                <UserIcon/>{user?.username || ""}
+                                {renderUsername()}
                             </NavLink>
                         ) : (
                             <NavLink to="/AddNewLogin" className="loginButton" role="button" onClick={openLogin}>

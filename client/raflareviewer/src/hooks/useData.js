@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import users from "../services/users";
 
-function useUserData() {
+function useData() {
     const [user, setUser] = useState(null)
 
     useEffect(() => {
@@ -19,4 +19,4 @@ function useUserData() {
     return user
 }
 
-export default useUserData
+export default useData

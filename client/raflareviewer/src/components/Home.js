@@ -7,7 +7,7 @@ import Tags from './Tags'
 import tagList from '../sources/tagList'
 import ResultsAmount from './ResultsAmount'
 
-function Home() {
+function Home({isLoggedIn}) {
   const [restaurants, setRestaurants] = useState([])
   const [searchWord, setSearchWord] = useState('')
 
@@ -175,7 +175,7 @@ function Home() {
           />
           <ResultsAmount number={restaurantsToShow.length} filterWords={filterWords} />
           <RestaurantList restaurants={restaurantsToShow}/>
-          <AddNewForm update={updatePage} />
+          <AddNewForm update={updatePage} isLoggedIn={isLoggedIn}/>
       </div>
   );
 }

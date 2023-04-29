@@ -44,9 +44,9 @@ function App() {
     <div className="main-layout">
       <Navigation isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} darkMode={darkMode} setDarkMode={setDarkMode}/>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home isLoggedIn={isLoggedIn}/>} />
         <Route path="/Sivu2" element={<Sivu2 />} />
-        <Route path="/RestaurantPage" element={<RestaurantPage />} />
+        <Route path="/RestaurantPage" element={<RestaurantPage isLoggedIn={isLoggedIn}/>} />
         <Route path="/Map" element={<Map />} />
         <Route path="/Creators" element={<Creators />} />
           <Route path="/profile" element={isLoggedIn ? <Profile setIsLoggedIn={setIsLoggedIn} /> : <Navigate to="/" />} />
