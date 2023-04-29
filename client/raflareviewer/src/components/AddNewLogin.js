@@ -2,7 +2,7 @@ import { useState } from "react"
 import userService from "../services/users"
 import Icon from '../images/x'
 
-const AddNewLogin = ({ setIsLoggedIn }) => {
+const AddNewLogin = ({setIsLoggedIn}) => {
     const [newUsername, setNewUsername] = useState("")
     const [newPassword, setNewPassword] = useState("")
     const [userExists, setUserExists] = useState(false)

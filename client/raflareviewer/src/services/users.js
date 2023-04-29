@@ -4,25 +4,27 @@ const baseUrl = "http://localhost:3001"
 
 const create = newObject => {
     const request = axios.post(`${baseUrl}/users`, newObject)
-    console.log("axios success")
-    return request.then(response => response.data)
+    return request.then(response => {
+        localStorage.setItem('token', response.data.token);
+        return response.data;
+    })
 }
 
 const login = async creds => {
     const response = await axios.post(`${baseUrl}/login`, creds)
-    const token = response.data.token
-    localStorage.setItem('token', token)
-    console.log("axios success login", token)
+    console.log("axios success login")
+    localStorage.setItem('token', response.data.token)
     return response.data
 }
 
 const getProfile = async () => {
     try {
         const token = localStorage.getItem('token')
-        console.log(token, "lol")
         const response = await axios.get(`${baseUrl}/profile`, {
-            headers: {Authorization: `Bearer ${token}`}
-        });
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
         console.log(response.data)
         return response.data;
     } catch (error) {
@@ -33,6 +35,7 @@ const getProfile = async () => {
 
 const handleLogout = async () => {
     try {
+        localStorage.removeItem("token");
         await axios.post(`${baseUrl}/logout`);
     } catch (error) {
         console.log(error);

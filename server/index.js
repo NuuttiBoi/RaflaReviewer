@@ -9,10 +9,16 @@ const jwt = require('jsonwebtoken')
 const jwtSecret = "avain";
 const {request, response} = require("express");
 const {requireAuth} = require('./models/authentication')
+const session = require('express-session')
 
 
 app.use(express.json())
 
+app.use(session ({
+    secret: 'jkeakuj31jhJ2LHJ2jhk',
+    resave: false,
+    saveUninitialized: true
+}))
 
 /* CORS ongelman korjaamiseen */
 app.use(function(req, res, next) {
@@ -155,11 +161,13 @@ app.post('/login', async (request, response) => {
             return response.status(401).json({ message: "Wrong username or password" });
         }
 
+        request.session.userId = user._id
+
         const token = jwt.sign({ userId: user._id }, jwtSecret, { expiresIn: '1h' });
 
         console.log(token)
 
-        response.cookie('token', token, { httpOnly: true }).json({ token: token });
+        response.json({token: token})
     } catch (error) {
         response.status(500).json({ message: error.message });
     }
@@ -193,8 +201,7 @@ app.get('/profile',requireAuth, async (request, response) => {
 })
 
 app.post('/logout', (request, response) => {
-    localStorage.removeItem('token');
-    response.clearCookie('token');
+    request.session.destroy()
     response.json({ message: 'Logged out' });
 })
 

@@ -10,6 +10,7 @@ import Confirm from './Confirm'
 import RestaurantPageTags from './RestaurantPageTags'
 import Scores from './Scores'
 import MapBoxMap from './Map/MapBoxMap';
+import useData from "../hooks/useData";
 
 const RestaurantPage = (props) => {
     let location = useLocation();
@@ -17,6 +18,8 @@ const RestaurantPage = (props) => {
 
     const [newComment, setNewComment] = useState('')
     const [comments, setComments] = useState([])
+
+    let user = useData() || {}
 
     useEffect(() => {
         commentService
@@ -89,7 +92,7 @@ const RestaurantPage = (props) => {
             <section id="comments">
                 <h2>Arvostelut</h2>
                 <div className="commentForm">
-                    <label className="username">Anonyymi</label>
+                    <label className="username">{user.username}</label>
                     <textarea id="commentField" onChange={handleCommentChange} className="formInput" rows="5"/>
                     <button className="button submitButton unclickable" onClick={saveComment}>Lähetä</button>
                 </div>

@@ -4,11 +4,11 @@ import { useState, useEffect } from "react"
 import UserDefaultAvatar from "../images/UserDefaultAvatar"
 import userService from "../services/users";
 import Logout from "../images/Logout";
-import userData from './UserData'
+import useData from '../hooks/useData'
 
 
 const Profile = ({setIsLoggedIn}) => {
-    const user = userData()
+    const user = useData()
 
     if (!user) {
         return (
@@ -23,7 +23,7 @@ const Profile = ({setIsLoggedIn}) => {
         try {
             await userService.handleLogout();
             console.log("kirjautui")
-            setIsLoggedIn(false);
+            setIsLoggedIn(false)
         } catch (error) {
             console.log(error);
         }

@@ -33,9 +33,16 @@ function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [darkMode, setDarkMode] = useState(true);
 
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            setIsLoggedIn(true);
+        }
+    }, []);
+
   return (
     <div className="main-layout">
-      <Navigation isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}  darkMode={darkMode} setDarkMode={setDarkMode}/>
+      <Navigation isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} darkMode={darkMode} setDarkMode={setDarkMode}/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/Sivu2" element={<Sivu2 />} />

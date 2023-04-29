@@ -3,7 +3,7 @@ import { useState } from "react";
 import userService from "../services/users"
 import Icon from '../images/x'
 
-const AddNewUser = () => {
+const AddNewUser = ({setIsLoggedIn}) => {
     const [newUsername, setNewUsername] = useState("")
     const [newPassword, setNewPassword] = useState("")
     const [newFirstname, setNewFirstname] = useState("")
@@ -41,8 +41,8 @@ const AddNewUser = () => {
                 setNewFirstname("")
                 setNewLastname("")
                 setUserExists(false)
+                setIsLoggedIn(true)
                 closeForm()
-
             })
             .catch(error => {
                 console.log(error)
