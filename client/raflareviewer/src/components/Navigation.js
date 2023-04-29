@@ -10,7 +10,7 @@ import useData from '../hooks/useData'
 import React from 'react';
 
 const Navigation = ({isLoggedIn, setIsLoggedIn}) => {
-    const user = useData() || {}
+    const user = useData(isLoggedIn) || {}
 
     const [darkMode, setDarkMode] = useState(true);
 

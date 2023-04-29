@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import users from "../services/users";
 
-function useData() {
+function useData(isLoggedIn) {
     const [user, setUser] = useState(null)
 
     useEffect(() => {
@@ -14,7 +14,7 @@ function useData() {
             }
         }
         fetchUser()
-    }, [])
+    }, [isLoggedIn])
 
     return user
 }
