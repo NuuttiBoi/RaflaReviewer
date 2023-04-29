@@ -21,7 +21,8 @@ const Comment = ({ userId, id, content, date, update }) => {
               .then(response => {
                   console.log('deleted comment ', response)
                   
-                  // Kutsuu RestaurantPage-komponentista funktiota ja välittää poistetun id:n
+                  /* Kutsuu RestaurantPage-komponentista funktiota joka päivittää
+                  sivun, ja välittää sille poistetun id:n */
                   update(id)
               })
               .catch(error => {

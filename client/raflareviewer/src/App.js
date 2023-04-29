@@ -1,5 +1,4 @@
 import Home from './components/Home'
-import Sivu2 from './components/Sivu2'
 import Navigation from './components/Navigation'
 import Footer from './components/Footer'
 import RestaurantPage from './components/RestaurantPage'
@@ -45,7 +44,6 @@ function App() {
       <Navigation isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} darkMode={darkMode} setDarkMode={setDarkMode}/>
       <Routes>
         <Route path="/" element={<Home isLoggedIn={isLoggedIn}/>} />
-        <Route path="/Sivu2" element={<Sivu2 />} />
         <Route path="/RestaurantPage" element={<RestaurantPage isLoggedIn={isLoggedIn}/>} />
         <Route path="/Map" element={<Map />} />
         <Route path="/Creators" element={<Creators />} />
@@ -61,5 +59,3 @@ function App() {
 }
 
 export default App;
-
-//

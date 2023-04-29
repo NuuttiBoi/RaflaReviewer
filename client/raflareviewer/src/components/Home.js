@@ -135,7 +135,7 @@ function Home({isLoggedIn}) {
 
     console.log("searching ", searchWord)
     //const restaurantsToShow = restaurants.filter(findWord)
-    const restaurantsToShow = filteredRestaurants.filter(findWord)
+    let restaurantsToShow = filteredRestaurants.filter(findWord)
 
     // Etsii sanaa ravintolan nimestä- ja osoitteesta
     function findWord(res) {
@@ -160,8 +160,16 @@ function Home({isLoggedIn}) {
       setRestaurants(restaurants.concat(newRestaurant))
     }
 
+    if (restaurants.length === 0) {
+      console.log('null')
+      //restaurantsToShow = null
+    }
+
+    const restaurantData = (restaurants.length === 0) ? null : restaurantsToShow
+
     return (
       <div className="container">
+        <h1>Ravintolahaku</h1>
           <button onClick={openForm} className="button center">Lisää arvostelu</button>
           <SearchBar onChange={handleFilter} filterResults={filterResults}/>
           <Tags
@@ -174,7 +182,7 @@ function Home({isLoggedIn}) {
             takeAwayLabel={tagList.takeAwayTitle} onTakeAwayChange={handleTakeAwayChange}
           />
           <ResultsAmount number={restaurantsToShow.length} filterWords={filterWords} />
-          <RestaurantList restaurants={restaurantsToShow}/>
+          <RestaurantList restaurants={restaurantData}/>
           <AddNewForm update={updatePage} isLoggedIn={isLoggedIn}/>
       </div>
   );

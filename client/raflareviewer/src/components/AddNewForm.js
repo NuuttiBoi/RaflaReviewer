@@ -53,6 +53,16 @@ const AddNewForm = ({ update, isLoggedIn }) => {
         console.log('close')
         document.getElementById('addNewForm').classList.add('visuallyhidden')
         document.querySelector('body').classList.remove('locked')
+        setNewName("")
+        setNewAddress("")
+        setNewComment("")
+        setCafe(false)
+        setFastFood(false)
+        setLunch(false)
+        setBrunch(false)
+        setVegetarian(false)
+        setAccessible(false)
+        setTakeAway(false)
     }
 
     // Tallentaa tiedot ja piilottaa lomakkeen
@@ -227,11 +237,11 @@ const AddNewForm = ({ update, isLoggedIn }) => {
 
                     <div className="required">
                         <label><p>Ravintolan nimi</p></label>
-                        <input onChange={handleNameChange} className="formInput"/>
+                        <input value={newName} onChange={handleNameChange} className="formInput"/>
                     </div>
                     <div className="required">
                         <label><p>Osoite</p></label>
-                        <input onChange={handleAddressChange} className="formInput"/>
+                        <input value={newAddress} onChange={handleAddressChange} className="formInput"/>
                     </div>
         
                     <section>
@@ -274,7 +284,7 @@ const AddNewForm = ({ update, isLoggedIn }) => {
 
                     <div>
                         <label><p>Kommentti</p></label>
-                        <textarea onChange={handleCommentChange} className="formInput" rows="4"/>
+                        <textarea value={newComment} onChange={handleCommentChange} className="formInput" rows="4"/>
                     </div>
                     <section>
                         <input type="file" />

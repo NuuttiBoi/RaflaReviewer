@@ -8,7 +8,7 @@
 :root {
   /* Teemabuttoneissa näkyvät värit  */
   --clr-light-primary:hsl(114, 20%, 32%);
-  --clr-light-secondary:rgb(169, 155, 123);
+  --clr-light-secondary:#f3f3f3;
   --clr-dark-primary: #1f1f1f;
   --clr-dark-secondary: #4b4298;
   --clr-secret-primary: hsl(244, 24%, 40%);
@@ -18,7 +18,7 @@
   --clr-dark: #363636;
   --clr-primary: var(--clr-light-primary);
   --clr-primary-light: hsl(116, 14%, 57%);
-  --clr-secondary: var(--clr-light-secondary);
+  --clr-secondary: rgb(169, 155, 123);
   --clr-neutral: rgb(110, 110, 110); /* Buttonien, input-kenttien yms. reunat */
   --clr-neutral-light: rgb(233, 233, 233);
 
@@ -1010,16 +1010,15 @@ textarea:focus, input:focus {
 .themeButtons {
   display: flex;
   justify-content: space-between;
-  gap: .5rem;
+  gap: .6rem;
   min-height: 1.5rem;
 }
 
- /* Customize the label (the container) */
  .themeButton {
   display: block;
   position: relative;
-  min-width: 1.6rem;
-  min-height: 1.6rem;
+  min-width: 1.5rem;
+  min-height: 1.5rem;
   cursor: pointer;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -1027,7 +1026,6 @@ textarea:focus, input:focus {
   user-select: none;
 }
 
-/* Hide the browser's default radio button */
 .themeButton input {
   position: absolute;
   opacity: 0;
@@ -1036,7 +1034,6 @@ textarea:focus, input:focus {
   width: 0;
 }
 
-/* Create a custom radio button */
 .themeButton .checkmark {
   position: absolute;
   top: 0;
@@ -1059,7 +1056,6 @@ textarea:focus, input:focus {
   background: linear-gradient(-50deg, var(--clr-secret-primary), var(--clr-secret-secondary));
 }
 
-/* When the radio button is checked, add a blue background */
 .themeButton input:checked ~ .checkmark {
   box-shadow: 0 0 0 .15rem #fff;
 }
