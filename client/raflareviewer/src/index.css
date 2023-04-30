@@ -44,7 +44,7 @@
   --clr-comment-bg: var(--clr-neutral-light);
 
   /* Punainen ja vihreä väri virheilmoituksiin yms. yksityiskohtiin */
-  --clr-green: rgb(24, 137, 16);
+  --clr-green: rgb(33, 176, 23);
   --clr-red: rgb(195, 0, 0);
 
   --border-radius: 1.25rem; /* Lomakkeiden, boksien yms. reunat */
@@ -245,7 +245,6 @@ h2, h3 {
 /* Otsikko ja hamburger-button */
 .nav-header {
   display: flex;
-  width: 100%;
   justify-content: space-between;
   align-items: center;
 }
@@ -253,14 +252,15 @@ h2, h3 {
 /* Linkit */
 .main-nav ul {
   list-style-type: none;
-  max-width: fit-content;
   display: flex;
   padding-bottom: 0;
   gap: .5rem;
+  align-items: center;
 }
 
 .main-nav li {
   display: inline-block;
+  min-width: 3rem;
 }
 
 #addReviewMobile {
@@ -303,13 +303,17 @@ h2, h3 {
   .nav-wrapper {
     flex-direction: column;
     align-items: flex-start;
-}
+  }
+
+  .nav-header {
+    width: 100%;
+  }
 
   .main-nav ul {
     width: 100%;
-    /* margin: 0 auto; */
     flex-direction: column;
     padding: 1rem 0;
+    align-items: flex-start;
   }
 
   /* Menulinkit tyyliltään samanlaisiksi */
@@ -1121,11 +1125,9 @@ textarea:focus, input:focus {
 }
 
 @media only screen and (min-width: 62em) {
-
   .searchContainer {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    position: relative;
   }
 
   .searchBar {
@@ -1223,6 +1225,7 @@ textarea:focus, input:focus {
   .main-nav {
     position: relative;
     padding: 1.5rem 3rem;
+    align-items: center;
   }
 
   .container {

@@ -19,7 +19,7 @@ const Restaurant = ({ restaurant, isLoggedIn }) => {
     })
   
     const user = useData() || {}
-    console.log('restaurant user: ', user)
+    console.log('user: ', user)
 
     useEffect(() => {
         commentService
@@ -32,34 +32,34 @@ const Restaurant = ({ restaurant, isLoggedIn }) => {
           })
     }, [])
 
-    // Thumbs up/down asetus
     useEffect(() => {
       setThumbsUp(restaurant.thumbsUp)
       setThumbsDown(restaurant.thumbsDown)
-    }, [])
+    })
 
     const upId = `thumbsUp${restaurant.id}`
     const downId = `thumbsDown${restaurant.id}`
+
+    if (restaurant.thumbsUp.includes(user._id)) document.getElementById(upId).classList.add('clicked')
+    if (restaurant.thumbsDown.includes(user._id)) document.getElementById(downId).classList.add('clicked')
+    
+    console.log('liked: ', restaurant.thumbsUp)
+    console.log('disliked: ', restaurant.thumbsDown)
+
 
   const handleThumbsUpClick = () => {
     if (isLoggedIn) {
         console.log('thumbs up')
 
-        if (!restaurant.thumbsUp.includes(user._id)) {
-          //add button class clicked green
-          // remove thumbs down
+        if (!document.getElementById(upId).classList.contains('clicked')) {
+          
           document.getElementById(upId).classList.add('clicked')
-          document.getElementById(downId).classList.remove('clicked')
-          //add to db
+          
+        } else {
+          // Poista tykkäys
 
-          restaurantService
-            .update(restaurant.id, {})
-            .then(response => {
-              console.log('? ', response)
-          })
-          .catch(error => {
-            console.log(error)
-          })
+          document.getElementById(upId).classList.remove('clicked')
+
         }
     } else {
         console.log('log in')
@@ -70,13 +70,9 @@ const Restaurant = ({ restaurant, isLoggedIn }) => {
   const handleThumbsDownClick = () => {
       if (isLoggedIn) {
           console.log('thumbs down')
-          console.log('gave thumbs down:', restaurant.thumbsDown)
 
           if (!restaurant.thumbsDown.includes(user.id)) {
-            //add button class clicked red
-            // remove thumbs up
-            document.getElementById(downId).classList.add('clicked')
-            document.getElementById(upId).classList.remove('clicked')
+            
           }
       } else {
           console.log('log in')
@@ -84,11 +80,7 @@ const Restaurant = ({ restaurant, isLoggedIn }) => {
       }
   }
 
-  useEffect(() => {
-    if (document.getElementById(upId).classList.contains('clicked')) {
-      console.log('cliekd!!!')
-    }
-  })
+  
 
     // Komponentti joka luo arvosanaboksit saa listan parametriksi
     const scoreInfo = [
