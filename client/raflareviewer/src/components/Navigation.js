@@ -70,11 +70,11 @@ const Navigation = ({isLoggedIn, setIsLoggedIn}) => {
                     </li>
                     <li>
                         {isLoggedIn ? (
-                            <NavLink to="/profile" className="loginButton">
+                            <NavLink to="/profile" className="loginButton navlink">
                                 {renderUsername()}
                             </NavLink>
                         ) : (
-                            <NavLink to="/AddNewLogin" className="loginButton" role="button" onClick={openLogin}>
+                            <NavLink to="/AddNewLogin" className="loginButton navlink" role="button" onClick={openLogin}>
                                 <UserIcon/>Kirjaudu
                             </NavLink>
                         )}
@@ -83,7 +83,7 @@ const Navigation = ({isLoggedIn, setIsLoggedIn}) => {
                     </li>
                     <li>
                         <div className={`App ${theme}`}>
-                            <button id="darkmodeBtn" onClick={toggleTheme}>
+                            <button id="darkmodeBtn" onClick={toggleTheme} className="navlink">
                                 Darkmode</button>
                         </div>
                     </li>

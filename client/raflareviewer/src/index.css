@@ -23,7 +23,7 @@
   --clr-neutral-light: rgb(233, 233, 233);
 
   --clr-text: var(--clr-dark);
-  --clr-headerlink: var(--clr-dark);
+  --clr-headerlink: var(--clr-primary);
   --clr-header-bg: var(--clr-light);
   --clr-button-bg: var(--clr-primary);
   --clr-button-hover: var(--clr-primary-light);
@@ -260,7 +260,6 @@ h2, h3 {
 
 .main-nav li {
   display: inline-block;
-  min-width: 3rem;
 }
 
 #addReviewMobile {
@@ -353,11 +352,6 @@ h2, h3 {
       clip: rect(0 0 0 0);
       overflow: hidden;
   }
-}
-
-.navlink  {
-  color: var(--clr-headerlink);
-  text-decoration: none;
 }
 
 .container a:not(.button), .container a:visited:not(.button),
@@ -536,7 +530,6 @@ h2 {
 }
 
 /* Uuden arvostelun lisäyslomake */
-
 .popup {
   background-color: var(--clr-bg);
   z-index: 100;
@@ -1229,6 +1222,38 @@ textarea:focus, input:focus {
     align-items: center;
   }
 
+  .navlink, .navlink:visited {
+    display: grid;
+    place-content: center;
+    min-height: 3rem;
+    min-width: 12rem;
+    border-radius: 100vmax;
+    line-height: 0;
+    font-weight: bold;
+    padding: 2em 2em;
+    max-height: 3rem;
+    text-align: center;
+    text-decoration: none;
+    color: var(--clr-primary);
+    background-color: var(--clr-bg);
+    border: 2px solid var(--clr-headerlink);
+  }
+
+  .navlink:hover {
+    background-color: var(--clr-primary);
+    color: var(--clr-light);
+   }
+
+  .darkTheme .main-nav ul .navlink:hover {
+    color: var(--clr-dark);
+    background-color: var(--clr-light);
+    border: 2px solid var(--clr-light);
+  }
+  
+   .nav-wrapper ul li:first-child {
+    margin-right: .5rem;
+  }
+
   .container {
     margin-top: 0;
   }
@@ -1255,8 +1280,6 @@ textarea:focus, input:focus {
   .restaurantList {
     grid-template-columns: repeat(3, 1fr);
   }
-
-  
 }
 /* Kirjauttuminen ja rekistöröityminen*/
 .loginButton {

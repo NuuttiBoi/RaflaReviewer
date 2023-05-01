@@ -114,7 +114,10 @@ const Restaurant = ({ restaurant, isLoggedIn }) => {
         <NavLink
           to={{ pathname: './RestaurantPage' }}
           state={{ restaurant: restaurant,
-                  scoreInfo: scoreInfo }}
+                  scoreInfo: scoreInfo,
+                  upId: upId,
+                  downId: downId
+                }}
           className="button articleButton center">
             <span>Katso arvostelut</span> <span>{`(${comments.length})`}</span>
         </NavLink>

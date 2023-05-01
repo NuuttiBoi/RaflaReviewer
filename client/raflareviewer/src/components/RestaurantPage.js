@@ -112,11 +112,12 @@ const RestaurantPage = ({isLoggedIn}) => {
                 <NavLink to="/" className="back-icon"><Back /></NavLink>
                 <h1>{state.restaurant.name}</h1>
                 <RestaurantPageTags tags={state.restaurant.tags} />
-                <div className="hide-border">
-                </div>
             </section>
             <section>
                 <Scores scores={state.scoreInfo} />
+                <div className="hide-border">
+                    <ThumbsUpButtons upId={state.upId} downId={state.downId} up={thumbsUp.length} down={thumbsDown.length} handleUp={() => {}} handleDown={() => {}} />
+                </div>
             </section>
             <section>
               <h2>Kartalla</h2>
