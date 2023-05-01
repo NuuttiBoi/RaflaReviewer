@@ -355,7 +355,7 @@ h2, h3 {
   }
 }
 
-.navlink {
+.navlink  {
   color: var(--clr-headerlink);
   text-decoration: none;
 }
@@ -523,6 +523,7 @@ code {
   font-size: 3rem;
   font-weight: bold;
   font-style: normal;
+  margin-bottom: .5rem;
 }
 
 h2 {

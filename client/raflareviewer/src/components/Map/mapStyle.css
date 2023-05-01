@@ -153,7 +153,9 @@ a:hover {
 }
 
 .map-container{
-    height: 100vh;
+    height: max(35vw, 30rem);
+    margin: 0 auto;
+    margin-bottom: .5rem;
 }
 #content, #sidebar{
     display: table-cell;

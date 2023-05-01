@@ -111,15 +111,19 @@ const RestaurantPage = ({isLoggedIn}) => {
             <section>
                 <NavLink to="/" className="back-icon"><Back /></NavLink>
                 <h1>{state.restaurant.name}</h1>
-            </section>
-            <section>
                 <RestaurantPageTags tags={state.restaurant.tags} />
-                <Address address={state.restaurant.address} />
                 <div className="hide-border">
                 </div>
             </section>
             <section>
                 <Scores scores={state.scoreInfo} />
+            </section>
+            <section>
+              <h2>Kartalla</h2>
+              <div>
+                <MapBoxMap></MapBoxMap>
+                <Address address={state.restaurant.address} />
+              </div>
             </section>
             <section id="comments">
                 <h2>Arvostelut</h2>
@@ -129,13 +133,6 @@ const RestaurantPage = ({isLoggedIn}) => {
                     <button className="button submitButton unclickable" onClick={saveComment}>Lähetä</button>
                 </div>
                 <Comments comments={comments} update={updatePage} />
-            </section>
-            <section>
-              <h2>Kartalla</h2>
-              <div>
-                <MapBoxMap></MapBoxMap>
-                <Address address={state.restaurant.address} />
-              </div>
             </section>
             <Confirm />
         </div>
