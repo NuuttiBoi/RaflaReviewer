@@ -75,7 +75,7 @@ const AddNewUser = ({setIsLoggedIn}) => {
     return (
         <div id="addNewUser" className="visuallyhidden popup addNewForm">
             <header className="formHeader">
-                <h2>Rekistöröidy</h2>
+                <h2>Rekisteröidy</h2>
                 <button type="button" onClick={closeForm} className="closeButton">
                     <Icon />
                 </button>

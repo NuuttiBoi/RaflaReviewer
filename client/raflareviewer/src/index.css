@@ -1225,12 +1225,11 @@ textarea:focus, input:focus {
   .navlink, .navlink:visited {
     display: grid;
     place-content: center;
-    min-height: 3rem;
     min-width: 12rem;
     border-radius: 100vmax;
     line-height: 0;
     font-weight: bold;
-    padding: 2em 2em;
+    padding: 1.9em 2.5em;
     max-height: 3rem;
     text-align: center;
     text-decoration: none;
@@ -1243,6 +1242,39 @@ textarea:focus, input:focus {
     background-color: var(--clr-primary);
     color: var(--clr-light);
    }
+
+   .navlink.loginButton, .navlink.loginButton:visited {
+    background-color: var(--clr-button-bg);
+    color: var(--clr-button-text);
+  }
+
+  .navlink.loginButton:hover {
+    background-color: transparent;
+    border: none;
+    color: var(--clr-button-bg);
+  }
+
+  .navlink.loginButton.loggedIn {
+    background-color: transparent;
+    border: 0;
+    color: var(--clr-button-bg);
+  }
+
+  .navlink.loginButton.loggedIn:hover, .darkTheme .navlink.loginButton.loggedIn:hover {
+    text-decoration: underline;
+    background-color: transparent;
+  }
+
+  .darkTheme .navlink.loginButton {
+    border: 2px solid var(--clr-button-bg);
+    background-color: var(--clr-button-bg);
+    color: var(--clr-button-text);
+  }
+
+  .darkTheme .navlink.loginButton.loggedIn:hover {
+    border: 0;
+    color: var(--clr-button-text);
+  }
 
   .darkTheme .main-nav ul .navlink:hover {
     color: var(--clr-dark);

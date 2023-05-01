@@ -70,7 +70,7 @@ const Navigation = ({isLoggedIn, setIsLoggedIn}) => {
                     </li>
                     <li>
                         {isLoggedIn ? (
-                            <NavLink to="/profile" className="loginButton navlink">
+                            <NavLink to="/profile" className="loginButton loggedIn navlink">
                                 {renderUsername()}
                             </NavLink>
                         ) : (
