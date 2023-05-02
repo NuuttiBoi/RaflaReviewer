@@ -12,11 +12,6 @@ const Restaurant = ({ restaurant, isLoggedIn }) => {
     const [comments, setComments] = useState([])
     const [thumbsUp, setThumbsUp] = useState([])
     const [thumbsDown, setThumbsDown] = useState([])
-
-    const [thumbs, setThumbs] = useState({
-      thumbsUp: [],
-      thumbsDown: []
-    })
   
     const user = useData() || {}
     console.log('user: ', user)
@@ -33,19 +28,17 @@ const Restaurant = ({ restaurant, isLoggedIn }) => {
     }, [])
 
     useEffect(() => {
-      setThumbsUp(restaurant.thumbsUp)
-      setThumbsDown(restaurant.thumbsDown)
+      setThumbsUp([])
+      setThumbsDown([])
     })
 
     const upId = `thumbsUp${restaurant.id}`
     const downId = `thumbsDown${restaurant.id}`
 
-    if (restaurant.thumbsUp.includes(user._id)) document.getElementById(upId).classList.add('clicked')
-    if (restaurant.thumbsDown.includes(user._id)) document.getElementById(downId).classList.add('clicked')
+    /* if (restaurant.thumbsUp.includes(user._id)) document.getElementById(upId).classList.add('clicked')
+    if (restaurant.thumbsDown.includes(user._id)) document.getElementById(downId).classList.add('clicked') */
     
-    console.log('liked: ', restaurant.thumbsUp)
-    console.log('disliked: ', restaurant.thumbsDown)
-
+  
 
   const handleThumbsUpClick = () => {
     if (isLoggedIn) {
