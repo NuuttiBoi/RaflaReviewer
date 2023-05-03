@@ -38,6 +38,7 @@
   --clr-checked: hsl(116, 36%, 84%);
   --clr-link-hover: var(--clr-secondary);
   --clr-score: var(--clr-secondary);
+  --clr-popup-link: var(--clr-secondary);
 
   --clr-bg: var(--clr-light);
   --clr-tags: var(--clr-neutral-light);
@@ -782,10 +783,14 @@ textarea:focus, input:focus {
 
 /* Estää buttonien klikkauksen  */
 .locked button:not(.popup button),
-.locked a:not(.popup button),
+.locked a:not(.popup > *),
 .locked .navlink:not(.popup button),
 .locked .footerlink:not(.popup button) {
   pointer-events: none;
+}
+
+.locked a.popup-link {
+  pointer-events: all;
 }
 
 /* Thumbs up-nappien container*/
@@ -1108,6 +1113,20 @@ textarea:focus, input:focus {
 
 .hide-border button {
   border: none;
+}
+
+/* Tekstilinkit popupeissa */
+.popup-link, .popup-link:visited {
+  color: var(--clr-popup-link);
+  text-decoration: underline;
+}
+
+.popup-link:hover {
+  text-decoration: none;
+}
+
+#loginPrompt {
+  gap: 2rem;
 }
 
 /* Pienemmillä näytöillä lomake täyttää koko sivun */

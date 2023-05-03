@@ -137,6 +137,7 @@ const RestaurantPage = ({isLoggedIn}) => {
             <section>
               <h2>Kartalla</h2>
               <div>
+                <MapBoxMap></MapBoxMap>
                 <Address address={state.restaurant.address} />
               </div>
             </section>
@@ -155,11 +156,3 @@ const RestaurantPage = ({isLoggedIn}) => {
 }
 
 export default RestaurantPage
-
-{/* <section>
-              <h2>Kartalla</h2>
-              <div>
-                <MapBoxMap></MapBoxMap>
-                <Address address={state.restaurant.address} />
-              </div>
-            </section> */}

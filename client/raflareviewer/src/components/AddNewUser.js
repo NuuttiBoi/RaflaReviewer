@@ -13,6 +13,7 @@ const AddNewUser = ({setIsLoggedIn}) => {
     function closeForm() {
         console.log("close")
         document.getElementById("addNewUser").classList.add("visuallyhidden")
+        document.querySelector('body').classList.remove('locked')
 
         setNewUsername("")
         setNewPassword("")

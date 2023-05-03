@@ -116,7 +116,7 @@ const AddNewForm = ({ update, isLoggedIn }) => {
                 foodScore: foodScore,
                 qualityPriceScore: qualityPriceScore,
                 experienceScore: experienceScore,
-                userId: user._id || null
+                userId: user._id
             }
 
             console.log('saving ', newRestaurant)

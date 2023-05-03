@@ -6,8 +6,16 @@ import SearchBar from './SearchBar'
 import Tags from './Tags'
 import tagList from '../sources/tagList'
 import ResultsAmount from './ResultsAmount'
+import LoginPrompt from './LoginPrompt'
+import useData from '../hooks/useData'
 
 function Home({isLoggedIn}) {
+
+  const user = useData() || {}
+
+  console.log('user ', user)
+  console.log('user obj ', Object.keys(user).length)
+
   const [restaurants, setRestaurants] = useState([])
   const [searchWord, setSearchWord] = useState('')
 
@@ -126,13 +134,13 @@ function Home({isLoggedIn}) {
     const openForm = (event) => {
       event.preventDefault() 
 
-      if (isLoggedIn) {
+      if (isLoggedIn && Object.keys(user).length != 0) {
         document.getElementById('addNewForm').classList.remove('visuallyhidden')
         document.querySelector('body').classList.add('locked')
         console.log('open form')
       } else {
-        // alert
-        alert('kirjaudu')
+        document.getElementById('loginPrompt').classList.remove('visuallyhidden')
+        document.querySelector('body').classList.add('locked')
       }
     }
 
@@ -195,7 +203,7 @@ function Home({isLoggedIn}) {
           <ResultsAmount number={restaurantsToShow.length} filterWords={filterWords} />
           <RestaurantList restaurants={restaurantData} isLoggedIn={isLoggedIn}/>
           <AddNewForm update={updatePage} isLoggedIn={isLoggedIn}/>
-
+          <LoginPrompt />
       </div>
   );
 }
