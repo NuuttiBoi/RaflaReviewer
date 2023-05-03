@@ -32,6 +32,8 @@ const AddNewForm = ({ update, isLoggedIn }) => {
         username = user.username
     }
 
+    console.log('user ', user)
+
     // Tyhjien kenttien tarkistus
     const checkFields = () => {
         const requiredFields = document.getElementById('addNewForm').querySelectorAll('.required > input')
@@ -113,7 +115,8 @@ const AddNewForm = ({ update, isLoggedIn }) => {
                 tags: tagsApply,
                 foodScore: foodScore,
                 qualityPriceScore: qualityPriceScore,
-                experienceScore: experienceScore
+                experienceScore: experienceScore,
+                userId: user._id || null
             }
 
             console.log('saving ', newRestaurant)

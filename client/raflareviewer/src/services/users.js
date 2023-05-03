@@ -42,4 +42,9 @@ const handleLogout = async () => {
     }
 }
 
-export default {create, login, getProfile, handleLogout}
+const getUser = async (id) => {
+    const response = await axios.get(`${baseUrl}/users/${id}`)
+    return await response.data
+}
+
+export default {create, login, getProfile, handleLogout, getUser}

@@ -907,6 +907,14 @@ textarea:focus, input:focus {
   font-size: var(--text-small);
 }
 
+.small {
+  font-size: var(--text-small);
+}
+
+.italic {
+  font-style: italic;
+}
+
 .comment__info {
   max-width: 50%;
   display: inline-block;

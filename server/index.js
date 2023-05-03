@@ -57,7 +57,8 @@ app.post('/restaurants', (request, response) => {
         experienceScore: body.experienceScore,
         tags: body.tags,
         thumbsUp: [],
-        thumbsDown: []
+        thumbsDown: [],
+        userId: body.userId
     })
 
     // Tallennus tietokantaan
@@ -229,6 +230,12 @@ app.delete('/login/:id', async (request, response) => {
             response.status(204).end()
         })
         .catch(error => next(error))
+})
+
+app.get('/users/:id', (request, response) => {
+    User.findById(request.params.id).then(user => {
+      response.json(user)
+    })
 })
 
 app.listen(3001)

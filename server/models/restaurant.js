@@ -27,7 +27,8 @@ mongoose.connect(url)
         experienceScore: Number,
         tags: [String],
         thumbsUp: [String],
-        thumbsDown: [String]
+        thumbsDown: [String],
+        userId: String
     })
 
     resSchema.set('toJSON', {

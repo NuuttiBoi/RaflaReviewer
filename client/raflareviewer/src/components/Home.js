@@ -34,9 +34,6 @@ function Home({isLoggedIn}) {
 
   let filteredRestaurants = restaurants
   if (showFilters.length > 0) {
-    console.log('filters: ',showFilters)
-    //console.log('filter list toString(): ', showFilters.toString())
-    //filteredRestaurants = restaurants.filter(res => res.tags.toString() === showFilters.toString()) toimii melkein
     filteredRestaurants = restaurants.filter(findCategory)
   }
 
@@ -44,13 +41,10 @@ function Home({isLoggedIn}) {
     let match = true
     
     showFilters.forEach(filter => {
-      console.log('searching ', res.name, ' for ', filter)
       if (!res.tags.includes(filter)) {
-        console.log(res.name, 'is not ', filter, '!!! >:(')
         match = false
       }
     })
-    console.log(res.name, 'match? ', match)
     return match
   }
 
@@ -131,9 +125,15 @@ function Home({isLoggedIn}) {
 
     const openForm = (event) => {
       event.preventDefault() 
-      document.getElementById('addNewForm').classList.remove('visuallyhidden')
-      document.querySelector('body').classList.add('locked')
-      console.log('open form')
+
+      if (isLoggedIn) {
+        document.getElementById('addNewForm').classList.remove('visuallyhidden')
+        document.querySelector('body').classList.add('locked')
+        console.log('open form')
+      } else {
+        // alert
+        alert('kirjaudu')
+      }
     }
 
     // Hakukentän event handler
@@ -195,6 +195,7 @@ function Home({isLoggedIn}) {
           <ResultsAmount number={restaurantsToShow.length} filterWords={filterWords} />
           <RestaurantList restaurants={restaurantData} isLoggedIn={isLoggedIn}/>
           <AddNewForm update={updatePage} isLoggedIn={isLoggedIn}/>
+
       </div>
   );
 }

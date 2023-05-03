@@ -11,6 +11,7 @@ import RestaurantPageTags from './RestaurantPageTags'
 import Scores from './Scores'
 import MapBoxMap from './Map/MapBoxMap';
 import useData from "../hooks/useData";
+import userService from '../services/users'
 
 const RestaurantPage = ({isLoggedIn}) => {
     let location = useLocation();
@@ -20,6 +21,7 @@ const RestaurantPage = ({isLoggedIn}) => {
     const [comments, setComments] = useState([])
     const [thumbsUp, setThumbsUp] = useState([])
     const [thumbsDown, setThumbsDown] = useState([])
+    const [reviewedBy, setReviewedBy] = useState(null)
 
     const user = useData() || {}
 
@@ -27,6 +29,18 @@ const RestaurantPage = ({isLoggedIn}) => {
     if (isLoggedIn) {
         username = user.username
     }
+
+    // Hakee arvostelun tekijän käyttäjätietokannasta
+    useEffect(() => {
+    userService
+        .getUser(state.restaurant.userId)
+        .then(response => {
+            setReviewedBy(response.username)
+        })
+        .catch(error => {
+        console.log(error)
+        })
+    }, [])
 
     // Kommenttien asetus
     useEffect(() => {
@@ -111,6 +125,7 @@ const RestaurantPage = ({isLoggedIn}) => {
             <section>
                 <NavLink to="/" className="back-icon"><Back /></NavLink>
                 <h1>{state.restaurant.name}</h1>
+                <p className='small italic'>Arvostelun lähettänyt <span className='username'>{reviewedBy}</span></p>
                 <RestaurantPageTags tags={state.restaurant.tags} />
             </section>
             <section>
@@ -122,12 +137,11 @@ const RestaurantPage = ({isLoggedIn}) => {
             <section>
               <h2>Kartalla</h2>
               <div>
-                <MapBoxMap></MapBoxMap>
                 <Address address={state.restaurant.address} />
               </div>
             </section>
             <section id="comments">
-                <h2>Arvostelut</h2>
+                <h2>Kommentit</h2>
                 <div className="commentForm">
                     <label className="username">{username}</label>
                     <textarea id="commentField" onChange={handleCommentChange} className="formInput" rows="5"/>
@@ -141,3 +155,11 @@ const RestaurantPage = ({isLoggedIn}) => {
 }
 
 export default RestaurantPage
+
+{/* <section>
+              <h2>Kartalla</h2>
+              <div>
+                <MapBoxMap></MapBoxMap>
+                <Address address={state.restaurant.address} />
+              </div>
+            </section> */}
