@@ -34,16 +34,24 @@ function Home({isLoggedIn}) {
 
   let filteredRestaurants = restaurants
   if (showFilters.length > 0) {
+    console.log('filters: ',showFilters)
+    //console.log('filter list toString(): ', showFilters.toString())
+    //filteredRestaurants = restaurants.filter(res => res.tags.toString() === showFilters.toString()) toimii melkein
     filteredRestaurants = restaurants.filter(findCategory)
   }
 
-  function findCategory(res) {
+   function findCategory(res) {
+    let match = true
+    
     showFilters.forEach(filter => {
+      console.log('searching ', res.name, ' for ', filter)
       if (!res.tags.includes(filter)) {
-        return false
+        console.log(res.name, 'is not ', filter, '!!! >:(')
+        match = false
       }
     })
-    return true
+    console.log(res.name, 'match? ', match)
+    return match
   }
 
   const handleCafeChange = () => {

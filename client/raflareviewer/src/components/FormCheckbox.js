@@ -1,7 +1,6 @@
 import { useState } from "react"
 
 const FormCheckbox = ({ label, onChange, isChecked }) => {
-
     return (
       <div className='checkbox'>
         <label>

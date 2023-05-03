@@ -14,7 +14,7 @@ const Restaurant = ({ restaurant, isLoggedIn }) => {
     const [thumbsDown, setThumbsDown] = useState([])
   
     const user = useData() || {}
-    console.log('user: ', user)
+    //console.log('user: ', user)
 
     useEffect(() => {
         commentService

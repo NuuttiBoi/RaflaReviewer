@@ -32,14 +32,12 @@ const AddNewForm = ({ update, isLoggedIn }) => {
         username = user.username
     }
 
-
     // Tyhjien kenttien tarkistus
     const checkFields = () => {
         const requiredFields = document.getElementById('addNewForm').querySelectorAll('.required > input')
 
         let ok = true;
         requiredFields.forEach(input => {
-            console.log('input value: ',input.value)
             if (input.value.trim().length === 0) {
                 ok = false
             }
