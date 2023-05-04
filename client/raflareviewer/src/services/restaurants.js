@@ -19,12 +19,12 @@ const create = async (newObject) => {
     return await response.data
 }
 
-const update = async (id, newObject) => {
+const updateRestaurant = async (id, newObject) => {
     console.log('axios, id: ', id)
     console.log('axios, newObj: ', newObject)
 
-    const request = await axios.patch(`${baseUrl}/${id}`, newObject)
-    return await request.then(response => response.data)
+    const response = await axios.patch(`${baseUrl}/${id}`, newObject)
+    return await response.data
 }
 
 /* const deletePerson = id => {
@@ -32,4 +32,4 @@ const update = async (id, newObject) => {
     return request.then(response => response)
 } */
 
-export default { getAll, getRestaurant, create, update }
+export default { getAll, getRestaurant, create, updateRestaurant }

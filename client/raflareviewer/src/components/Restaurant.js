@@ -13,7 +13,7 @@ const Restaurant = ({ restaurant, isLoggedIn }) => {
     /* const [thumbsUp, setThumbsUp] = useState([])
     const [thumbsDown, setThumbsDown] = useState([]) */
 
-    // Tykänneiden käyttäjien id:t tallennettu taulukoihin
+    // Tykänneiden käyttäjien id:t taulukoissa
     const [thumbs, setThumbs] = useState({
       thumbsUp: [],
       thumbsDown: []
@@ -39,9 +39,13 @@ const Restaurant = ({ restaurant, isLoggedIn }) => {
         thumbsUp: restaurant.thumbsUp,
         thumbsDown: restaurant.thumbsDown
       })
-      if (restaurant.thumbsUp.includes(user._id)) document.getElementById(upId).classList.add('clicked')
+      
+      // Jos sisäänkirjautunut käyttäjä on antanut ylä/alapeukun, vaihda väri
+      restaurant.thumbsUp.includes(user._id) ? document.getElementById(upId).classList.add('clicked') : document.getElementById(upId).classList.remove('clicked')
+      //restaurant.thumbsDown.includes(user._id) ? document.getElementById(downId).classList.add('clicked') : document.getElementById(downId).classList.remove('clicked')
     }, [])
 
+    // Jokaisen ravintolan peukkukuvakkeilla yksilölliset id:t
     const upId = `thumbsUp${restaurant.id}`
     const downId = `thumbsDown${restaurant.id}`
 
@@ -57,6 +61,7 @@ const Restaurant = ({ restaurant, isLoggedIn }) => {
         console.log('liked by: ', thumbs.thumbsUp)
         //console.log('disliked by: ', thumbs.thumbsDown)
 
+        // Jos käyttäjä on kirjautunut sisään
 
         if (!thumbs.thumbsUp.includes(user._id)) {
           // Lisää tykkäys
@@ -76,7 +81,7 @@ const Restaurant = ({ restaurant, isLoggedIn }) => {
 
             // Päivitys tietokantaan
             restaurantService
-              .update(restaurant.id, newThumbs)
+              .updateRestaurant(restaurant.id, newThumbs)
               .then(response => {
                   console.log('toimi ',response)
               })
@@ -102,6 +107,7 @@ const Restaurant = ({ restaurant, isLoggedIn }) => {
           setThumbs(newThumbs)
         }
     } else {
+        // Jos ei kirjautunut sisään, näytä popup
         console.log('log in')
         // alert
     }
@@ -109,12 +115,14 @@ const Restaurant = ({ restaurant, isLoggedIn }) => {
 
   const handleThumbsDownClick = () => {
       if (isLoggedIn && Object.keys(user).length != 0) {
+        // Jos käyttäjä on kirjautunut sisään
           console.log('thumbs down')
 
           if (!restaurant.thumbsDown.includes(user.id)) {
             
           }
       } else {
+          // Jos ei kirjautunut sisään, näytä popup
           console.log('log in')
           // alert
       }

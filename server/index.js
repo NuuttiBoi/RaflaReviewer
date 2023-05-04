@@ -86,16 +86,16 @@ app.get('/restaurants/comment/:comment', (request, response) => {
 
 app.patch('/restaurants/:id', (request, response, next) => {
     const body = request.body
-    console.log('patch req: ', body)
-    /* const note = {
-      thumbsUp: []
-    } */
+    const thumbs = {
+      thumbsUp: body.thumbsUp,
+      thumbsDown: body.thumbsDown
+    }
   
-    /* Restaurant.findByIdAndUpdate(request.params.id, note)
-      .then(updatedNote => {
-        response.json(updatedNote)
+    Restaurant.findByIdAndUpdate(request.params.id, thumbs)
+      .then(updatedRes => {
+        response.json(updatedRes)
       })
-      .catch(error => next(error)) */
+      .catch(error => next(error))
   })
 
 // Kommentit
