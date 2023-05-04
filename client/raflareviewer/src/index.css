@@ -1050,14 +1050,14 @@ textarea:focus, input:focus {
   display: flex;
   justify-content: space-between;
   gap: .6rem;
-  min-height: 1.5rem;
+  min-height: 1.25rem;
 }
 
  .themeButton {
   display: block;
   position: relative;
-  min-width: 1.5rem;
-  min-height: 1.5rem;
+  min-width: 1.25rem;
+  min-height: 1.25rem;
   cursor: pointer;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -1077,8 +1077,8 @@ textarea:focus, input:focus {
   position: absolute;
   top: 0;
   left: 0;
-  height: 1.5rem;
-  width: 1.5rem;
+  height: 1.25rem;
+  width: 1.25rem;
   border-radius: 100vmax;
   border: 1px solid #fff;
 }
@@ -1095,8 +1095,9 @@ textarea:focus, input:focus {
   background: linear-gradient(-50deg, var(--clr-secret-primary), var(--clr-secret-secondary));
 }
 
+/* Valkoinen reunus valitussa radio buttonissa */
 .themeButton input:checked ~ .checkmark {
-  box-shadow: 0 0 0 .15rem #fff;
+  box-shadow: 0 0 0 .1rem #fff;
 }
 
 /* Piilottaa elementin näkyvistä */

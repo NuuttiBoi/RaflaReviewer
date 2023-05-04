@@ -20,7 +20,10 @@ const create = async (newObject) => {
 }
 
 const update = async (id, newObject) => {
-    const request = await axios.post(`${baseUrl}/${id}`, newObject)
+    console.log('axios, id: ', id)
+    console.log('axios, newObj: ', newObject)
+
+    const request = await axios.patch(`${baseUrl}/${id}`, newObject)
     return await request.then(response => response.data)
 }
 

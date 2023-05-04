@@ -3,14 +3,21 @@ import { useState, useEffect } from 'react'
 import ThumbsUpButtons from './ThumbsUpButtons'
 import Address from './Address'
 import commentService from '../services/comments'
+import restaurantService from '../services/restaurants'
 import scores from '../sources/scores'
 import Scores from './Scores'
 import useData from '../hooks/useData'
 
 const Restaurant = ({ restaurant, isLoggedIn }) => {
     const [comments, setComments] = useState([])
-    const [thumbsUp, setThumbsUp] = useState([])
-    const [thumbsDown, setThumbsDown] = useState([])
+    /* const [thumbsUp, setThumbsUp] = useState([])
+    const [thumbsDown, setThumbsDown] = useState([]) */
+
+    // Tykänneiden käyttäjien id:t tallennettu taulukoihin
+    const [thumbs, setThumbs] = useState({
+      thumbsUp: [],
+      thumbsDown: []
+    })
   
     const user = useData() || {}
     //console.log('user: ', user)
@@ -26,32 +33,73 @@ const Restaurant = ({ restaurant, isLoggedIn }) => {
           })
     }, [])
 
+    // Tykkäysten alustus
     useEffect(() => {
-      setThumbsUp([])
-      setThumbsDown([])
-    })
+      setThumbs({
+        thumbsUp: restaurant.thumbsUp,
+        thumbsDown: restaurant.thumbsDown
+      })
+      if (restaurant.thumbsUp.includes(user._id)) document.getElementById(upId).classList.add('clicked')
+    }, [])
 
     const upId = `thumbsUp${restaurant.id}`
     const downId = `thumbsDown${restaurant.id}`
 
-    /* if (restaurant.thumbsUp.includes(user._id)) document.getElementById(upId).classList.add('clicked')
-    if (restaurant.thumbsDown.includes(user._id)) document.getElementById(downId).classList.add('clicked') */
+    // if (restaurant.thumbsDown.includes(user._id)) document.getElementById(downId).classList.add('clicked')
     
-  
+    console.log('likes: ', thumbs.thumbsUp.length, ' ', thumbs.thumbsDown.length)
+
+    console.log('liked by: ', thumbs.thumbsUp)
 
   const handleThumbsUpClick = () => {
-    if (isLoggedIn) {
-        console.log('thumbs up')
+    if (isLoggedIn && Object.keys(user).length != 0) {
+        //console.log('thumbs up')
+        console.log('liked by: ', thumbs.thumbsUp)
+        //console.log('disliked by: ', thumbs.thumbsDown)
 
-        if (!document.getElementById(upId).classList.contains('clicked')) {
-          
+
+        if (!thumbs.thumbsUp.includes(user._id)) {
+          // Lisää tykkäys
+          console.log('like added')
+          // Vaihda kuvakkeen väri
           document.getElementById(upId).classList.add('clicked')
-          
+
+          // Jos dislike, poista se
+          if (thumbs.thumbsDown.includes(user._id)) {
+            // Poista dislike ja lisää tykkäys
+          } else {
+            // Lisää käyttäjä tykkäyksiin
+            const newThumbs = {
+              ...thumbs,
+              thumbsUp: thumbs.thumbsUp.concat(user._id)
+            }
+
+            // Päivitys tietokantaan
+            restaurantService
+              .update(restaurant.id, newThumbs)
+              .then(response => {
+                  console.log('toimi ',response)
+              })
+              .catch(error => {
+                console.log(error)
+              })
+
+            // Päivitys sivulle
+            setThumbs(newThumbs)
+          }
         } else {
           // Poista tykkäys
 
+          console.log('like removed')
+          // Poista vihreä väri
           document.getElementById(upId).classList.remove('clicked')
 
+          // Poista käyttäjän id tykkäyksistä
+          const newThumbs = {
+            ...thumbs,
+            thumbsUp: thumbs.thumbsUp.filter(id => id != user._id)
+          }
+          setThumbs(newThumbs)
         }
     } else {
         console.log('log in')
@@ -60,7 +108,7 @@ const Restaurant = ({ restaurant, isLoggedIn }) => {
   }
 
   const handleThumbsDownClick = () => {
-      if (isLoggedIn) {
+      if (isLoggedIn && Object.keys(user).length != 0) {
           console.log('thumbs down')
 
           if (!restaurant.thumbsDown.includes(user.id)) {
@@ -113,7 +161,7 @@ const Restaurant = ({ restaurant, isLoggedIn }) => {
           className="button articleButton center">
             <span>Katso arvostelut</span> <span>{`(${comments.length})`}</span>
         </NavLink>
-        <ThumbsUpButtons upId={upId} downId={downId} up={thumbsUp.length} down={thumbsDown.length} handleUp={handleThumbsUpClick} handleDown={handleThumbsDownClick} />
+        <ThumbsUpButtons upId={upId} downId={downId} up={thumbs.thumbsUp.length} down={thumbs.thumbsDown.length} handleUp={handleThumbsUpClick} handleDown={handleThumbsDownClick} />
       </article>
     )
   }

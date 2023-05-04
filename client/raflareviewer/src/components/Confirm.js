@@ -1,5 +1,7 @@
 import Icon from '../images/x'
 
+// Ravintolasivun "Vahvista että haluat poistaa kommentin" -popup
+
 const Confirm = ({ id, onClick, update }) => {
 
     function closePopup() {
