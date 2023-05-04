@@ -1,5 +1,5 @@
 'use strict';
-
+require('dotenv').config()
 const express = require('express')
 const app = express()
 const Restaurant = require('./models/restaurant')
@@ -10,7 +10,6 @@ const jwtSecret = "avain";
 const {request, response} = require("express");
 const {requireAuth} = require('./models/authentication')
 const session = require('express-session')
-
 
 app.use(express.json())
 
@@ -238,9 +237,7 @@ app.get('/users/:id', (request, response) => {
     })
 })
 
-app.listen(3001)
-console.log('Server running on port 3001')
-
-// npm run server reviewer
-
-// node index.js reviewer <- yhdistää vaan db:een
+const PORT = process.env.DB_PORT
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`)
+})

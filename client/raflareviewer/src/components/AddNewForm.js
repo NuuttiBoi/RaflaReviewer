@@ -49,10 +49,9 @@ const AddNewForm = ({ update, isLoggedIn }) => {
     }
 
     // Piilottaa lomakkeen näkyvistä
-    function closeForm() {
+    function closeForm(event) {
+        event.preventDefault()
         console.log('close')
-        document.getElementById('addNewForm').classList.add('visuallyhidden')
-        document.querySelector('body').classList.remove('locked')
         setNewName("")
         setNewAddress("")
         setNewComment("")
@@ -63,6 +62,8 @@ const AddNewForm = ({ update, isLoggedIn }) => {
         setVegetarian(false)
         setAccessible(false)
         setTakeAway(false)
+        document.getElementById('addNewForm').classList.add('visuallyhidden')
+        document.querySelector('body').classList.remove('locked')
     }
 
     // Tallentaa tiedot ja piilottaa lomakkeen

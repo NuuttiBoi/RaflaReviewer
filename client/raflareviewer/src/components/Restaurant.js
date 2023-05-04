@@ -37,28 +37,15 @@ const Restaurant = ({ restaurant, isLoggedIn }) => {
         thumbsUp: restaurant.thumbsUp,
         thumbsDown: restaurant.thumbsDown
       })
-      
-      if (isLoggedIn && Object.keys(user).length != 0) {
-        if (restaurant.thumbsUp.includes(user._id)) document.getElementById(upId).classList.add('clicked')
-        if (restaurant.thumbsDown.includes(user._id)) document.getElementById(downId).classList.add('clicked')
-      }
     }, [])
 
     // Jokaisen ravintolan peukkukuvakkeilla yksilölliset id:t
     const upId = `thumbsUp${restaurant.id}`
     const downId = `thumbsDown${restaurant.id}`
 
-    if (isLoggedIn) {
-        if (restaurant.thumbsUp.includes(user._id)) document.getElementById(upId).classList.add('clicked')
-        if (restaurant.thumbsDown.includes(user._id)) document.getElementById(downId).classList.add('clicked')
-    }
-
   const handleThumbsUpClick = () => {
     if (isLoggedIn && Object.keys(user).length != 0) {
         // Jos käyttäjä on kirjautunut sisään
-
-        // Vaihda painikkeen väri
-        document.getElementById(upId).classList.toggle('clicked')
 
         let newThumbs // Päivitetyt tykkäykset sisältävä olio
 
@@ -66,9 +53,6 @@ const Restaurant = ({ restaurant, isLoggedIn }) => {
         if (!thumbs.thumbsUp.includes(user._id)) {
           if (thumbs.thumbsDown.includes(user._id)) {
             // Jos käyttäjä on antanut alapeukun aiemmin, poista alapeukku ja lisää yläpeukku
-            
-            // Poista alapeukun väri
-            document.getElementById(downId).classList.remove('clicked')
 
             newThumbs = {
               thumbsDown: thumbs.thumbsDown.filter(id => id != user._id),
@@ -113,18 +97,12 @@ const Restaurant = ({ restaurant, isLoggedIn }) => {
     if (isLoggedIn && Object.keys(user).length != 0) {
         // Jos käyttäjä on kirjautunut sisään
 
-        // Vaihda painikkeen väri
-        document.getElementById(downId).classList.toggle('clicked')
-
         let newThumbs // Päivitetyt tykkäykset sisältävä olio
 
         // Jos käyttäjä ei ole vielä antanut alapeukkua
         if (!thumbs.thumbsDown.includes(user._id)) {
           if (thumbs.thumbsUp.includes(user._id)) {
             // Jos käyttäjä on antanut yläpeukun aiemmin, poista yläpeukku ja lisää alapeukku
-            
-            // Poista yläpeukun väri
-            document.getElementById(upId).classList.remove('clicked')
 
             newThumbs = {
               thumbsUp: thumbs.thumbsUp.filter(id => id != user._id),
