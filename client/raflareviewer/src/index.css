@@ -817,6 +817,10 @@ textarea:focus, input:focus {
   gap: .5rem;
 }
 
+.center-mobile {
+  margin: 0 auto;
+}
+
 /* Buttonit */
 .thumbsUp, .thumbsDown {
   display: flex;
@@ -1026,7 +1030,7 @@ textarea:focus, input:focus {
   gap: .75rem;
   margin: 0 auto;
   font-weight: 500;
-  padding: 3rem 0;
+  padding: 3rem 2rem;
   background-color: var(--clr-scoreBox-bg);
   --clr-score: var(--clr-primary);
 }
@@ -1375,6 +1379,10 @@ textarea:focus, input:focus {
     padding: .5rem;
     background-color: var(--clr-scoreBox-bg);
     border-radius: var(--border-small);
+  }
+
+  .center-mobile {
+    margin: 0;
   }
 }
 

@@ -24,6 +24,7 @@ const AddNewForm = ({ update, isLoggedIn }) => {
     const [foodScore, setFoodScore] = useState(50)
     const [qualityPriceScore, setqualityPriceScore] = useState(50)
     const [experienceScore, setExperienceScore] = useState(50)
+    const [image, setImage] = useState('')
 
     const user = useData() || {}
 
@@ -49,9 +50,10 @@ const AddNewForm = ({ update, isLoggedIn }) => {
     }
 
     // Piilottaa lomakkeen näkyvistä
-    function closeForm(event) {
-        event.preventDefault()
+    function closeForm() {
         console.log('close')
+        document.getElementById('addNewForm').classList.add('visuallyhidden')
+        document.querySelector('body').classList.remove('locked')
         setNewName("")
         setNewAddress("")
         setNewComment("")
@@ -62,8 +64,6 @@ const AddNewForm = ({ update, isLoggedIn }) => {
         setVegetarian(false)
         setAccessible(false)
         setTakeAway(false)
-        document.getElementById('addNewForm').classList.add('visuallyhidden')
-        document.querySelector('body').classList.remove('locked')
     }
 
     // Tallentaa tiedot ja piilottaa lomakkeen
@@ -117,11 +117,18 @@ const AddNewForm = ({ update, isLoggedIn }) => {
                 foodScore: foodScore,
                 qualityPriceScore: qualityPriceScore,
                 experienceScore: experienceScore,
+                thumbsUp: [],
+                thumbsDown: [],
                 userId: user._id
             }
 
+            console.log('img: ', image)
+
+
             console.log('saving ', newRestaurant)
 
+
+            
             // Lähetys palvelimelle
             resService
                 .create(newRestaurant)
@@ -154,6 +161,7 @@ const AddNewForm = ({ update, isLoggedIn }) => {
             console.log('saving ', newRestaurant)
             closeForm()
             update(newRestaurant)
+            
     }
 
     // Kenttien tilojen päivitys
@@ -226,6 +234,21 @@ const AddNewForm = ({ update, isLoggedIn }) => {
         setExperienceScore(event.target.value)
     }
 
+    function convertToBase64(event) {
+        event.preventDefault()
+        console.log('img?',event.target.value)
+        console.log('upload image')
+        var reader = new FileReader()
+        reader.readAsDataURL(event.target.files[0])
+        reader.onload = () => {
+            console.log('read file',reader.result)
+            setImage(reader.result)
+        }
+        reader.onerror = error => {
+            console.log('error',error)
+        }
+    }
+
     return (
         <div id="addNewForm" className="visuallyhidden popup addNewForm">
             <header className="formHeader">
@@ -234,7 +257,7 @@ const AddNewForm = ({ update, isLoggedIn }) => {
                     <Icon />
                 </button>
             </header>
-            <form onSubmit={saveForm}>
+            <form onSubmit={saveForm} action="/images/" method="POST" enctype="multipart/form-data">
                 <div className="formFields">
 
                     <div className="required">
@@ -289,7 +312,15 @@ const AddNewForm = ({ update, isLoggedIn }) => {
                         <textarea value={newComment} onChange={handleCommentChange} className="formInput" rows="4"/>
                     </div>
                     <section>
-                        <input type="file" />
+                    <input
+                        type="file"
+                        id="image"
+                        accept="image"
+                        onChange={convertToBase64}
+                        name="image"
+                        value=""
+                    />
+                    { image === "" || image === null ? "" : <img width="50px" height="50px" alt="Kuvan esikatselu" src={image} />}
                     </section>
                 </div>
             <button type="submit" className="button center unclickable" id="formSubmitButton">Tallenna</button>

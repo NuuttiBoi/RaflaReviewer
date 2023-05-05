@@ -44,6 +44,13 @@ const Restaurant = ({ restaurant, isLoggedIn }) => {
     const upId = `thumbsUp${restaurant.id}`
     const downId = `thumbsDown${restaurant.id}`
 
+    const likeBtn = document.getElementById(upId)
+    const dislikeBtn = document.getElementById(downId)
+
+    if (thumbs.thumbsUp.includes(user._id)) likeBtn.classList.add('clicked')
+    if (thumbs.thumbsDown.includes(user._id)) dislikeBtn.classList.add('clicked')
+    
+
   const handleThumbsUpClick = () => {
     if (isLoggedIn && Object.keys(user).length != 0) {
         // Jos käyttäjä on kirjautunut sisään
@@ -52,8 +59,15 @@ const Restaurant = ({ restaurant, isLoggedIn }) => {
 
         // Jos käyttäjä ei ole vielä antanut yläpeukkua
         if (!thumbs.thumbsUp.includes(user._id)) {
+
+          // Vaihda yläpeukun väri
+          likeBtn.classList.add('clicked')
+
           if (thumbs.thumbsDown.includes(user._id)) {
             // Jos käyttäjä on antanut alapeukun aiemmin, poista alapeukku ja lisää yläpeukku
+
+            // Poista alapeukun väri
+            dislikeBtn.classList.remove('clicked')
 
             newThumbs = {
               thumbsDown: thumbs.thumbsDown.filter(id => id != user._id),
@@ -68,6 +82,9 @@ const Restaurant = ({ restaurant, isLoggedIn }) => {
           }
         } else {
           // Jos nappia painetaan, kun käyttäjä on jo antanut yläpeukun, poista yläpeukku
+
+          // Poista yläpeukun väri
+          likeBtn.classList.remove('clicked')
 
           // Poista käyttäjän id yläpeukuista
           newThumbs = {
@@ -102,8 +119,15 @@ const Restaurant = ({ restaurant, isLoggedIn }) => {
 
         // Jos käyttäjä ei ole vielä antanut alapeukkua
         if (!thumbs.thumbsDown.includes(user._id)) {
+
+          // Vaihda alapeukun väri
+          dislikeBtn.classList.add('clicked')
+
           if (thumbs.thumbsUp.includes(user._id)) {
             // Jos käyttäjä on antanut yläpeukun aiemmin, poista yläpeukku ja lisää alapeukku
+
+            // Poista yläpeukun väri
+            likeBtn.classList.remove('clicked')
 
             newThumbs = {
               thumbsUp: thumbs.thumbsUp.filter(id => id != user._id),
@@ -118,6 +142,9 @@ const Restaurant = ({ restaurant, isLoggedIn }) => {
           }
         } else {
           // Jos nappia painetaan, kun käyttäjä on jo antanut alapeukun, poista alapeukku
+
+          // Poista alapeukun väri
+          dislikeBtn.classList.remove('clicked')
 
           // Poista käyttäjän id alapeukuista
           newThumbs = {
