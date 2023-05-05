@@ -20,7 +20,7 @@
   --clr-primary-light: hsl(116, 14%, 57%);
   --clr-secondary: rgb(169, 155, 123);
   --clr-neutral: rgb(110, 110, 110); /* Buttonien, input-kenttien yms. reunat */
-  --clr-neutral-light: rgb(233, 233, 233);
+  --clr-neutral-light: rgb(228, 228, 228);
 
   --clr-text: var(--clr-dark);
   --clr-headerlink: var(--clr-primary);
@@ -39,6 +39,7 @@
   --clr-link-hover: var(--clr-secondary);
   --clr-score: var(--clr-secondary);
   --clr-popup-link: var(--clr-secondary);
+  --clr-scoreBox-bg: var(--clr-neutral-light);
 
   --clr-bg: var(--clr-light);
   --clr-tags: var(--clr-neutral-light);
@@ -365,10 +366,27 @@ h2, h3 {
   text-decoration: none;
 }
 
+/* RaflaReviewer-otsikko + logo */
+.title-wrapper {
+  display: flex;
+  align-items: center;
+  font-size: 1.6rem;
+}
+
+.main-logo {
+  display: inline-block;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.darkTheme .main-logo {
+  color: var(--clr-primary);
+}
+
 /* RaflaReviewer-otsikko */
 .title, .title:visited {
   color: var(--clr-title);
-  font-size: 1.6rem;
   text-decoration: none;
   font-family: 'Rubik', sans-serif;
 }
@@ -861,6 +879,10 @@ textarea:focus, input:focus {
   color: var(--clr-icon);
 }
 
+.back-icon svg {
+  max-height: 1.75rem;
+}
+
 .back-icon:hover {
   color: var(--clr-text);
 }
@@ -1001,13 +1023,11 @@ textarea:focus, input:focus {
 /* Arvosanaboksit */
 .scoresContainer {
   display: grid;
-  background-color: var(--clr-primary-light);
   gap: .75rem;
-  width: min(38em, 100%);
   margin: 0 auto;
   font-weight: 500;
-  padding: .5rem;
-  border-radius: var(--border-small);
+  padding: 3rem 0;
+  background-color: var(--clr-scoreBox-bg);
   --clr-score: var(--clr-primary);
 }
 
@@ -1016,6 +1036,8 @@ textarea:focus, input:focus {
   display: flex;
   justify-content: space-between;
   font-size: 1.15rem;
+  margin: 0 auto;
+  width: 100%;
   color: var(--clr-text);
   /* background-color: var(--clr-primary-light);
   border-radius: var(--border-radius);
@@ -1032,6 +1054,12 @@ textarea:focus, input:focus {
   font-style: italic;
   font-size: 1.7rem;
   padding-right: .5rem;
+}
+
+/* Saa elementin näyttämään koko näytön levyiseltä */
+.full-width-mobile {
+  box-shadow: 0 0 0 100vmax var(--clr-scoreBox-bg);
+  clip-path: inset(0 -100vmax);
 }
 
 /* Arviot articlessa etusivulla */
@@ -1167,7 +1195,7 @@ textarea:focus, input:focus {
     margin-right: 0;
   }
 
-  .title {
+  .title-wrapper {
     font-size: 1.75rem;
   }
 
@@ -1329,6 +1357,24 @@ textarea:focus, input:focus {
     overflow: hidden;
     opacity: 0;
     pointer-events: none;
+  }
+
+  .main-logo {
+    opacity: 1;
+    width: 4.5rem;
+    height: 4.5rem;
+    aspect-ratio: 1 / 1;
+  }
+
+  .full-width-mobile {
+    box-shadow: none;
+  }
+
+  .scoresContainer {
+    width: min(38rem, 100%);
+    padding: .5rem;
+    background-color: var(--clr-scoreBox-bg);
+    border-radius: var(--border-small);
   }
 }
 

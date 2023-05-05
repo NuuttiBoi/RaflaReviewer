@@ -122,18 +122,18 @@ const RestaurantPage = ({isLoggedIn}) => {
 
     return (
         <div className="container">
+            <NavLink to="/" className="back-icon"><Back /></NavLink>
             <section>
-                <NavLink to="/" className="back-icon"><Back /></NavLink>
                 <h1>{state.restaurant.name}</h1>
                 <p className='small italic'>Arvostelun lähettänyt <span className='username'>{reviewedBy}</span></p>
                 <RestaurantPageTags tags={state.restaurant.tags} />
             </section>
-            <section>
-                <Scores scores={state.scoreInfo} />
+                <div className="full-width-mobile">
+                    <Scores scores={state.scoreInfo} />
+                </div>
                 <div className="hide-border">
                     <ThumbsUpButtons upId={state.upId} downId={state.downId} up={thumbsUp.length} down={thumbsDown.length} handleUp={() => {}} handleDown={() => {}} />
                 </div>
-            </section>
             <section>
               <h2>Kartalla</h2>
               <div>

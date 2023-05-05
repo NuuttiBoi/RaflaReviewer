@@ -18,7 +18,8 @@ const Restaurant = ({ restaurant, isLoggedIn }) => {
     })
   
     const user = useData() || {}
-    //console.log('user: ', user)
+    console.log('isLoggedIn: ', isLoggedIn)
+    console.log('user: ', user)
 
     useEffect(() => {
         commentService

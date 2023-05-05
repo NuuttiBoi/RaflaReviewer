@@ -8,6 +8,7 @@ import {useState} from "react";
 import {useEffect} from "react"
 import useData from '../hooks/useData'
 import React from 'react';
+import Logo from '../images/Logo.js'
 
 const Navigation = ({isLoggedIn, setIsLoggedIn}) => {
     const user = useData(isLoggedIn) || {}
@@ -55,7 +56,9 @@ const Navigation = ({isLoggedIn, setIsLoggedIn}) => {
         <nav className="main-nav">
              <div className="nav-wrapper">
                 <div className="nav-header">
-                    <NavLink to="/" className="title">RaflaReviewer</NavLink>
+                    <div className="title-wrapper">
+                    <Logo /><NavLink to="/" className="title">RaflaReviewer</NavLink>
+                    </div>
                     <button id="mobileMenu" className="mobileMenu" onClick={toggleMenu}><Hamburger /></button>
                 </div>
                 <ul id="main-nav-links" className="hideOnMobile">
