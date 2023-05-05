@@ -11,23 +11,6 @@ import AddNewLogin from "./components/AddNewLogin";
 import './components/Darkmode/darkmode.css'
 import DarkMode from './components/Darkmode/DarkMode'
 
-
-/*
-cd client/raflareviewer
-npm start
-
-toisessa terminaalissa:
-cd server
-npm run server reviewer <- käynnistää palvelimen
-
-(reviewer = mongodb salasana, pitää lisätä komentoon loppuun)
-
-http://localhost:3000 <- app
-http://localhost:3001/restaurants <- palvelin
-
-(muistakaa npm install)
-*/
-
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [darkMode, setDarkMode] = useState(true);

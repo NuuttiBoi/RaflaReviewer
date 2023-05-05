@@ -56,9 +56,10 @@ const Navigation = ({isLoggedIn, setIsLoggedIn}) => {
         <nav className="main-nav">
              <div className="nav-wrapper">
                 <div className="nav-header">
-                    <div className="title-wrapper">
-                    <Logo /><NavLink to="/" className="title">RaflaReviewer</NavLink>
-                    </div>
+                    <NavLink to="/" className="title-wrapper">
+                        <Logo />
+                        <span className="title">RaflaReviewer</span>
+                    </NavLink>
                     <button id="mobileMenu" className="mobileMenu" onClick={toggleMenu}><Hamburger /></button>
                 </div>
                 <ul id="main-nav-links" className="hideOnMobile">

@@ -18,7 +18,7 @@
   --clr-dark: #363636;
   --clr-primary: var(--clr-light-primary);
   --clr-primary-light: hsl(116, 14%, 57%);
-  --clr-secondary: rgb(169, 155, 123);
+  --clr-secondary: rgb(164, 163, 54);
   --clr-neutral: rgb(110, 110, 110); /* Buttonien, input-kenttien yms. reunat */
   --clr-neutral-light: rgb(228, 228, 228);
 
@@ -536,7 +536,7 @@ code {
   font-size: 3rem;
   font-weight: bold;
   font-style: normal;
-  margin-bottom: .5rem;
+  line-height: 1;
 }
 
 h2 {
@@ -1363,7 +1363,7 @@ textarea:focus, input:focus {
     opacity: 1;
     width: 4.5rem;
     height: 4.5rem;
-    aspect-ratio: 1 / 1;
+    color: var(--clr-primary);
   }
 
   .full-width-mobile {
