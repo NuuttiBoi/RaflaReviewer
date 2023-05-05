@@ -98,6 +98,15 @@ app.patch('/restaurants/:id', (request, response, next) => {
       .catch(error => next(error))
   })
 
+  // Ravintolan poistaminen
+app.delete('/restaurants/:id', (request, response, next) => {
+    Restaurant.findByIdAndRemove(request.params.id)
+      .then(result => {
+        response.status(204).end()
+      })
+      .catch(error => next(error))
+})
+
 // Kommentit
 
 // Hakee kaikki kommentit
@@ -113,6 +122,7 @@ app.post('/comments', (request, response) => {
     const comment = new Comment({
         restaurantId: body.restaurantId,
         userId: body.userId,
+        username: body.username,
         content: body.content,
         date: new Date()
     })

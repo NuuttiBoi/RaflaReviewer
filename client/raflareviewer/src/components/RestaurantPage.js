@@ -13,6 +13,7 @@ import Scores from './Scores'
 import MapBoxMap from './Map/MapBoxMap';
 import useData from "../hooks/useData";
 import userService from '../services/users'
+import ConfirmDeleteReview from './ConfirmDeleteReview'
 
 const RestaurantPage = ({isLoggedIn}) => {
     let location = useLocation();
@@ -34,6 +35,10 @@ const RestaurantPage = ({isLoggedIn}) => {
     if (isLoggedIn) {
         username = user.username
     }
+
+    // Onko arvostelun lähettänyt käyttäjä sisäänkirjautunut
+    const authorLoggedIn = (isLoggedIn && user._id === state.restaurant.userId)
+    console.log('author logged in ', authorLoggedIn)
 
     // Hakee ravintolan tietokannasta
     useEffect(() => {
@@ -83,13 +88,17 @@ const RestaurantPage = ({isLoggedIn}) => {
     if (thumbs.thumbsUp.includes(user._id)) likeBtn.classList.add('clicked')
     if (thumbs.thumbsDown.includes(user._id)) dislikeBtn.classList.add('clicked')
     
+    // Poista-nappi näkyvissä vain arvostelun tekijälle
+    if (authorLoggedIn) {
+       document.getElementById('deleteReviewBtn').classList.remove('visuallyhidden')
+    }
 
     function saveComment() {
-
         // Kommentti-olio
         const Comment = {
             restaurantId: state.restaurant.id,
-            userId: username, // käyttäjä
+            username: username, // käyttäjä
+            userId: user._id,
             content: newComment
         }
         console.log('saving ', Comment)
@@ -243,8 +252,31 @@ const RestaurantPage = ({isLoggedIn}) => {
             document.querySelector('body').classList.add('locked')
           }
       }
-    
 
+      const deleteRestaurant = () => {
+        console.log('poista')
+        document.getElementById('confirmDeletePopup').classList.remove('visuallyhidden')
+        document.querySelector('body').classList.add('locked')
+      }
+    
+      // Poistaa kommentin
+    const confirmDelete = () => {
+        restaurantService
+              .deleteRestaurant(state.restaurant.id)
+              .then(response => {
+                  console.log('deleted res ', response)
+              })
+              .catch(error => {
+                console.log(error)
+              })
+        closePopup()
+    }
+
+    // Sulkee popupin
+    function closePopup() {
+        document.getElementById('confirmDeletePopup').classList.add('visuallyhidden')
+        document.querySelector('body').classList.remove('locked')
+    }
 
     return (
         <div className="container">
@@ -267,6 +299,9 @@ const RestaurantPage = ({isLoggedIn}) => {
                 <Address address={state.restaurant.address} />
               </div>
             </section>
+            <section>
+                <button id="deleteReviewBtn" className="button deleteBtn visuallyhidden center right-bigscreen" onClick={deleteRestaurant}>Poista arvostelu</button>
+            </section>
             <section id="comments">
                 <h2>Kommentit</h2>
                 <div className="commentForm">
@@ -274,9 +309,10 @@ const RestaurantPage = ({isLoggedIn}) => {
                     <textarea id="commentField" onChange={handleCommentChange} className="formInput" rows="5"/>
                     <button className="button submitButton unclickable" onClick={saveComment}>Lähetä</button>
                 </div>
-                <Comments comments={comments} update={updatePage} />
+                <Comments comments={comments} update={updatePage} isLoggedIn={isLoggedIn}/>
             </section>
             <Confirm />
+            <ConfirmDeleteReview onClick={confirmDelete} />
         </div>
     )
 }

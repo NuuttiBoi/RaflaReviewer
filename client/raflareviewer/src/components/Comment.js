@@ -2,8 +2,18 @@ import Delete from '../images/Trash'
 import Flag from '../images/Flag'
 import Confirm from './Confirm'
 import commentService from '../services/comments'
+import useData from '../hooks/useData'
 
-const Comment = ({ userId, id, content, date, update }) => {  
+const Comment = ({ userId, username, id, content, date, update, isLoggedIn }) => {  
+
+    // Onko kommentin jättänyt käyttäjä kirjautuneena sisään
+    const user = useData() || {}
+    const authorLoggedIn = (isLoggedIn && user._id === userId)
+
+    console.log(userId)
+    console.log(user._id)
+
+    console.log('author logged in? (comment) ', authorLoggedIn)
 
     // Avaa popupin, jossa kysytään haluaako varmasti poistaa kommentin
     const confirmDelete = () => {
@@ -45,16 +55,11 @@ const Comment = ({ userId, id, content, date, update }) => {
         <div className="commentItem">
             <p className="comment__content">{content}</p>
             <div className="comment__info">
-                <p className="username">{userId}</p>
+                <p className="username">{username}</p>
                 <p className="comment__date">{date}</p>
             </div>
             <div className="comment__buttons">
-                <button onClick={reportComment} className="commentButton" title="Ilmoita asiaton kommentti">
-                    <Flag />
-                </button>
-                <button onClick={confirmDelete} className="commentButton" title="Poista">
-                    <Delete />
-                </button>
+                { authorLoggedIn ? <button onClick={confirmDelete} className="commentButton" title="Poista"><Delete /></button> :                 <button onClick={reportComment} className="commentButton" title="Ilmoita asiaton kommentti"><Flag /></button>}
             </div>
             <Confirm id={id} onClick={deleteComment} />
         </div>

@@ -47,7 +47,8 @@
 
   /* Punainen ja vihreä väri virheilmoituksiin yms. yksityiskohtiin */
   --clr-green: rgb(33, 176, 23);
-  --clr-red: rgb(195, 0, 0);
+  --clr-red: rgb(195 0 0);
+  --clr-red-light: rgba(212, 87, 87, 0.9); 
 
   --border-radius: 1.25rem; /* Lomakkeiden, boksien yms. reunat */
   --border-small: .35rem;
@@ -633,12 +634,11 @@ form label:not(.formCheckboxContainer label) {
   flex-grow: 0;
 }
 
-/* x-icon */
-.closeIcon {
+.closeIcon, .back-icon {
   color: var(--clr-icon)
 }
 
-.closeButton:hover {
+.closeButton:hover, .back-icon:hover {
   --clr-icon: var(--clr-dark);
 }
 
@@ -1162,6 +1162,19 @@ textarea:focus, input:focus {
   gap: 2rem;
 }
 
+/* Vaihtaa buttonin ja box shadown värin samalla */
+.deleteBtn {
+  --clr-button-bg: var(--clr-red);
+}
+
+.deleteBtn:hover {
+  --clr-button-bg: var(--clr-red-light);
+}
+
+.darkTheme .deleteBtn:hover {
+  color: var(--clr-light);
+}
+
 /* Pienemmillä näytöillä lomake täyttää koko sivun */
 @media only screen and (min-width: 32em) and (min-height: 42em) {
   .addNewForm {
@@ -1265,8 +1278,7 @@ textarea:focus, input:focus {
 
   .commentItem:nth-child(even) .comment__buttons {
     bottom: 1rem;
-    right: 11.3rem;
-    color: red;
+    right: 11.7rem;
   }
 
   .commentItem .comment__content {
@@ -1383,6 +1395,11 @@ textarea:focus, input:focus {
 
   .center-mobile {
     margin: 0;
+  }
+
+  /* Elementti oikeassa laidassa isolla ruudulla */
+  .right-bigscreen {
+    margin-right: 0;
   }
 }
 

@@ -140,7 +140,8 @@ const AddNewForm = ({ update, isLoggedIn }) => {
                         // Kommentti-olio
                         const Comment = {
                             restaurantId: response.id, // Ravintolan id = responsen palauttama id
-                            userId: username, // käyttäjä
+                            username: username, // käyttäjä
+                            userId: user._id,
                             content: newComment
                         }
                         console.log('comment ', Comment)

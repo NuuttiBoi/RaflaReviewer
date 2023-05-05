@@ -14,6 +14,7 @@ mongoose.connect(url)
     // Skeema määrittelee miten ravintola-oliot tallennetaan tietokantaan
     const commentSchema = new mongoose.Schema({
         restaurantId: String,
+        username: String,
         userId: String,
         content: String,
         date: Date

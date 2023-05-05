@@ -27,9 +27,9 @@ const updateRestaurant = async (id, newObject) => {
     return await response.data
 }
 
-/* const deletePerson = id => {
-    const request = axios.delete(`${baseUrl}/${id}`)
-    return request.then(response => response)
-} */
+const deleteRestaurant = async (id) => {
+    const response = await axios.delete(`${baseUrl}/${id}`)
+    return response
+}
 
-export default { getAll, getRestaurant, create, updateRestaurant }
+export default { getAll, getRestaurant, create, updateRestaurant, deleteRestaurant }
