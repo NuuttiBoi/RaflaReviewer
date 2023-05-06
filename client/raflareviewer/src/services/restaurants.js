@@ -1,7 +1,7 @@
 // Hakee ravintolat
 
 import axios from 'axios'
-const baseUrl = 'http://localhost:3001/restaurants'
+const baseUrl = 'http://localhost:3001/api/v1/restaurants'
 
 const getAll = async () => {
     const response = await axios.get(baseUrl)

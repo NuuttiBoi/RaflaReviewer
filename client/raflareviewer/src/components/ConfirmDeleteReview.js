@@ -1,4 +1,5 @@
 import Icon from '../images/x'
+import { NavLink } from 'react-router-dom'
 
 // "Vahvista että haluat poistaa arvostelun" -popup
 
@@ -9,6 +10,8 @@ const ConfirmDeleteReview = ({ onClick }) => {
         document.querySelector('body').classList.remove('locked')
     }
 
+    // Parametrina saatu onClick-funktio poistaa ravintolan ja kommentit ja käyttäjä palautetaan etusivulle
+
     return (
         <div id="confirmDeletePopup" className="visuallyhidden popup">
             <header className="formHeader">
@@ -18,7 +21,7 @@ const ConfirmDeleteReview = ({ onClick }) => {
             </header>
             <p className="center">Arvostelun poistaminen poistaa myös kaikki kommentit. Haluatko varmasti poistaa arvostelun?</p>
             
-            <button className="button center" onClick={onClick}>Poista</button>
+            <NavLink to="/" className="button center"onClick={onClick}>Poista</NavLink>
         </div>
     )
 }

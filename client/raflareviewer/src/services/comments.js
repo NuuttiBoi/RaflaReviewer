@@ -1,7 +1,7 @@
 // Hakee kommentit
 
 import axios from 'axios'
-const baseUrl = 'http://localhost:3001/comments'
+const baseUrl = 'http://localhost:3001/api/v1/comments'
 
 const getAll = async () => {
     const response = axios.get(baseUrl)
@@ -9,7 +9,7 @@ const getAll = async () => {
 }
 
 const getByRestaurant = async restaurantId => {
-    const response = await axios.get(`${baseUrl}/restaurantId/${restaurantId}`)
+    const response = await axios.get(`${baseUrl}/restaurant/${restaurantId}`)
     return await response.data
 }
 
@@ -24,4 +24,9 @@ const deleteComment = async id => {
     return response
 }
 
-export default { getAll, getByRestaurant, create, deleteComment }
+const deleteByRestaurant = async restaurantId => {
+    const response = await axios.delete(`${baseUrl}/restaurant/${restaurantId}`)
+    return response
+}
+
+export default { getAll, getByRestaurant, create, deleteComment, deleteByRestaurant }

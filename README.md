@@ -6,7 +6,7 @@
 - /api/v1/restaurants/[id]
 - /api/v1/comments
 - /api/v1/comments/[id]
-- /api/v1/comments/restaurantId/[id]
+- /api/v1/comments/restaurant/[id]
 - /users
 
 <br />
@@ -21,7 +21,7 @@
 
 /api/v1/comments/[id]
 
-/api/v1/comments/restaurantId/[id]&emsp;&emsp;(kaikki ravintolan kommentit ravintolan id:llä)
+/api/v1/comments/restaurant/[id]&emsp;&emsp;(kaikki ravintolan kommentit ravintolan id:llä)
 
 /users&emsp;&emsp;&emsp;
 

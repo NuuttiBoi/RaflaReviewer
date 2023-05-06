@@ -128,7 +128,7 @@ const RestaurantPage = ({isLoggedIn}) => {
     }
 
     const updatePage = (deletedComment) => {
-        console.log('update page w/o: ', deletedComment)
+        console.log('päivitä sivu ilman: ', deletedComment)
         //setRestaurants(restaurants.concat(newRestaurant))
         setComments(comments.filter(comment => comment.id !== deletedComment))
     }
@@ -261,15 +261,27 @@ const RestaurantPage = ({isLoggedIn}) => {
     
       // Poistaa kommentin
     const confirmDelete = () => {
-        restaurantService
-              .deleteRestaurant(state.restaurant.id)
-              .then(response => {
-                  console.log('deleted res ', response)
-              })
-              .catch(error => {
-                console.log(error)
-              })
-        closePopup()
+            // Poistaa kommentit
+            commentService
+            .deleteByRestaurant(state.restaurant.id)
+            .then(response => {
+                console.log('deleted comments ', response)
+            })
+            .catch(error => {
+              console.log(error)
+            })
+            console.log('kommentit poistettiin')
+
+            // Poistaa ravintolan
+            restaurantService
+                  .deleteRestaurant(state.restaurant.id)
+                  .then(response => {
+                      console.log('deleted res ', response)
+                  })
+                  .catch(error => {
+                    console.log(error)
+                  })
+            closePopup()
     }
 
     // Sulkee popupin
