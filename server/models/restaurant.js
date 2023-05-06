@@ -21,6 +21,7 @@ mongoose.connect(url)
         tags: [String],
         thumbsUp: [String],
         thumbsDown: [String],
+        image: String,
         userId: String
     })
 

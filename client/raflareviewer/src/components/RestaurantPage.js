@@ -14,6 +14,7 @@ import MapBoxMap from './Map/MapBoxMap';
 import useData from "../hooks/useData";
 import userService from '../services/users'
 import ConfirmDeleteReview from './ConfirmDeleteReview'
+import ReviewImage from './ReviewImage'
 
 const RestaurantPage = ({isLoggedIn}) => {
     let location = useLocation();
@@ -22,6 +23,7 @@ const RestaurantPage = ({isLoggedIn}) => {
     const [comments, setComments] = useState([])
     const [reviewedBy, setReviewedBy] = useState(null)
     const [restaurant, setRestaurant] = useState(null)
+    const [defaultImage, setDefaultImage] = useState(true);
 
      // Tykänneiden käyttäjien id:t taulukoissa
      const [thumbs, setThumbs] = useState({
@@ -290,6 +292,10 @@ const RestaurantPage = ({isLoggedIn}) => {
         document.querySelector('body').classList.remove('locked')
     }
 
+    console.log('default img? ', defaultImage)
+
+    const url = defaultImage ? 'https://users.metropolia.fi/~matleek/star_b_full.png' : state.restaurant.image
+    
     return (
         <div className="container">
             <NavLink to="/" className="back-icon"><Back /></NavLink>
@@ -298,12 +304,22 @@ const RestaurantPage = ({isLoggedIn}) => {
                 <p className='small italic'>Arvostelun lähettänyt <span className='username'>{reviewedBy}</span></p>
                 <RestaurantPageTags tags={state.restaurant.tags} />
             </section>
-            <div className="full-width-mobile">
-                <Scores scores={state.scoreInfo} />
-            </div>
-                <div className="hide-border center-mobile">
+
+            <section className='image-scores'>
+              <figure className="reviewImage">
+                <img src={state.restaurant.image} />
+              </figure>
+
+              <div className='scores-likes'>
+                <div className="full-width-mobile">
+                  <Scores scores={state.scoreInfo} />
+                </div>
+
+                <div className="hide-border center-mobile right-bigscreen">
                     <ThumbsUpButtons upId={state.upId} downId={state.downId} up={thumbs.thumbsUp.length} down={thumbs.thumbsDown.length} handleUp={handleThumbsUpClick} handleDown={handleThumbsDownClick} />
                 </div>
+              </div>
+            </section>
             <section>
               <h2>Kartalla</h2>
               <div>
@@ -323,6 +339,7 @@ const RestaurantPage = ({isLoggedIn}) => {
                 </div>
                 <Comments comments={comments} update={updatePage} isLoggedIn={isLoggedIn}/>
             </section>
+            <button>Ilmoita virheellisistä tiedoista</button>
             <Confirm />
             <ConfirmDeleteReview onClick={confirmDelete} />
         </div>

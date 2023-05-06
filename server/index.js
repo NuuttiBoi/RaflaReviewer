@@ -67,6 +67,7 @@ app.post('/api/v1/restaurants', (request, response) => {
         tags: body.tags,
         thumbsUp: [],
         thumbsDown: [],
+        image: body.image,
         userId: body.userId
     })
 

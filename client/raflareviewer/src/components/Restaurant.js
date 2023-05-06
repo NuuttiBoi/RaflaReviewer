@@ -194,7 +194,7 @@ const Restaurant = ({ restaurant, isLoggedIn }) => {
       <article className="restaurantArticle">
         <h2>{restaurant.name}</h2>
         <div className="article-img">
-          <img src="https://placekitten.com/800/800" />
+          <img src={restaurant.image} />
         </div>
         <div>
           <Address address={restaurant.address} />

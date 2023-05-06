@@ -70,7 +70,7 @@ const Navigation = ({isLoggedIn, setIsLoggedIn}) => {
                         <NavLink to="/Map" className="navlink">Kartta</NavLink>
                     </li>
                     <li>
-                        <NavLink to="/Creators" className="navlink mobileOnly">Tekijät</NavLink>
+                        <NavLink to="/Creators" className="navlink mobileOnly">Tietoa</NavLink>
                     </li>
                     <li>
                         {isLoggedIn ? (

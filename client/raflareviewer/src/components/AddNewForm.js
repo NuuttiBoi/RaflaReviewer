@@ -57,6 +57,7 @@ const AddNewForm = ({ update, isLoggedIn }) => {
         setNewName("")
         setNewAddress("")
         setNewComment("")
+        setImage("")
         setCafe(false)
         setFastFood(false)
         setLunch(false)
@@ -119,16 +120,12 @@ const AddNewForm = ({ update, isLoggedIn }) => {
                 experienceScore: experienceScore,
                 thumbsUp: [],
                 thumbsDown: [],
+                image: image,
                 userId: user._id
             }
 
-            console.log('img: ', image)
-
-
             console.log('saving ', newRestaurant)
 
-
-            
             // Lähetys palvelimelle
             resService
                 .create(newRestaurant)
@@ -182,6 +179,12 @@ const AddNewForm = ({ update, isLoggedIn }) => {
 
         // Tarkista muut pakolliset kentät
         checkFields()
+    }
+
+    // Kuvan url
+    const handleImageChange = (event) => {
+        console.log(event.target.value)
+        setImage(event.target.value)
     }
 
     // Kommentti
@@ -313,15 +316,11 @@ const AddNewForm = ({ update, isLoggedIn }) => {
                         <textarea value={newComment} onChange={handleCommentChange} className="formInput" rows="4"/>
                     </div>
                     <section>
-                    <input
-                        type="file"
-                        id="image"
-                        accept="image"
-                        onChange={convertToBase64}
-                        name="image"
-                        value=""
-                    />
-                    { image === "" || image === null ? "" : <img width="50px" height="50px" alt="Kuvan esikatselu" src={image} />}
+                        <h2>Lisää kuva</h2>
+                        <div>
+                            <label><p>URL</p></label>
+                            <input type="url" value={image} onChange={handleImageChange} className="formInput"/>
+                        </div>
                     </section>
                 </div>
             <button type="submit" className="button center unclickable" id="formSubmitButton">Tallenna</button>
