@@ -208,7 +208,7 @@ const Restaurant = ({ restaurant, isLoggedIn }) => {
                   downId: downId
                 }}
           className="button articleButton center">
-            <span>Katso kommentit</span> <span>{`(${comments.length})`}</span>
+            <span>Katso arvostelut</span> <span>{`(${comments.length})`}</span>
         </NavLink>
         <ThumbsUpButtons upId={upId} downId={downId} up={thumbs.thumbsUp.length} down={thumbs.thumbsDown.length} handleUp={handleThumbsUpClick} handleDown={handleThumbsDownClick} />
       </article>

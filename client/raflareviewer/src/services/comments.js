@@ -1,7 +1,7 @@
 // Hakee kommentit
 
 import axios from 'axios'
-const baseUrl = 'http://localhost:3001/api/v1/comments'
+const baseUrl = 'http://localhost:3001/comments'
 
 const getAll = async () => {
     const response = axios.get(baseUrl)
