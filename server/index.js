@@ -27,8 +27,18 @@ app.use(function(req, res, next) {
     next();
 });
 
+/* / ja /api vievät pääsivulle */
 app.get('/', (request, response) => {
-    response.send('(^ _ ^)/')
+    response.render('index.ejs');
+})
+
+app.get('/api', (request, response) => {
+    response.render('index.ejs');
+})
+
+/* v1 (ravintolat, käyttäjät, kommentit) */
+app.get('/api/v1', (request, response) => {
+    response.render('api_v1.ejs');
 })
 
 // Ravintolat
