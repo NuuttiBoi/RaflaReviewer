@@ -11,8 +11,7 @@ const {request, response} = require("express");
 const {requireAuth} = require('./models/authentication')
 const session = require('express-session')
 
-app.use(express.json({limit: '50mb'}));
-app.use(express.urlencoded({limit: '50mb'}));
+app.use(express.static(__dirname + '/public'));
 
 app.use(session ({
     secret: 'jkeakuj31jhJ2LHJ2jhk',
@@ -27,26 +26,36 @@ app.use(function(req, res, next) {
     next();
 });
 
+/* / ja /api vievät pääsivulle */
 app.get('/', (request, response) => {
-    response.send('(^ _ ^)/')
+    response.render('index.ejs');
+})
+
+app.get('/api', (request, response) => {
+    response.render('index.ejs');
+})
+
+/* v1 (ravintolat, käyttäjät, kommentit) */
+app.get('/api/v1', (request, response) => {
+    response.render('api_v1.ejs');
 })
 
 // Ravintolat
 
 // Hakee kaikki ravintolat
-app.get('/restaurants', (request, response) => {
+app.get('/api/v1/restaurants', (request, response) => {
     Restaurant.find({}).then(restaurants => {
         response.json(restaurants)
     })
 })
 
 // Ravintolan tallennus
-app.post('/restaurants', (request, response) => {
+app.post('/api/v1/restaurants', (request, response) => {
     const body = request.body
 
-    /* if (body.name === undefined) {
+    if (body.name === undefined) {
         return response.status(400).json({ error: 'content missing' })
-    } */
+    }
 
     // Tallennettavan rivin "konstruktori"
     const restaurant = new Restaurant({
@@ -69,14 +78,14 @@ app.post('/restaurants', (request, response) => {
 })
 
 // Hakee yksittäisen ravintolan
-app.get('/restaurants/:id', (request, response) => {
+app.get('/api/v1/restaurants/:id', (request, response) => {
     Restaurant.findById(request.params.id).then(restaurant => {
       response.json(restaurant)
     })
 })
 
 // Hakee kaikki ravintolan kommentit
-app.get('/restaurants/comment/:comment', (request, response) => {
+app.get('/api/v1/restaurants/comment/:comment', (request, response) => {
     Restaurant.find({ comment: request.params.comment} ).then(restaurant => {
       response.json(restaurant)
     })
@@ -84,7 +93,7 @@ app.get('/restaurants/comment/:comment', (request, response) => {
 
 // Ravintolan muokkaus
 
-app.patch('/restaurants/:id', (request, response, next) => {
+app.patch('/api/v1/restaurants/:id', (request, response, next) => {
     const body = request.body
     const thumbs = {
       thumbsUp: body.thumbsUp,
@@ -99,7 +108,7 @@ app.patch('/restaurants/:id', (request, response, next) => {
   })
 
   // Ravintolan poistaminen
-app.delete('/restaurants/:id', (request, response, next) => {
+app.delete('/api/v1/restaurants/:id', (request, response, next) => {
     Restaurant.findByIdAndRemove(request.params.id)
       .then(result => {
         response.status(204).end()
@@ -110,13 +119,13 @@ app.delete('/restaurants/:id', (request, response, next) => {
 // Kommentit
 
 // Hakee kaikki kommentit
-app.get('/comments', (request, response) => {
+app.get('/api/v1/comments', (request, response) => {
     Comment.find({}).then(comments => {
         response.json(comments)
     })
 })
 
-app.post('/comments', (request, response) => {
+app.post('/api/v1/comments', (request, response) => {
     const body = request.body
 
     const comment = new Comment({
@@ -134,21 +143,21 @@ app.post('/comments', (request, response) => {
 })
 
 // Hakee yksittäisen kommentin
-app.get('/comments/:id', (request, response) => {
+app.get('/api/v1/comments/:id', (request, response) => {
     Comment.findById(request.params.id).then(comment => {
       response.json(comment)
     })
 })
 
 // Hakee kaikki ravintolan kommentit
-app.get('/comments/restaurantId/:restaurantId', (request, response) => {
+app.get('/api/v1/comments/restaurantId/:restaurantId', (request, response) => {
     Comment.find({ restaurantId: request.params.restaurantId } ).then(comments => {
       response.json(comments)
     })
 })
 
 // Kommentin poistaminen
-app.delete('/comments/:id', (request, response, next) => {
+app.delete('/api/v1/comments/:id', (request, response, next) => {
     Comment.findByIdAndRemove(request.params.id)
       .then(result => {
         response.status(204).end()
