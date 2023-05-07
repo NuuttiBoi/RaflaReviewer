@@ -8,6 +8,11 @@
 - /api/v1/comments/[id]
 - /api/v1/comments/restaurant/[id]
 - /users
+- /users/[id]
+- /login
+- /login/[id]
+- /profile
+- /logout
 
 <br />
 
@@ -27,6 +32,10 @@
 
 /users/[id]&emsp;&emsp;&emsp;
 
+/profile
+
+/login
+
 <br />
 
 ## POST
@@ -36,6 +45,10 @@
 /api/v1/comments
 
 /users
+
+/login
+
+/logout
 
 <br />
 
@@ -52,3 +65,11 @@
 /api/v1/comments/[id]
 
 /api/v1/comments/restaurant/[id]
+
+/login/[id]
+
+<br />
+
+## PUT
+
+/users/[id]
