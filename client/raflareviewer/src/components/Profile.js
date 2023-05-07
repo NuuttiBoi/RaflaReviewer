@@ -4,7 +4,6 @@ import UserDefaultAvatar from "../images/UserDefaultAvatar"
 import userService from "../services/users";
 import Logout from "../images/Logout";
 import useData from '../hooks/useData'
-import commentServices from "../services/comments";
 
 const ProfileBoxOne = ({ user }) => {
     const [firstname, setFirstName] = useState("")
@@ -22,6 +21,11 @@ const ProfileBoxOne = ({ user }) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault()
+
+        if (firstname === "" || lastname === "") {
+            alert("Täytä kentät")
+            return
+        }
 
         try {
             await userService.updateProfile(user._id, {firstname, lastname})
@@ -51,8 +55,7 @@ const ProfileBoxOne = ({ user }) => {
         </div>
     )
 }
-const ProfileBoxTwo = ({user, setIsLoggedIn}) => {
-
+const ProfileBoxTwo = ({ user, setIsLoggedIn, firstname, lastname }) => {
     const logout = async (event) => {
         event.preventDefault();
         try {
@@ -70,7 +73,7 @@ const ProfileBoxTwo = ({user, setIsLoggedIn}) => {
                 <UserDefaultAvatar/>
             </div>
             <h3>{user.username}</h3>
-            <h3>{user.firstname} {user.lastname}</h3>
+            <h3>{firstname} {lastname}</h3>
             <button onClick={logout} className="logoutBtn">
                 <Logout />
                 <span>Kirjaudu Ulos</span>
@@ -162,7 +165,7 @@ const Profile = ({ setIsLoggedIn }) => {
                         <ProfileBoxOne user={user} />
                     </div>
                     <div className="profile-box-two box-style">
-                        <ProfileBoxTwo user={user} setIsLoggedIn={setIsLoggedIn} />
+                        <ProfileBoxTwo user={user} setIsLoggedIn={setIsLoggedIn} firstname={user.firstname} lastname={user.lastname}/>
                     </div>
                     <div className="profile-box-three box-style">
                         <ProfileBoxThree user={user} />
