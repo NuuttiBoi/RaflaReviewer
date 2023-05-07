@@ -24,16 +24,21 @@ const RestaurantPage = ({isLoggedIn}) => {
     const [reviewedBy, setReviewedBy] = useState(null)
     const [restaurant, setRestaurant] = useState(null)
     const [image, setImage] = useState('')
+
+    // Oletuskuva, joka näytetään, jos arvosteluun ei ole tallennettu kuvaa tai sitä ei löydy
     const defaultImage = 'https://users.metropolia.fi/~matleek/notfound.jpg'
 
-     // Tykänneiden käyttäjien id:t taulukoissa
-     const [thumbs, setThumbs] = useState({
+    /**
+     * Ylä/alapeukun antaneiden käyttäjien id:t taulukossa
+     */
+    const [thumbs, setThumbs] = useState({
         thumbsUp: [],
         thumbsDown: []
     })
 
     const user = useData() || {}
 
+    // Käyttäjänimi, joka tulee kommenttikenttään
     let username = "Vierailija"
     if (isLoggedIn) {
         username = user.username
@@ -43,7 +48,9 @@ const RestaurantPage = ({isLoggedIn}) => {
     const authorLoggedIn = (isLoggedIn && user._id === state.restaurant.userId)
     console.log('author logged in ', authorLoggedIn)
 
-    // Hakee ravintolan tietokannasta
+    /**
+     * Ravintolan haku tietokannasta ja peukkujen alustus
+     */
     useEffect(() => {
         restaurantService
             .getRestaurant(state.restaurant.id)
@@ -60,7 +67,9 @@ const RestaurantPage = ({isLoggedIn}) => {
             })
     }, [])
 
-    // Hakee arvostelun tekijän käyttäjätietokannasta
+    /**
+     * Arvostelun tehneen käyttäjän haku tietokannasta
+     */
     useEffect(() => {
     userService
         .getUser(state.restaurant.userId)
@@ -72,7 +81,9 @@ const RestaurantPage = ({isLoggedIn}) => {
         })
     }, [])
 
-    // Kommenttien asetus
+    /**
+     * Kommenttien haku tietokannasta ravintolan id:llä
+     */
     useEffect(() => {
         commentService
           .getByRestaurant(state.restaurant.id)
@@ -88,7 +99,7 @@ const RestaurantPage = ({isLoggedIn}) => {
     useEffect(() => {
       /**
       * Tarkistus löytyykö url-osoitteella kuva
-      * @url {string} - tarkistettava url
+      * @url {string} url - tarkistettava url
       */
        function imageFound (url) {
          var image = new Image();
@@ -105,11 +116,10 @@ const RestaurantPage = ({isLoggedIn}) => {
        imageFound(state.restaurant.image)
      })
  
-
-    console.log('upid ',state.upId)
     const likeBtn = document.getElementById(state.upId)
     const dislikeBtn = document.getElementById(state.downId)
 
+    // Jos sisäänkirjautunut käyttäjä on antanut arvostelulle ylä/alapeukun, vaihda kuvakkeen väri
     if (thumbs.thumbsUp.includes(user._id)) likeBtn.classList.add('clicked')
     if (thumbs.thumbsDown.includes(user._id)) dislikeBtn.classList.add('clicked')
     
@@ -118,6 +128,9 @@ const RestaurantPage = ({isLoggedIn}) => {
        document.getElementById('deleteReviewBtn').classList.remove('visuallyhidden')
     }
 
+    /**
+     * Kommentin tallennus
+     */
     function saveComment() {
         // Kommentti-olio
         const Comment = {
@@ -140,6 +153,9 @@ const RestaurantPage = ({isLoggedIn}) => {
             })
     }
 
+    /**
+     * Kommentin päivitys kommenttikentän muuttuessa
+     */
     const handleCommentChange = (event) => {
         console.log(event.target.value)
         setNewComment(event.target.value)
@@ -152,12 +168,19 @@ const RestaurantPage = ({isLoggedIn}) => {
         }
     }
 
+    /**
+     * Funktiota kutsutaan, kun kommentti poistetaan.
+     * Renderöi kommentit sivulle uudestaan ilman poistettua kommenttia
+     */
     const updatePage = (deletedComment) => {
         console.log('päivitä sivu ilman: ', deletedComment)
         //setRestaurants(restaurants.concat(newRestaurant))
         setComments(comments.filter(comment => comment.id !== deletedComment))
     }
 
+    /**
+     * Käsittelee yläpeukkukuvakkeen klikkauksen
+     */
     const handleThumbsUpClick = () => {
         if (isLoggedIn && Object.keys(user).length != 0) {
             // Jos käyttäjä on kirjautunut sisään
@@ -217,99 +240,109 @@ const RestaurantPage = ({isLoggedIn}) => {
             document.querySelector('body').classList.add('locked')
           }
       }
-
-      const handleThumbsDownClick = () => {
-        if (isLoggedIn && Object.keys(user).length != 0) {
-            // Jos käyttäjä on kirjautunut sisään
     
-            let newThumbs // Päivitetyt tykkäykset sisältävä olio
-    
-            // Jos käyttäjä ei ole vielä antanut alapeukkua
-            if (!thumbs.thumbsDown.includes(user._id)) {
-    
-              // Vaihda alapeukun väri
-              dislikeBtn.classList.add('clicked')
-    
-              if (thumbs.thumbsUp.includes(user._id)) {
-                // Jos käyttäjä on antanut yläpeukun aiemmin, poista yläpeukku ja lisää alapeukku
-    
-                // Poista yläpeukun väri
-                likeBtn.classList.remove('clicked')
-    
-                newThumbs = {
-                  thumbsUp: thumbs.thumbsUp.filter(id => id != user._id),
-                  thumbsDown: thumbs.thumbsDown.concat(user._id)
-                }
-              } else {
-                // Jos ei ole antanut yläpeukkua, lisää pelkästään käyttäjä alapeukkuihin
-                newThumbs = {
-                  ...thumbs,
-                  thumbsDown: thumbs.thumbsDown.concat(user._id)
-                }
+    /**
+    * Käsittelee alapeukkukuvakkeen klikkauksen
+    */
+    const handleThumbsDownClick = () => {
+      if (isLoggedIn && Object.keys(user).length != 0) {
+          // Jos käyttäjä on kirjautunut sisään
+  
+          let newThumbs // Päivitetyt tykkäykset sisältävä olio
+  
+          // Jos käyttäjä ei ole vielä antanut alapeukkua
+          if (!thumbs.thumbsDown.includes(user._id)) {
+  
+            // Vaihda alapeukun väri
+            dislikeBtn.classList.add('clicked')
+  
+            if (thumbs.thumbsUp.includes(user._id)) {
+              // Jos käyttäjä on antanut yläpeukun aiemmin, poista yläpeukku ja lisää alapeukku
+  
+              // Poista yläpeukun väri
+              likeBtn.classList.remove('clicked')
+  
+              newThumbs = {
+                thumbsUp: thumbs.thumbsUp.filter(id => id != user._id),
+                thumbsDown: thumbs.thumbsDown.concat(user._id)
               }
             } else {
-              // Jos nappia painetaan, kun käyttäjä on jo antanut alapeukun, poista alapeukku
-    
-              // Poista alapeukun väri
-              dislikeBtn.classList.remove('clicked')
-    
-              // Poista käyttäjän id alapeukuista
+              // Jos ei ole antanut yläpeukkua, lisää pelkästään käyttäjä alapeukkuihin
               newThumbs = {
                 ...thumbs,
-                thumbsDown: thumbs.thumbsDown.filter(id => id != user._id)
+                thumbsDown: thumbs.thumbsDown.concat(user._id)
               }
             }
-            // Päivitys tietokantaan
-            restaurantService
-            .updateRestaurant(state.restaurant.id, newThumbs)
-            .then(response => {
-                console.log('thumbs down toimi ',response)
-            })
-            .catch(error => {
-              console.log(error)
-            })
-    
-            // Päivitys sivulle
-            setThumbs(newThumbs)
-        } else {
-            // Jos ei kirjautunut sisään, näytä popup
-            document.getElementById('loginPrompt').classList.remove('visuallyhidden')
-            document.querySelector('body').classList.add('locked')
+          } else {
+            // Jos nappia painetaan, kun käyttäjä on jo antanut alapeukun, poista alapeukku
+  
+            // Poista alapeukun väri
+            dislikeBtn.classList.remove('clicked')
+  
+            // Poista käyttäjän id alapeukuista
+            newThumbs = {
+              ...thumbs,
+              thumbsDown: thumbs.thumbsDown.filter(id => id != user._id)
+            }
           }
-      }
-
-      const deleteRestaurant = () => {
-        console.log('poista')
-        document.getElementById('confirmDeletePopup').classList.remove('visuallyhidden')
-        document.querySelector('body').classList.add('locked')
-      }
-    
-      // Poistaa kommentin
-    const confirmDelete = () => {
-            // Poistaa kommentit
-            commentService
-            .deleteByRestaurant(state.restaurant.id)
-            .then(response => {
-                console.log('deleted comments ', response)
-            })
-            .catch(error => {
-              console.log(error)
-            })
-            console.log('kommentit poistettiin')
-
-            // Poistaa ravintolan
-            restaurantService
-                  .deleteRestaurant(state.restaurant.id)
-                  .then(response => {
-                      console.log('deleted res ', response)
-                  })
-                  .catch(error => {
-                    console.log(error)
-                  })
-            closePopup()
+          // Päivitys tietokantaan
+          restaurantService
+          .updateRestaurant(state.restaurant.id, newThumbs)
+          .then(response => {
+              console.log('thumbs down toimi ',response)
+          })
+          .catch(error => {
+            console.log(error)
+          })
+  
+          // Päivitys sivulle
+          setThumbs(newThumbs)
+      } else {
+          // Jos ei kirjautunut sisään, näytä popup
+          document.getElementById('loginPrompt').classList.remove('visuallyhidden')
+          document.querySelector('body').classList.add('locked')
+        }
     }
 
-    // Sulkee popupin
+    /**
+     * Poista-painiketta painaessa avautuu popup, jossa kysytään, haluaako käyttäjä varmasti poistaa ravintolan
+     */
+    const deleteRestaurant = () => {
+      console.log('poista')
+      document.getElementById('confirmDeletePopup').classList.remove('visuallyhidden')
+      document.querySelector('body').classList.add('locked')
+    }
+    
+    /**
+     * Ravintolan poisto
+     */
+    const confirmDelete = () => {
+        // Kommenttien poisto tietokannasta
+        commentService
+        .deleteByRestaurant(state.restaurant.id)
+        .then(response => {
+            console.log('deleted comments ', response)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+        console.log('kommentit poistettiin')
+
+        // Ravintolan poisto tietokannasta
+        restaurantService
+              .deleteRestaurant(state.restaurant.id)
+              .then(response => {
+                  console.log('deleted res ', response)
+              })
+              .catch(error => {
+                console.log(error)
+              })
+        closePopup()
+    }
+
+    /**
+     * Sulkee popupin
+     */
     function closePopup() {
         document.getElementById('confirmDeletePopup').classList.add('visuallyhidden')
         document.querySelector('body').classList.remove('locked')

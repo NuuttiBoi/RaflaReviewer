@@ -31,6 +31,9 @@ function Home({isLoggedIn}) {
 
   console.log('filters ',filters)
 
+  /**
+   * Luo listan valituista suodattimista
+   */
   let showFilters = []
   Object.entries(filters).forEach(([key, value]) => {
     if (value) {
@@ -41,11 +44,21 @@ function Home({isLoggedIn}) {
   console.log('keys ', showFilters)
 
   let filteredRestaurants = restaurants
+
+  /**
+   * Jos suodattimia on valittu vähintään yksi, luodaan lista ravintoloista, joista
+   * kategoriat löytyvät. Jos suodattimia on valittu 0, näytetään kaikki ravintolat.
+   */
   if (showFilters.length > 0) {
     filteredRestaurants = restaurants.filter(findCategory)
   }
 
-   function findCategory(res) {
+  /**
+   * Käy läpi ravintolaan tallennetut kategoriat ja vertaa niitä
+   * listaan valituista suodattimista
+   * @returns {boolean} true - jos ravintola vastaa hakuehtoja
+   */
+  function findCategory(res) {
     let match = true
     
     showFilters.forEach(filter => {
@@ -56,6 +69,9 @@ function Home({isLoggedIn}) {
     return match
   }
 
+  /**
+   * Lisää/poistaa kahvilan valittujen suodattimien listalta nappia painettaessa
+   */
   const handleCafeChange = () => {
       document.getElementById(tagList.cafeTitle).classList.toggle('checked')
       const newFilters = {
@@ -65,6 +81,9 @@ function Home({isLoggedIn}) {
       setFilters(newFilters)
   }
 
+  /**
+   * Lisää/poistaa pikaruoan valittujen suodattimien listalta nappia painettaessa
+   */
   const handleFastFoodChange = () => {
     document.getElementById(tagList.fastFoodTitle).classList.toggle('checked')
     const newFilters = {
@@ -74,6 +93,9 @@ function Home({isLoggedIn}) {
     setFilters(newFilters)
   }
 
+  /**
+   * Lisää/poistaa lounaan valittujen suodattimien listalta nappia painettaessa
+   */
   const handleLunchChange = () => {
     document.getElementById(tagList.lunchTitle).classList.toggle('checked')
     const newFilters = {
@@ -83,6 +105,9 @@ function Home({isLoggedIn}) {
     setFilters(newFilters)
   }
 
+  /**
+   * Lisää/poistaa brunssin valittujen suodattimien listalta nappia painettaessa
+   */
   const handleBrunchChange = () => {
     document.getElementById(tagList.brunchTitle).classList.toggle('checked')
     const newFilters = {
@@ -92,6 +117,9 @@ function Home({isLoggedIn}) {
     setFilters(newFilters)
   }
 
+  /**
+   * Lisää/poistaa kasvisvaihtoehdot valittujen suodattimien listalta nappia painettaessa
+   */
   const handleVegetarianChange = () => {
     document.getElementById(tagList.vegetarianTitle).classList.toggle('checked')
     const newFilters = {
@@ -101,6 +129,9 @@ function Home({isLoggedIn}) {
     setFilters(newFilters)
   }
 
+  /**
+   * Lisää/poistaa liikuntaesteettömyyden valittujen suodattimien listalta nappia painettaessa
+   */
   const handleAccessibleChange = () => {
     document.getElementById(tagList.accessibleTitle).classList.toggle('checked')
     const newFilters = {
@@ -110,6 +141,9 @@ function Home({isLoggedIn}) {
     setFilters(newFilters)
   }
 
+  /**
+   * Lisää/poistaa takeawayn valittujen suodattimien listalta nappia painettaessa
+   */
   const handleTakeAwayChange = () => {
     document.getElementById(tagList.takeAwayTitle).classList.toggle('checked')
     const newFilters = {
@@ -119,11 +153,13 @@ function Home({isLoggedIn}) {
     setFilters(newFilters)
   }
 
+  /**
+   * Ravintoloiden alustus
+   */
   useEffect(() => {
     resService
       .getAll()
       .then(response => {
-          //console.log(response)
           setRestaurants(response)
       })
       .catch(error => {
@@ -131,6 +167,10 @@ function Home({isLoggedIn}) {
       })
     }, [])
 
+    /**
+     * Jos käyttäjä on kirjautunut sisään, uuden arvostelun lisäyslomake avataan.
+     * Jos ei, näytetään popup, jossa kehotetaan kirjautumaan sisään.
+     */
     const openForm = (event) => {
       event.preventDefault() 
 
@@ -144,16 +184,23 @@ function Home({isLoggedIn}) {
       }
     }
 
-    // Hakukentän event handler
+    /**
+     * Päivittää hakusanan hakukentän muuttuessa
+     */
     const handleFilter = (event) => {
       setSearchWord(event.target.value)
     }
 
     console.log("searching ", searchWord)
-    //const restaurantsToShow = restaurants.filter(findWord)
+
+    /**
+     * Päivittää sivulle ravintolat, jotka löytyvät hakusanalla
+     */
     let restaurantsToShow = filteredRestaurants.filter(findWord)
 
-    // Etsii sanaa ravintolan nimestä- ja osoitteesta
+    /**
+     * Etsii hakusanaa ravintolan nimestä ja osoitteesta
+     */
     function findWord(res) {
       if (res.name.toLowerCase().includes(searchWord.toLowerCase()) ||
       res.address.toLowerCase().includes(searchWord.toLowerCase())) {
@@ -161,26 +208,34 @@ function Home({isLoggedIn}) {
       }
     }
 
-    // Suodatinpainikkeen painaminen näyttää/piilottaa tagit
+    /**
+     * Suodatinpainikkeen painaminen näyttää/piilottaa kategoriat
+     */
     const filterResults = () => {
       document.getElementById('tagContainer').classList.toggle('visuallyhidden')
     }
 
     let filterWords = showFilters
+
+    /**
+     * Jos hakusana on tyhjä, näytetään kaikki ravintolat
+     */
     if (searchWord != '') {
       filterWords = showFilters.concat(searchWord)
     }
 
+    /**
+     * Päivittää sivulle uuden lisätyn ravintolan
+     */
     const updatePage = (newRestaurant) => {
       console.log(newRestaurant)
       setRestaurants(restaurants.concat(newRestaurant))
     }
 
-    if (restaurants.length === 0) {
-      console.log('null')
-      //restaurantsToShow = null
-    }
-
+    /**
+     * Ravintolat listaavalle elementille välitettävä tieto siitä,
+     * onko tietokantaan tallennettu ollenkaan ravintoloita
+     */
     const restaurantData = (restaurants.length === 0) ? null : restaurantsToShow
 
     return (

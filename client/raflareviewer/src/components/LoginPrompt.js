@@ -1,8 +1,14 @@
 import { NavLink } from 'react-router-dom'
 
+/**
+ * Popup, jossa kehotetaan käyttäjää kirjautumaan sisään tai luomaan tunnus
+ */
+
 const LoginPrompt = () => {
 
-    // Avaa sisäänkirjautumisikkuna
+    /**
+     * Avaa sisäänkirjautumisikkunan
+     */
     const openLogin = (event) => {
         event.preventDefault()
         document.getElementById('loginPrompt').classList.add('visuallyhidden')
@@ -10,14 +16,18 @@ const LoginPrompt = () => {
         console.log('open login')
     }
 
-    // Avaa rekisteröitymisikkuna
+    /**
+     * Avaa rekisteröitymisikkunan
+     */
     const openUser = () => {
         document.getElementById('loginPrompt').classList.add('visuallyhidden')
         document.getElementById("addNewUser").classList.remove("visuallyhidden")
         console.log('open register')
     }
 
-    // Piilottaa popupin näkyvistä
+    /**
+     * Piilottaa popupin näkyvistä
+     */
     const closePopup = () => {
         console.log('close')
         document.getElementById('loginPrompt').classList.add('visuallyhidden')

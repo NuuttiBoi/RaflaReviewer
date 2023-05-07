@@ -1,5 +1,10 @@
 import ReportIcon from '../images/ReportIcon.js'
 
+/**
+ * Komponentti, joka sisältää info-kuvakkeen ja painikkeen, josta käyttäjä voi lähettää
+ * palautetta virheellisestä sisällöstä
+ */
+
 const Report = ({onClick}) => {
     return (
         <div className="reportBtnContainer">

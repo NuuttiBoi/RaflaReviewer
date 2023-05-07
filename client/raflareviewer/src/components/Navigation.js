@@ -10,7 +10,7 @@ import React from 'react';
 import Logo from '../images/Logo.js'
 
 /**
- * Navigaatio komponenti, joka näyttää linkkejä eri sivuihin.
+ * Navigaatio komponentti, joka näyttää linkkejä eri sivuihin.
  * Mobiili menu nappi, jota painamalla näkee linkit.
  *
  * @param isLoggedIn - Boolean, joka näyttää että onko käyttäjä kirjautunut.
@@ -20,20 +20,6 @@ import Logo from '../images/Logo.js'
  */
 const Navigation = ({isLoggedIn, setIsLoggedIn}) => {
     const user = useData(isLoggedIn) || {}
-
-    const [darkMode, setDarkMode] = useState(true);
-
-    const [theme, setTheme] = useState('light');
-    const toggleTheme = () => {
-        if (theme === 'light') {
-            setTheme('dark');
-        } else {
-            setTheme('light');
-        }
-    };
-    useEffect(() => {
-        document.body.className = theme;
-    }, [theme]);
 
     /**
      * Funktio, jolla avataan käyttäjän kirjautuminen.
@@ -70,7 +56,6 @@ const Navigation = ({isLoggedIn, setIsLoggedIn}) => {
             return 'Ladataan..'
         }
     }
-
 
     return (
         <nav className="main-nav">

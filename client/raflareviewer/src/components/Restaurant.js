@@ -23,6 +23,9 @@ const Restaurant = ({ restaurant, isLoggedIn }) => {
     console.log('isLoggedIn: ', isLoggedIn)
     console.log('user: ', user)
 
+    /**
+     * Hakee tietokannasta kommentit ravintolan id:llä
+     */
     useEffect(() => {
         commentService
           .getByRestaurant(restaurant.id)
@@ -34,7 +37,9 @@ const Restaurant = ({ restaurant, isLoggedIn }) => {
           })
     }, [])
 
-    // Tykkäysten alustus
+    /**
+     * Tykkäysten alustus
+     */
     useEffect(() => {
       setThumbs({
         thumbsUp: restaurant.thumbsUp,
@@ -72,131 +77,141 @@ const Restaurant = ({ restaurant, isLoggedIn }) => {
     const likeBtn = document.getElementById(upId)
     const dislikeBtn = document.getElementById(downId)
 
+    // Jos sisäänkirjautunut käyttäjä on antanut arvostelulle ylä/alapeukun, vaihda kuvakkeen väri
     if (thumbs.thumbsUp.includes(user._id)) likeBtn.classList.add('clicked')
     if (thumbs.thumbsDown.includes(user._id)) dislikeBtn.classList.add('clicked')
     
+    /**
+     * Käsittelee yläpeukkukuvakkeen klikkauksen
+     */
+    const handleThumbsUpClick = () => {
+      if (isLoggedIn && Object.keys(user).length != 0) {
+          // Jos käyttäjä on kirjautunut sisään
 
-  const handleThumbsUpClick = () => {
-    if (isLoggedIn && Object.keys(user).length != 0) {
-        // Jos käyttäjä on kirjautunut sisään
+          let newThumbs // Päivitetyt tykkäykset sisältävä olio
 
-        let newThumbs // Päivitetyt tykkäykset sisältävä olio
+          // Jos käyttäjä ei ole vielä antanut yläpeukkua
+          if (!thumbs.thumbsUp.includes(user._id)) {
 
-        // Jos käyttäjä ei ole vielä antanut yläpeukkua
-        if (!thumbs.thumbsUp.includes(user._id)) {
+            // Vaihda yläpeukun väri
+            likeBtn.classList.add('clicked')
 
-          // Vaihda yläpeukun väri
-          likeBtn.classList.add('clicked')
+            if (thumbs.thumbsDown.includes(user._id)) {
+              // Jos käyttäjä on antanut alapeukun aiemmin, poista alapeukku ja lisää yläpeukku
 
-          if (thumbs.thumbsDown.includes(user._id)) {
-            // Jos käyttäjä on antanut alapeukun aiemmin, poista alapeukku ja lisää yläpeukku
+              // Poista alapeukun väri
+              dislikeBtn.classList.remove('clicked')
 
-            // Poista alapeukun väri
-            dislikeBtn.classList.remove('clicked')
-
-            newThumbs = {
-              thumbsDown: thumbs.thumbsDown.filter(id => id != user._id),
-              thumbsUp: thumbs.thumbsUp.concat(user._id)
+              newThumbs = {
+                thumbsDown: thumbs.thumbsDown.filter(id => id != user._id),
+                thumbsUp: thumbs.thumbsUp.concat(user._id)
+              }
+            } else {
+              // Jos ei ole antanut alapeukkua, lisää pelkästään käyttäjä yläpeukkuihin
+              newThumbs = {
+                ...thumbs,
+                thumbsUp: thumbs.thumbsUp.concat(user._id)
+              }
             }
           } else {
-            // Jos ei ole antanut alapeukkua, lisää pelkästään käyttäjä yläpeukkuihin
-            newThumbs = {
-              ...thumbs,
-              thumbsUp: thumbs.thumbsUp.concat(user._id)
-            }
-          }
-        } else {
-          // Jos nappia painetaan, kun käyttäjä on jo antanut yläpeukun, poista yläpeukku
-
-          // Poista yläpeukun väri
-          likeBtn.classList.remove('clicked')
-
-          // Poista käyttäjän id yläpeukuista
-          newThumbs = {
-            ...thumbs,
-            thumbsUp: thumbs.thumbsUp.filter(id => id != user._id)
-          }
-        }
-        // Päivitys tietokantaan
-        restaurantService
-        .updateRestaurant(restaurant.id, newThumbs)
-        .then(response => {
-            console.log('thumbs up toimi ',response)
-        })
-        .catch(error => {
-          console.log(error)
-        })
-
-        // Päivitys sivulle
-        setThumbs(newThumbs)
-    } else {
-        // Jos ei kirjautunut sisään, näytä popup
-        document.getElementById('loginPrompt').classList.remove('visuallyhidden')
-        document.querySelector('body').classList.add('locked')
-      }
-  }
-
-  const handleThumbsDownClick = () => {
-    if (isLoggedIn && Object.keys(user).length != 0) {
-        // Jos käyttäjä on kirjautunut sisään
-
-        let newThumbs // Päivitetyt tykkäykset sisältävä olio
-
-        // Jos käyttäjä ei ole vielä antanut alapeukkua
-        if (!thumbs.thumbsDown.includes(user._id)) {
-
-          // Vaihda alapeukun väri
-          dislikeBtn.classList.add('clicked')
-
-          if (thumbs.thumbsUp.includes(user._id)) {
-            // Jos käyttäjä on antanut yläpeukun aiemmin, poista yläpeukku ja lisää alapeukku
+            // Jos nappia painetaan, kun käyttäjä on jo antanut yläpeukun, poista yläpeukku
 
             // Poista yläpeukun väri
             likeBtn.classList.remove('clicked')
 
-            newThumbs = {
-              thumbsUp: thumbs.thumbsUp.filter(id => id != user._id),
-              thumbsDown: thumbs.thumbsDown.concat(user._id)
-            }
-          } else {
-            // Jos ei ole antanut yläpeukkua, lisää pelkästään käyttäjä alapeukkuihin
+            // Poista käyttäjän id yläpeukuista
             newThumbs = {
               ...thumbs,
-              thumbsDown: thumbs.thumbsDown.concat(user._id)
+              thumbsUp: thumbs.thumbsUp.filter(id => id != user._id)
             }
           }
-        } else {
-          // Jos nappia painetaan, kun käyttäjä on jo antanut alapeukun, poista alapeukku
+          // Päivitys tietokantaan
+          restaurantService
+          .updateRestaurant(restaurant.id, newThumbs)
+          .then(response => {
+              console.log('thumbs up toimi ',response)
+          })
+          .catch(error => {
+            console.log(error)
+          })
 
-          // Poista alapeukun väri
-          dislikeBtn.classList.remove('clicked')
-
-          // Poista käyttäjän id alapeukuista
-          newThumbs = {
-            ...thumbs,
-            thumbsDown: thumbs.thumbsDown.filter(id => id != user._id)
-          }
+          // Päivitys sivulle
+          setThumbs(newThumbs)
+      } else {
+          // Jos ei kirjautunut sisään, näytä popup
+          document.getElementById('loginPrompt').classList.remove('visuallyhidden')
+          document.querySelector('body').classList.add('locked')
         }
-        // Päivitys tietokantaan
-        restaurantService
-        .updateRestaurant(restaurant.id, newThumbs)
-        .then(response => {
-            console.log('thumbs down toimi ',response)
-        })
-        .catch(error => {
-          console.log(error)
-        })
+    }
 
-        // Päivitys sivulle
-        setThumbs(newThumbs)
-    } else {
-        // Jos ei kirjautunut sisään, näytä popup
-        document.getElementById('loginPrompt').classList.remove('visuallyhidden')
-        document.querySelector('body').classList.add('locked')
-      }
-  }
+    /**
+     * Käsittelee alapeukkukuvakkeen klikkauksen
+     */
+    const handleThumbsDownClick = () => {
+      if (isLoggedIn && Object.keys(user).length != 0) {
+          // Jos käyttäjä on kirjautunut sisään
 
-    // Komponentti joka luo arvosanaboksit saa listan parametriksi
+          let newThumbs // Päivitetyt tykkäykset sisältävä olio
+
+          // Jos käyttäjä ei ole vielä antanut alapeukkua
+          if (!thumbs.thumbsDown.includes(user._id)) {
+
+            // Vaihda alapeukun väri
+            dislikeBtn.classList.add('clicked')
+
+            if (thumbs.thumbsUp.includes(user._id)) {
+              // Jos käyttäjä on antanut yläpeukun aiemmin, poista yläpeukku ja lisää alapeukku
+
+              // Poista yläpeukun väri
+              likeBtn.classList.remove('clicked')
+
+              newThumbs = {
+                thumbsUp: thumbs.thumbsUp.filter(id => id != user._id),
+                thumbsDown: thumbs.thumbsDown.concat(user._id)
+              }
+            } else {
+              // Jos ei ole antanut yläpeukkua, lisää pelkästään käyttäjä alapeukkuihin
+              newThumbs = {
+                ...thumbs,
+                thumbsDown: thumbs.thumbsDown.concat(user._id)
+              }
+            }
+          } else {
+            // Jos nappia painetaan, kun käyttäjä on jo antanut alapeukun, poista alapeukku
+
+            // Poista alapeukun väri
+            dislikeBtn.classList.remove('clicked')
+
+            // Poista käyttäjän id alapeukuista
+            newThumbs = {
+              ...thumbs,
+              thumbsDown: thumbs.thumbsDown.filter(id => id != user._id)
+            }
+          }
+          // Päivitys tietokantaan
+          restaurantService
+          .updateRestaurant(restaurant.id, newThumbs)
+          .then(response => {
+              console.log('thumbs down toimi ',response)
+          })
+          .catch(error => {
+            console.log(error)
+          })
+
+          // Päivitys sivulle
+          setThumbs(newThumbs)
+      } else {
+          // Jos ei kirjautunut sisään, näytä popup
+          document.getElementById('loginPrompt').classList.remove('visuallyhidden')
+          document.querySelector('body').classList.add('locked')
+        }
+    }
+
+    /**
+     * Ruoalle, hinta-laatusuhteelle ja kokemukselle annetut
+     * arvosanat sekä maksimiarvot ja otsikot tallennettuna listaan.
+     * Lista välitetään komponentille, joka generoi arvosanaboksin
+     */
     const scoreInfo = [
       {
         title: scores.food.title,
