@@ -1,16 +1,22 @@
 import Icon from '../images/x'
 import { NavLink } from 'react-router-dom'
 
-// "Vahvista että haluat poistaa arvostelun" -popup
+/**
+ * "Vahvista että haluat poistaa arvostelun" -popup,
+ * kun arvostelu yritetään poistaa
+ */
 
 const ConfirmDeleteReview = ({ onClick }) => {
 
+    /**
+     * Sulkee popupin
+     */
     function closePopup() {
         document.getElementById('confirmDeletePopup').classList.add('visuallyhidden')
         document.querySelector('body').classList.remove('locked')
     }
 
-    // Parametrina saatu onClick-funktio poistaa ravintolan ja kommentit ja käyttäjä palautetaan etusivulle
+    // Parametrina saatu onClick-funktio poistaa ravintolan ja kommentit tietokannasta ja käyttäjä palautetaan etusivulle
 
     return (
         <div id="confirmDeletePopup" className="visuallyhidden popup">

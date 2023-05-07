@@ -1,9 +1,15 @@
 import Icon from '../images/x'
 
-// Ravintolasivun "Vahvista että haluat poistaa kommentin" -popup
+/**
+ * "Vahvista että haluat poistaa kommentin" -popup,
+ * kun ravintolasivulta yritetään poistaa kommentti
+ */
 
 const Confirm = ({ id, onClick, update }) => {
 
+    /**
+     * Sulkee popupin
+     */
     function closePopup() {
         document.getElementById(id).classList.add('visuallyhidden')
         document.querySelector('body').classList.remove('locked')

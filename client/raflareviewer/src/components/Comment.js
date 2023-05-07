@@ -5,24 +5,24 @@ import commentService from '../services/comments'
 import useData from '../hooks/useData'
 
 const Comment = ({ userId, username, id, content, update, isLoggedIn }) => {  
+    const user = useData() || {}
 
     // Onko kommentin jättänyt käyttäjä kirjautuneena sisään
-    const user = useData() || {}
     const authorLoggedIn = (isLoggedIn && user._id === userId)
-
-    console.log(userId)
-    console.log(user._id)
-
     console.log('author logged in? (comment) ', authorLoggedIn)
 
-    // Avaa popupin, jossa kysytään haluaako varmasti poistaa kommentin
+    /**
+     * Avaa popupin, jossa kysytään, haluaako käyttäjä varmasti poistaa kommentin
+     */
     const confirmDelete = () => {
         console.log(id)
         document.getElementById(id).classList.remove('visuallyhidden')
         document.querySelector('body').classList.add('locked')
     }
 
-    // Poistaa kommentin
+    /**
+     * Kommentin poisto tietokannasta
+     */
     function deleteComment() {
         console.log('poistetaan ', id)
 
@@ -45,7 +45,9 @@ const Comment = ({ userId, username, id, content, update, isLoggedIn }) => {
         console.log('report ', id)
     }
 
-    // Sulkee popupin
+    /**
+     * Sulkee popupin
+     */
     function closePopup() {
         document.getElementById(id).classList.add('visuallyhidden')
         document.querySelector('body').classList.remove('locked')

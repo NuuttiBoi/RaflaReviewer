@@ -1,4 +1,6 @@
-import { useState } from "react"
+/**
+ * "Lisää uusi arvostelu" -lomakkeen checkbox
+ */
 
 const FormCheckbox = ({ label, onChange, isChecked }) => {
     return (

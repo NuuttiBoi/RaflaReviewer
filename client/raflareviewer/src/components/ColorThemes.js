@@ -1,10 +1,18 @@
 import { useState, useEffect } from 'react'
 
+/**
+ * Kolme painiketta väriteeman vaihtamiseen
+ */
+
 const ColorThemes = () => {
     const [lightTheme, setLightTheme] = useState(false)
     const [darkTheme, setDarkTheme] = useState(false)
     const [secretTheme, setSecretTheme] = useState(false)
 
+    /**
+     * Hakee käyttäjän valinnan välimuistista ja vaihtaa teeman sen mukaisesti,
+     * oletus vaalea teema
+     */
     useEffect(() => {
         const preference = localStorage.getItem('theme');
 
@@ -17,6 +25,9 @@ const ColorThemes = () => {
         }
     }, []);
 
+    /**
+     * Vaihtaa vaalean teeman
+     */
     const changeLightTheme = () => {
         setLightTheme(true)
         setDarkTheme(false)
@@ -24,6 +35,9 @@ const ColorThemes = () => {
         document.querySelector('body').classList.remove('darkTheme', 'secretTheme')
     }
 
+    /**
+     * Vaihtaa tumman teeman
+     */
     const changeDarkTheme = () => {
         setDarkTheme(true)
         setLightTheme(false)
@@ -32,6 +46,9 @@ const ColorThemes = () => {
         document.querySelector('body').classList.remove('secretTheme')
     }
 
+    /**
+     * Vaihtaa kolmannen teeman
+     */
     const changeSecretTheme = () => {
         setSecretTheme(true)
         setDarkTheme(false)
@@ -40,16 +57,28 @@ const ColorThemes = () => {
         document.querySelector('body').classList.remove('darkTheme')
     }
 
+    /**
+     * Vaaleaa teemapainiketta painettaessa päivittää tiedon
+     * välimuistiin ja kutsuu funktiota, joka vaihtaa sivulle vaalean teeman
+     */
     const handleLightThemeChange = () => {
         changeLightTheme()
         localStorage.setItem('theme', 'light')
     }
 
+     /**
+     * Tummaa teemapainiketta painettaessa päivittää tiedon
+     * välimuistiin ja kutsuu funktiota, joka vaihtaa sivulle tumman teeman
+     */
     const handleDarkThemeChange = () => {
         changeDarkTheme()
         localStorage.setItem('theme', 'dark')
     }
 
+     /**
+     * Kolmatta teemapainiketta painettaessa päivittää tiedon
+     * välimuistiin ja kutsuu funktiota, joka vaihtaa sivulle kolmannen teeman
+     */
     const handleSecretThemeChange = () => {
         changeSecretTheme()
         localStorage.setItem('theme', 'secret')

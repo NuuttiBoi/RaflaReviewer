@@ -1,5 +1,3 @@
-// Lisää uusi arvostelu -lomake
-
 import { useState } from 'react'
 import resService from '../services/restaurants'
 import commentService from '../services/comments'
@@ -8,6 +6,10 @@ import Icon from '../images/x'
 import tagList from '../sources/tagList'
 import scores from '../sources/scores'
 import useData from "../hooks/useData";
+
+/**
+ * Lisää uusi arvostelu -lomake
+ */
 
 const AddNewForm = ({ update, isLoggedIn }) => {
     // Kenttien tiedot
@@ -35,7 +37,9 @@ const AddNewForm = ({ update, isLoggedIn }) => {
 
     console.log('user ', user)
 
-    // Tyhjien kenttien tarkistus
+    /**
+     * Tarkistus, etteivät pakolliset kentät ole tyhjät
+     */
     const checkFields = () => {
         const requiredFields = document.getElementById('addNewForm').querySelectorAll('.required > input')
 
@@ -49,7 +53,9 @@ const AddNewForm = ({ update, isLoggedIn }) => {
         ok ? document.getElementById('formSubmitButton').classList.remove('unclickable') : document.getElementById('formSubmitButton').classList.add('unclickable')
     }
 
-    // Piilottaa lomakkeen näkyvistä
+    /**
+     * Piilottaa lomakkeen näkyvistä ja resetoi kentät
+     */
     function closeForm() {
         console.log('close')
         document.getElementById('addNewForm').classList.add('visuallyhidden')
@@ -67,7 +73,9 @@ const AddNewForm = ({ update, isLoggedIn }) => {
         setTakeAway(false)
     }
 
-    // Tallentaa tiedot ja piilottaa lomakkeen
+    /**
+     * Tietojen tallennus tietokantaan
+     */
     const saveForm = (event) => {
         event.preventDefault()
         console.log('save')
@@ -111,6 +119,7 @@ const AddNewForm = ({ update, isLoggedIn }) => {
             }
         })
 
+        // Uusi ravintola-olio
         const newRestaurant = {
                 name: newName,
                 address: newAddress,
@@ -129,7 +138,7 @@ const AddNewForm = ({ update, isLoggedIn }) => {
             // Jos url-kenttää ei ole jätetty tyhjäksi, tarkistus onko url validi
             if (image.length === 0 || isValidUrl(image) ) {
                 console.log('url ok')
-                // Jos ok, lähetys palvelimelle
+                // Jos url ok, lähetys palvelimelle
                 resService
                     .create(newRestaurant)
                     .then(response => {
@@ -140,7 +149,7 @@ const AddNewForm = ({ update, isLoggedIn }) => {
                             // Kommentti-olio
                             const Comment = {
                                 restaurantId: response.id, // Ravintolan id = responsen palauttama id
-                                username: username, // käyttäjä
+                                username: username,
                                 userId: user._id,
                                 content: newComment
                             }
@@ -168,8 +177,9 @@ const AddNewForm = ({ update, isLoggedIn }) => {
             }
     }
 
-    // Kenttien tilojen päivitys
-    // Nimi (pakollinen kenttä)
+    /**
+     * Nimi-muuttujan päivitys nimikentän muuttuessa (pakollinen kenttä)
+     */
     const handleNameChange = (event) => {
         console.log(event.target.value)
         setNewName(event.target.value)
@@ -178,7 +188,9 @@ const AddNewForm = ({ update, isLoggedIn }) => {
         checkFields()
     }
 
-    // Osoite (pakollinen kenttä)
+    /**
+     * Osoite-muuttujan päivitys osoitekentän muuttuessa (pakollinen kenttä)
+     */
     const handleAddressChange = (event) => {
         console.log(event.target.value)
         setNewAddress(event.target.value)
@@ -187,76 +199,93 @@ const AddNewForm = ({ update, isLoggedIn }) => {
         checkFields()
     }
 
-    // Kuvan url
+    /**
+     * Url-muuttujan päivitys url-kentän muuttuessa
+     */
     const handleImageChange = (event) => {
         console.log(event.target.value)
         setImage(event.target.value)
     }
 
-    // Kommentti
+    /**
+     * Kommentin päivitys kommenttikentän muuttuessa
+     */
     const handleCommentChange = (event) => {
         console.log(event.target.value)
         setNewComment(event.target.value)
     }
 
-    // Checkboxit
+    /**
+     * "Kahvila"-arvon vaihtaminen nappia painettaessa
+     */
     const handleCafeChange = (event) => {
         setCafe(!cafe)
     }
 
+    /**
+     * "Pikaruoka"-arvon vaihtaminen nappia painettaessa
+     */
     const handleFastFoodChange = (event) => {
         setFastFood(!fastFood)
     }
 
+    /**
+     * "Lounas"-arvon vaihtaminen nappia painettaessa
+     */
     const handleLunchChange = (event) => {
         setLunch(!lunch)
     }
 
+    /**
+     * "Brunssi"-arvon vaihtaminen nappia painettaessa
+     */
     const handleBrunchChange = (event) => {
         setBrunch(!brunch)
     }
 
+    /**
+     * "Kasvisvaihtoehtoja"-arvon vaihtaminen nappia painettaessa
+     */
     const handleVegetarianChange = (event) => {
         setVegetarian(!vegetarian)
     }
 
+    /**
+     * "Liikuntaesteetön"-arvon vaihtaminen nappia painettaessa
+     */
     const handleAccessibleChange = (event) => {
         setAccessible(!accessible)
     }
 
+    /**
+     * "Takeaway"-arvon vaihtaminen nappia painettaessa
+     */
     const handleTakeAwayChange = (event) => {
         setTakeAway(!takeAway)
     }
 
-    // Sliderit
+    /**
+     * Ruoka-arvosanan päivitys sliderin arvon muuttuessa
+     */
     const handleFoodScoreChange = (event) => {
         console.log('food ', event.target.value)
         setFoodScore(event.target.value)
     }
 
+    /**
+     * Hinta-laatu-suhde -arvosanan päivitys sliderin arvon muuttuessa
+     */
     const handlequalityPriceScoreChange = (event) => {
         console.log('quality price ', event.target.value)
         setqualityPriceScore(event.target.value)
     }
 
+    /**
+     * Kokemus-arvosanan päivitys sliderin arvon muuttuessa
+     */
     const handleExperienceScoreChange = (event) => {
         console.log('experience ', event.target.value)
         setExperienceScore(event.target.value)
-    }
-
-    function convertToBase64(event) {
-        event.preventDefault()
-        console.log('img?',event.target.value)
-        console.log('upload image')
-        var reader = new FileReader()
-        reader.readAsDataURL(event.target.files[0])
-        reader.onload = () => {
-            console.log('read file',reader.result)
-            setImage(reader.result)
-        }
-        reader.onerror = error => {
-            console.log('error',error)
-        }
     }
 
     /**
