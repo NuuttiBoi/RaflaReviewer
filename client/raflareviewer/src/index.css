@@ -680,6 +680,8 @@ form label:not(.formCheckboxContainer label) {
   width: 6rem;
   flex-grow: 0;
   font-weight: bold;
+  line-height: 1.7;
+  margin-bottom: 0;
 }
 
 .addNewForm h2 {
@@ -1297,6 +1299,13 @@ p:not(:last-child) {
   display: inline-block;
   width: 100%;
   height: 100%;
+}
+
+.warningText {
+  font-size: var(--text-small);
+  color: var(--clr-red);
+  text-align: center;
+  opacity: 0;
 }
 
 /* Pienemmillä näytöillä lomake täyttää koko sivun */

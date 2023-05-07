@@ -10,6 +10,8 @@ import useData from '../hooks/useData'
 
 const Restaurant = ({ restaurant, isLoggedIn }) => {
     const [comments, setComments] = useState([])
+    const [image, setImage] = useState('')
+    const defaultImage = 'https://users.metropolia.fi/~matleek/notfound.jpg'
 
     // Tykänneiden käyttäjien id:t taulukoissa
     const [thumbs, setThumbs] = useState({
@@ -39,6 +41,29 @@ const Restaurant = ({ restaurant, isLoggedIn }) => {
         thumbsDown: restaurant.thumbsDown
       })
     }, [])
+
+    useEffect(() => {
+      /**
+      * Tarkistus löytyykö url-osoitteella kuva
+      * @url {string} - tarkistettava url
+      */
+       function imageFound (url) {
+         var image = new Image();
+         image.onload = function() {
+           if (this.width > 0) {
+             console.log(restaurant.name, " image exists");
+             setImage(url)
+           }
+         }
+         image.onerror = function() {
+           console.log(restaurant.name, "image doesn't exist");
+           setImage(defaultImage)
+         }
+         image.src = url
+       }
+       imageFound(restaurant.image)
+     })
+ 
 
     // Jokaisen ravintolan peukkukuvakkeilla yksilölliset id:t
     const upId = `thumbsUp${restaurant.id}`
@@ -194,7 +219,7 @@ const Restaurant = ({ restaurant, isLoggedIn }) => {
       <article className="restaurantArticle">
         <h2>{restaurant.name}</h2>
         <div className="article-img">
-          <img src={restaurant.image} />
+          <img src={image} />
         </div>
         <div>
           <Address address={restaurant.address} />

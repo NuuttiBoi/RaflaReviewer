@@ -126,40 +126,46 @@ const AddNewForm = ({ update, isLoggedIn }) => {
 
             console.log('saving ', newRestaurant)
 
-            // Lähetys palvelimelle
-            resService
-                .create(newRestaurant)
-                .then(response => {
-                    console.log('success')
+            // Jos url-kenttää ei ole jätetty tyhjäksi, tarkistus onko url validi
+            if (image.length === 0 || isValidUrl(image) ) {
+                console.log('url ok')
+                // Jos ok, lähetys palvelimelle
+                resService
+                    .create(newRestaurant)
+                    .then(response => {
+                        console.log('success')
 
-                    // Jos arvostelussa mukana kommentti, tallennetaan se toiseen tauluun
-                    if (newComment.trim().length > 0) {
-                        // Kommentti-olio
-                        const Comment = {
-                            restaurantId: response.id, // Ravintolan id = responsen palauttama id
-                            username: username, // käyttäjä
-                            userId: user._id,
-                            content: newComment
+                        // Jos arvostelussa mukana kommentti, tallennetaan se toiseen tauluun
+                        if (newComment.trim().length > 0) {
+                            // Kommentti-olio
+                            const Comment = {
+                                restaurantId: response.id, // Ravintolan id = responsen palauttama id
+                                username: username, // käyttäjä
+                                userId: user._id,
+                                content: newComment
+                            }
+                            console.log('comment ', Comment)
+
+                            // Kommentin tallennus palvelimelle
+                            commentService.create(Comment)
+                                .then(response => {
+                                    console.log('comment saved ', response)
+                                })
+                                .catch(error => {
+                                    console.log('comment error ', error)
+                                })
                         }
-                        console.log('comment ', Comment)
-
-                        // Kommentin tallennus palvelimelle
-                        commentService.create(Comment)
-                            .then(response => {
-                                console.log('comment saved ', response)
-                            })
-                            .catch(error => {
-                                console.log('comment error ', error)
-                            })
-                    }
+                    })
+                    .catch(error => {
+                        console.log(error)
                 })
-                .catch(error => {
-                    console.log(error)
-            })
-            console.log('saving ', newRestaurant)
-            closeForm()
-            update(newRestaurant)
-            
+                console.log('saving ', newRestaurant)
+                closeForm()
+                update(newRestaurant)
+            } else {
+                // Jos url ei ole validissa muodossa, näytä virheilmoitus
+                document.getElementById('addNewForm').querySelector('.warningText').style.opacity = '1'
+            }
     }
 
     // Kenttien tilojen päivitys
@@ -253,6 +259,20 @@ const AddNewForm = ({ update, isLoggedIn }) => {
         }
     }
 
+    /**
+     * Tarkistaa onko merkkijono validi url
+     * @param {string} url - tarkistettava merkkijono
+     * @return {boolean} - true, jos url on validi
+     */
+    const isValidUrl = url => {
+        try { 
+            return Boolean(new URL(url)); 
+        }
+        catch(e){ 
+            return false; 
+        }
+    }
+
     return (
         <div id="addNewForm" className="visuallyhidden popup addNewForm">
             <header className="formHeader">
@@ -319,8 +339,9 @@ const AddNewForm = ({ update, isLoggedIn }) => {
                         <h2>Lisää kuva</h2>
                         <div>
                             <label><p>URL</p></label>
-                            <input type="url" value={image} onChange={handleImageChange} className="formInput"/>
+                            <input value={image} onChange={handleImageChange} className="formInput"/>
                         </div>
+                        <p className='warningText'>Virheellinen URL</p>
                     </section>
                 </div>
             <button type="submit" className="button center unclickable" id="formSubmitButton">Tallenna</button>

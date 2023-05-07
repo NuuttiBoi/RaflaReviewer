@@ -23,6 +23,8 @@ const RestaurantPage = ({isLoggedIn}) => {
     const [comments, setComments] = useState([])
     const [reviewedBy, setReviewedBy] = useState(null)
     const [restaurant, setRestaurant] = useState(null)
+    const [image, setImage] = useState('')
+    const defaultImage = 'https://users.metropolia.fi/~matleek/notfound.jpg'
 
      // Tykänneiden käyttäjien id:t taulukoissa
      const [thumbs, setThumbs] = useState({
@@ -82,6 +84,27 @@ const RestaurantPage = ({isLoggedIn}) => {
             console.log(error)
           })
     }, [])
+
+    useEffect(() => {
+      /**
+      * Tarkistus löytyykö url-osoitteella kuva
+      * @url {string} - tarkistettava url
+      */
+       function imageFound (url) {
+         var image = new Image();
+         image.onload = function() {
+           if (this.width > 0) {
+             setImage(url)
+           }
+         }
+         image.onerror = function() {
+           setImage(defaultImage)
+         }
+         image.src = url
+       }
+       imageFound(state.restaurant.image)
+     })
+ 
 
     console.log('upid ',state.upId)
     const likeBtn = document.getElementById(state.upId)
@@ -307,14 +330,12 @@ const RestaurantPage = ({isLoggedIn}) => {
 
             <section className='image-scores'>
               <figure className="reviewImage">
-                <img src={state.restaurant.image} />
+                <img src={image} />
               </figure>
-
               <div className='scores-likes'>
                 <div className="full-width-mobile">
                   <Scores scores={state.scoreInfo} />
                 </div>
-
                 <div className="hide-border center-mobile right-bigscreen">
                     <ThumbsUpButtons upId={state.upId} downId={state.downId} up={thumbs.thumbsUp.length} down={thumbs.thumbsDown.length} handleUp={handleThumbsUpClick} handleDown={handleThumbsDownClick} />
                 </div>
