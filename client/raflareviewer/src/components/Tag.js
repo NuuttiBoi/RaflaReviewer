@@ -1,3 +1,10 @@
+/**
+ * Komponentti, joka renderöi yksittäisen Tag-komponentin.
+ * @param label  - tageihin liittyvä teksti.
+ * @param onChange - funktio, joka kutsutaan kun tageja valitaan tai poistetaan
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const Tag = ({ label, onChange }) => {
     let isChecked=false
 
