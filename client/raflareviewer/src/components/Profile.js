@@ -1,22 +1,57 @@
 import React from "react"
-import users from "../services/users"
 import { useState, useEffect } from "react"
 import UserDefaultAvatar from "../images/UserDefaultAvatar"
 import userService from "../services/users";
 import Logout from "../images/Logout";
 import useData from '../hooks/useData'
+import commentServices from "../services/comments";
 
+const ProfileBoxOne = ({ user }) => {
+    const [firstname, setFirstName] = useState("")
+    const [lastname, setLastName] = useState("")
 
-const Profile = ({setIsLoggedIn}) => {
-    const user = useData()
+    const handleChange = (event) => {
+        const {name, value} = event.target
 
-    if (!user) {
-        return (
-            <div>
-                Ladataan käyttäjää
-            </div>
-        )
+        if (name === "firstName") {
+            setFirstName(value)
+        } else if (name === "lastName") {
+            setLastName(value)
+        }
     }
+
+    const handleSubmit = async (event) => {
+        event.preventDefault()
+
+        try {
+            await userService.updateProfile(user._id, {firstname, lastname})
+            console.log('User data updated successfully.' , user._id)
+            alert("Tiedot vaihdettu")
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    return (
+        <div className="profile-box-one">
+            <header className="boxFormHeaderOne">
+                <h2>Vaihda tietoja</h2>
+            </header>
+            <div className="profileFormContOne">
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <input type="text" name="firstName" value={firstname} onChange={handleChange} className="formInput" placeholder="Etunimi"/>
+                    </div>
+                    <div>
+                        <input type="text" name="lastName" value={lastname} onChange={handleChange} className="formInput" placeholder="Sukunimi"/>
+                    </div>
+                    <button className="button" type="submit">Tallenna</button>
+                </form>
+            </div>
+        </div>
+    )
+}
+const ProfileBoxTwo = ({user, setIsLoggedIn}) => {
 
     const logout = async (event) => {
         event.preventDefault();
@@ -30,30 +65,113 @@ const Profile = ({setIsLoggedIn}) => {
     }
 
     return (
-        <div className="profile">
-            <h1>Profiili</h1>
-            <div className="user-info">
-                <div className="avatar-container">
-                    {user?.avatar ? (
-                        <img src={user.avatar} alt="User avatar" className="avatar" />
-                    ) : (
-                        <UserDefaultAvatar/>
-                    )}
-                </div>
-                <div className="user-details">
-                    <h2>{user?.username}</h2>
-                    <p>{user?.firstname} {user?.lastname}</p>
-                </div>
+        <div className="profile-box-two">
+            <div className="avatar-container">
+                <UserDefaultAvatar/>
             </div>
-            <div>
-                <button onClick={logout} className="logoutBtn">
-                    <Logout />
-                    <span>Kirjaudu Ulos</span>
-                </button>
-            </div>
-
+            <h3>{user.username}</h3>
+            <h3>{user.firstname} {user.lastname}</h3>
+            <button onClick={logout} className="logoutBtn">
+                <Logout />
+                <span>Kirjaudu Ulos</span>
+            </button>
         </div>
     )
 }
+
+const ProfileBoxThree = ({ user }) => {
+    const [oldPassword, setOldPassword] = useState("")
+    const [newPassword, setNewPassword] = useState("")
+    const [confirmPassword, setConfirmPassword] = useState("")
+
+    const handleChange = (event) => {
+        const { name, value } = event.target
+
+        if (name === "oldPassword") {
+            setOldPassword(value)
+        } else if (name === "newPassword") {
+            setNewPassword(value)
+        } else if (name === "confirmPassword") {
+            setConfirmPassword(value)
+        }
+    }
+
+    const handleSubmit = async (event) => {
+        event.preventDefault()
+
+        if (newPassword === "" && confirmPassword === "") {
+            alert("Täytä kohdat")
+            return;
+        }
+
+        if (newPassword !== confirmPassword) {
+            console.log('Passwords do not match')
+            alert("Salasanat eivät ole samat")
+            return;
+        }
+
+        try {
+            await userService.updateProfile(user._id, {
+                oldPassword,
+                newPassword,
+            })
+            console.log('Password changed successfully.')
+            setOldPassword('')
+            setNewPassword('')
+            setConfirmPassword('')
+        } catch (error) {
+            console.log(error)
+            alert("Vanha salasana on väärä")
+        }
+    }
+
+    return (
+        <div className="profile-box-three">
+            <header className="boxFormHeaderThree">
+                <h2>Vaihda salasanaa</h2>
+            </header>
+            <div className="profileFormContThree">
+                <form onSubmit={handleSubmit}>
+                    <input type="password" name="oldPassword" value={oldPassword} onChange={handleChange} className="formInput" placeholder="Vanha salsana"/>
+                    <input type="password" name="newPassword" value={newPassword} onChange={handleChange} className="formInput" placeholder="Uusi salasana"/>
+                    <input type="password" name="confirmPassword" value={confirmPassword} onChange={handleChange} className="formInput" placeholder="Salasana uudestaan"/>
+                    <button type="submit" className="button" >Tallenna</button>
+                </form>
+            </div>
+        </div>
+    )
+}
+
+const Profile = ({ setIsLoggedIn }) => {
+    const user = useData()
+
+    if (!user) {
+        return (
+            <div>
+                Ladataan käyttäjää
+            </div>
+        )
+    }
+
+    return (
+        <div className="profile">
+            <h1>Profiili</h1>
+            {user && (
+                <>
+                    <div className="profile-box-one box-style">
+                        <ProfileBoxOne user={user} />
+                    </div>
+                    <div className="profile-box-two box-style">
+                        <ProfileBoxTwo user={user} setIsLoggedIn={setIsLoggedIn} />
+                    </div>
+                    <div className="profile-box-three box-style">
+                        <ProfileBoxThree user={user} />
+                    </div>
+                </>
+            )}
+        </div>
+    )
+}
+
 
 export default Profile

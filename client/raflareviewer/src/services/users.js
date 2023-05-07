@@ -47,4 +47,15 @@ const getUser = async (id) => {
     return await response.data
 }
 
-export default {create, login, getProfile, handleLogout, getUser}
+const updateProfile = async (id, data) => {
+    const token = localStorage.getItem('token')
+    const response = await axios.put(`${baseUrl}/users/${id}`, data, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    })
+    console.log(response.data)
+    return response.data
+}
+
+export default {create, login, getProfile, handleLogout, getUser, updateProfile}

@@ -183,9 +183,7 @@ app.post('/users', async (request, response) => {
 
         const user = new User({ username, password, firstname, lastname });
         await user.save();
-        const token = jwt.sign({ userId: user._id }, jwtSecret, { expiresIn: '1h' });
-
-        console.log(token)
+        const token = jwt.sign({ userId: user._id }, jwtSecret);
 
         response.status(201).json({ token: token});
     } catch (error) {
@@ -208,13 +206,45 @@ app.post('/login', async (request, response) => {
 
         request.session.userId = user._id
 
-        const token = jwt.sign({ userId: user._id }, jwtSecret, { expiresIn: '1h' });
-
-        console.log(token)
-
+        const token = jwt.sign({ userId: user._id }, jwtSecret);
         response.json({token: token})
     } catch (error) {
         response.status(500).json({ message: error.message });
+    }
+})
+
+app.put('/users/:id', requireAuth ,async (request, response) => {
+    const userId = request.params.id
+    const { firstname, lastname, oldPassword, newPassword} = request.body
+
+    try {
+        const user = await User.findById(userId)
+        if (!user) {
+            return response.status(404).json({ message: 'User not found' })
+        }
+        if (firstname) {
+            user.firstname = firstname
+        }
+
+        if (lastname) {
+            user.lastname = lastname
+        }
+
+        if (oldPassword && newPassword) {
+            const passwordMatch = await user.comparePassword(oldPassword)
+
+            if (!passwordMatch) {
+                return response.status(401).json({ message: 'Old password is incorrect' })
+            }
+
+            user.password = newPassword;
+        }
+
+        await user.save()
+        console.log(user)
+        response.json({ message: 'User updated successfully' })
+    } catch (error) {
+        response.status(500).json({ message: error.message })
     }
 })
 
