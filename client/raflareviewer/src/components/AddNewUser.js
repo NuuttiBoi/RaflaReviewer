@@ -3,6 +3,12 @@ import { useState } from "react";
 import userService from "../services/users"
 import Icon from '../images/x'
 
+/**
+ * Komponentti rekistöröitymistä varten.
+ * @param setIsLoggedIn  - Funktio, jolla päivitetään kirjautumis status.
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const AddNewUser = ({setIsLoggedIn}) => {
     const [newUsername, setNewUsername] = useState("")
     const [newPassword, setNewPassword] = useState("")
@@ -10,6 +16,9 @@ const AddNewUser = ({setIsLoggedIn}) => {
     const [newLastname, setNewLastname] = useState("")
     const [userExists, setUserExists] = useState(false)
 
+    /**
+     * Sulkee lomakkeen.
+     */
     function closeForm() {
         console.log("close")
         document.getElementById("addNewUser").classList.add("visuallyhidden")
@@ -22,6 +31,10 @@ const AddNewUser = ({setIsLoggedIn}) => {
         setUserExists(false)
     }
 
+    /**
+     * Hoitaa lomakkeen tietojan tallentamisen.
+     * @param event
+     */
     const saveForm = (event) => {
         event.preventDefault()
         console.log("save")
@@ -55,6 +68,10 @@ const AddNewUser = ({setIsLoggedIn}) => {
         console.log("saving user")
     }
 
+    /**
+     * Hoitaa lomakkeen syötön muutoksen.
+     * @param event
+     */
     const handleChange = (event) => {
         switch (event.target.id) {
             case 'username':

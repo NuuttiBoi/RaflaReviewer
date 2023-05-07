@@ -5,10 +5,22 @@ import userService from "../services/users";
 import Logout from "../images/Logout";
 import useData from '../hooks/useData'
 
+/**
+ * Komponentti käyttäjän tietojen muutokseen.
+ * @param user - Käyttäjä objekti.
+ * @param setFName - Funktio, jolla laitetaan etunimi.
+ * @param setLName - Funktio, jolla laitetaan sukunimi.
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const ProfileBoxOne = ({ user, setFName , setLName }) => {
     const [firstname, setFirstName] = useState("")
     const [lastname, setLastName] = useState("")
 
+    /**
+     * Hoitaa lomakkeen syötön muutoksen.
+     * @param event
+     */
     const handleChange = (event) => {
         const {name, value} = event.target
 
@@ -19,7 +31,11 @@ const ProfileBoxOne = ({ user, setFName , setLName }) => {
         }
     }
 
-
+    /**
+     * Hoitaa lomakkeen tietojen tallentamisen.
+     * @param event
+     * @returns {Promise<void>}
+     */
     const handleSubmit = async (event) => {
         event.preventDefault()
 
@@ -58,7 +74,23 @@ const ProfileBoxOne = ({ user, setFName , setLName }) => {
         </div>
     )
 }
+
+/**
+ * Komponentti, joka näyttää käyttäjän etu, sukunimen ja avatarin.
+ * @param user - Käyttäjä objekti.
+ * @param setIsLoggedIn - Funktio, jolla päivitetään kirjautumis status.
+ * @param fname - Käyttäjän etunimi.
+ * @param lname - Käyttäjän sukunimi.
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const ProfileBoxTwo = ({ user, setIsLoggedIn, fname, lname }) => {
+
+    /**
+     * Hoitaa käyttäjän kirjautumisen ulos.
+     * @param event
+     * @returns {Promise<void>}
+     */
     const logout = async (event) => {
         event.preventDefault();
         try {
@@ -89,11 +121,21 @@ const ProfileBoxTwo = ({ user, setIsLoggedIn, fname, lname }) => {
     )
 }
 
+/**
+ * Komponentti käyttäjän salasanan muutokseen.
+ * @param user - Käyttäjä objekti.
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const ProfileBoxThree = ({ user }) => {
     const [oldPassword, setOldPassword] = useState("")
     const [newPassword, setNewPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
 
+    /**
+     * Hoitaa lomakkeen muutoksen.
+     * @param event
+     */
     const handleChange = (event) => {
         const { name, value } = event.target
 
@@ -106,6 +148,11 @@ const ProfileBoxThree = ({ user }) => {
         }
     }
 
+    /**
+     * Hoitaa lomakkeen tietojen tallentamisen.
+     * @param event
+     * @returns {Promise<void>}
+     */
     const handleSubmit = async (event) => {
         event.preventDefault()
 
@@ -152,6 +199,12 @@ const ProfileBoxThree = ({ user }) => {
     )
 }
 
+/**
+ * Komponentti, jolla luodaan käyttäjän profiili.
+ * @param setIsLoggedIn - - Funktio, jolla päivitetään kirjautumis status.
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const Profile = ({ setIsLoggedIn }) => {
     const user = useData()
     const [fname, setFName] = useState("")

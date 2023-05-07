@@ -3,13 +3,21 @@ import AddNewUser from "./AddNewUser"
 import AddNewLogin from "./AddNewLogin"
 import Hamburger from '../images/Hamburger'
 import UserIcon from "../images/UserIcon"
-// import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap' sori tää import crashas koko apin :'D
 import {useState} from "react";
 import {useEffect} from "react"
 import useData from '../hooks/useData'
 import React from 'react';
 import Logo from '../images/Logo.js'
 
+/**
+ * Navigaatio komponenti, joka näyttää linkkejä eri sivuihin.
+ * Mobiili menu nappi, jota painamalla näkee linkit.
+ *
+ * @param isLoggedIn - Boolean, joka näyttää että onko käyttäjä kirjautunut.
+ * @param setIsLoggedIn - Funktio, jolla päivitetään kirjautumis status.
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const Navigation = ({isLoggedIn, setIsLoggedIn}) => {
     const user = useData(isLoggedIn) || {}
 
@@ -27,18 +35,29 @@ const Navigation = ({isLoggedIn, setIsLoggedIn}) => {
         document.body.className = theme;
     }, [theme]);
 
+    /**
+     * Funktio, jolla avataan käyttäjän kirjautuminen.
+     * @param event - Klick eventti.
+     */
     const openLogin = (event) => {
         event.preventDefault()
         document.getElementById("addNewLogin").classList.remove("visuallyhidden")
         console.log("open form")
     }
 
+    /**
+     * Funktio, jolla avataan mobiili menu.
+     * @param event
+     */
     const toggleMenu = (event) => {
         event.preventDefault()
         document.getElementById('main-nav-links').classList.toggle('hideOnMobile')
     }
 
-    //Jos ei saada username näkyy "Ladataan"
+    /**
+     * Funktio, jolla näytetään "Ladataan..." jos username ei ole saatavilla.
+     * @returns {JSX.Element|string} - Käyttäjä icon ja käyttäjänimi tai "Ladataan..."
+     */
     const renderUsername = () => {
         if (user.username && user.username.length > 0) {
             return (
@@ -51,6 +70,7 @@ const Navigation = ({isLoggedIn, setIsLoggedIn}) => {
             return 'Ladataan..'
         }
     }
+
 
     return (
         <nav className="main-nav">
@@ -92,3 +112,4 @@ const Navigation = ({isLoggedIn, setIsLoggedIn}) => {
 }
 
 export default Navigation
+
