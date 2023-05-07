@@ -1,0 +1,32 @@
+{
+  "source": {
+    "include": [
+      "client/raflareviewer/src",
+      "server/index.js",
+      "server/models",
+      "README.md"
+    ],
+    "exclude": [
+      "node_modules",
+      "src/__tests__"
+    ]
+  },
+  "sourceType": "module",
+  "plugins": [
+    "plugins/markdown"
+  ],
+  "opts": {
+    "destination": "./docs/",
+    "recurse": true
+  },
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false
+  },
+  "markdown": {
+    "idInHeadings": true
+  },
+  "tags": {
+    "allowUnknownTags": true
+  }
+}

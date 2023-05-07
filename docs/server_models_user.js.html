@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: server/models/user.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: server/models/user.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
+
+const url = process.env.DB_HOST
+console.log('connecting to ', url)
+
+/**
+ * Yhdistää MongoDB:hen käyttäen muutujassa DB_HOST URL:ia
+ */
+mongoose.connect(url)
+    .then(result => {
+        console.log("connected to MongoDB");
+    })
+    .catch((error) => {
+        console.log("error connecting to MongoDB: ", error.message);
+    })
+
+/**
+ * Mongoose-käyttäjämalli tallennettavalle käyttäjäoliolle
+ *
+ * @typedef User
+ * @property username - Käyttäjänimi.
+ * @property password - Salasana.
+ * @property [firstname] - Etunimi.
+ * @property [lastname] - Sukunimi.
+ * @property [avatar] - Avatar-kuvan URL.
+ */
+    const userSchema = new mongoose.Schema({
+        username: {type: String, required: true, unique: true},
+        password: {type: String, required: true},
+        firstname: String,
+        lastname: String,
+        avatar: String
+    })
+
+/**
+ * Suoritetaan ennen tallennusta: Hashaa käyttäjän salasanan bcrypt-algoritmilla.
+ */
+    userSchema.pre("save", async function (next){
+        const user = this;
+        if (!user.isModified("password")){
+            return next()
+        }
+        const salt = await bcrypt.genSalt(10)
+        user.password = await bcrypt.hash(user.password, salt)
+        next()
+    })
+
+/**
+ * Vertaa käyttäjän syöttämää salasanaa tallennetun salasanan kanssa bcrypt-algoritmilla.
+ * @param password - Käyttäjän salasana.
+ * @returns {Promise&lt;void|*|NodeJS.Global.Promise>}
+ */
+    userSchema.methods.comparePassword = async function (password) {
+        return await bcrypt.compare(password, this.password)
+    }
+
+/**
+ * Muuntaa Mongoose-käyttäjämallin JavaScript-objektiksi ja poistaa salasanan.
+ */
+userSchema.set("toJSON", {
+        transform: function (doc, ret, options){
+            delete ret.password
+            return ret
+        }
+    })
+
+module.exports = mongoose.model("User", userSchema)</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AddNewLogin.html">AddNewLogin</a></li><li><a href="AddNewUser.html">AddNewUser</a></li><li><a href="Navigation.html">Navigation</a></li><li><a href="Profile.html">Profile</a></li><li><a href="ProfileBoxOne.html">ProfileBoxOne</a></li><li><a href="ProfileBoxThree.html">ProfileBoxThree</a></li><li><a href="ProfileBoxTwo.html">ProfileBoxTwo</a></li><li><a href="RestaurantPageTags.html">RestaurantPageTags</a></li><li><a href="ResultsAmount.html">ResultsAmount</a></li><li><a href="Score.html">Score</a></li><li><a href="Scores.html">Scores</a></li><li><a href="SearchBar.html">SearchBar</a></li><li><a href="Tag.html">Tag</a></li><li><a href="Tags.html">Tags</a></li><li><a href="ThumbsUpButtons.html">ThumbsUpButtons</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AddNewForm">AddNewForm</a></li><li><a href="global.html#Address">Address</a></li><li><a href="global.html#ColorThemes">ColorThemes</a></li><li><a href="global.html#Comments">Comments</a></li><li><a href="global.html#Confirm">Confirm</a></li><li><a href="global.html#ConfirmDeleteReview">ConfirmDeleteReview</a></li><li><a href="global.html#Creators">Creators</a></li><li><a href="global.html#FormCheckbox">FormCheckbox</a></li><li><a href="global.html#FormCheckboxContainer">FormCheckboxContainer</a></li><li><a href="global.html#LoginPrompt">LoginPrompt</a></li><li><a href="global.html#Report">Report</a></li><li><a href="global.html#create">create</a></li><li><a href="global.html#deleteByRestaurant">deleteByRestaurant</a></li><li><a href="global.html#deleteComment">deleteComment</a></li><li><a href="global.html#deleteRestaurant">deleteRestaurant</a></li><li><a href="global.html#getAll">getAll</a></li><li><a href="global.html#getByRestaurant">getByRestaurant</a></li><li><a href="global.html#getByUser">getByUser</a></li><li><a href="global.html#getProfile">getProfile</a></li><li><a href="global.html#getRestaurant">getRestaurant</a></li><li><a href="global.html#getUser">getUser</a></li><li><a href="global.html#handleLogout">handleLogout</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#updateProfile">updateProfile</a></li><li><a href="global.html#updateRestaurant">updateRestaurant</a></li><li><a href="global.html#useData">useData</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun May 07 2023 22:49:44 GMT+0300 (Itä-Euroopan kesäaika)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

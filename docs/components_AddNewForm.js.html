@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/AddNewForm.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/AddNewForm.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useState } from 'react'
+import resService from '../services/restaurants'
+import commentService from '../services/comments'
+import Checkbox from './FormCheckbox'
+import Icon from '../images/x'
+import tagList from '../sources/tagList'
+import scores from '../sources/scores'
+import useData from "../hooks/useData";
+
+/**
+ * Lisää uusi arvostelu -lomake
+ */
+
+const AddNewForm = ({ update, isLoggedIn }) => {
+    // Kenttien tiedot
+    const [newName, setNewName] = useState('')
+    const [newAddress, setNewAddress] = useState('')
+    const [newComment, setNewComment] = useState('')
+    const [cafe, setCafe] = useState(false)
+    const [fastFood, setFastFood] = useState(false)
+    const [lunch, setLunch] = useState(false)
+    const [brunch, setBrunch] = useState(false)
+    const [vegetarian, setVegetarian] = useState(false)
+    const [accessible, setAccessible] = useState(false)
+    const [takeAway, setTakeAway] = useState(false)
+    const [foodScore, setFoodScore] = useState(50)
+    const [qualityPriceScore, setqualityPriceScore] = useState(50)
+    const [experienceScore, setExperienceScore] = useState(50)
+    const [image, setImage] = useState('')
+
+    const user = useData() || {}
+
+    let username = "Anonyymi"
+    if (isLoggedIn) {
+        username = user.username
+    }
+
+    console.log('user ', user)
+
+    /**
+     * Tarkistus, etteivät pakolliset kentät ole tyhjät
+     */
+    const checkFields = () => {
+        const requiredFields = document.getElementById('addNewForm').querySelectorAll('.required > input')
+
+        let ok = true;
+        requiredFields.forEach(input => {
+            if (input.value.trim().length === 0) {
+                ok = false
+            }
+        })
+        // Estä napin painaminen, jos joku pakollisista kentistä on tyhjä
+        ok ? document.getElementById('formSubmitButton').classList.remove('unclickable') : document.getElementById('formSubmitButton').classList.add('unclickable')
+    }
+
+    /**
+     * Piilottaa lomakkeen näkyvistä ja resetoi kentät
+     */
+    function closeForm() {
+        console.log('close')
+        document.getElementById('addNewForm').classList.add('visuallyhidden')
+        document.querySelector('body').classList.remove('locked')
+        setNewName("")
+        setNewAddress("")
+        setNewComment("")
+        setImage("")
+        setCafe(false)
+        setFastFood(false)
+        setLunch(false)
+        setBrunch(false)
+        setVegetarian(false)
+        setAccessible(false)
+        setTakeAway(false)
+    }
+
+    /**
+     * Tietojen tallennus tietokantaan
+     */
+    const saveForm = (event) => {
+        event.preventDefault()
+        console.log('save')
+
+        const tags = [
+            {
+                title: tagList.cafeTitle,
+                value: cafe
+            },
+            {
+                title: tagList.fastFoodTitle,
+                value: fastFood
+            },
+            {
+                title: tagList.lunchTitle,
+                value: lunch
+            },
+            {
+                title: tagList.brunchTitle,
+                value: brunch
+            },
+            {
+                title: tagList.vegetarianTitle,
+                value: vegetarian
+            },
+            {
+                title: tagList.accessibleTitle,
+                value: accessible
+            },
+            {
+                title: tagList.takeAwayTitle,
+                value: takeAway
+            }
+        ]
+
+        // Valitut tagit taulukkoon
+        let tagsApply = []
+        tags.map(tag => {
+            if (tag.value) {
+                tagsApply.push(tag.title)
+            }
+        })
+
+        // Uusi ravintola-olio
+        const newRestaurant = {
+                name: newName,
+                address: newAddress,
+                tags: tagsApply,
+                foodScore: foodScore,
+                qualityPriceScore: qualityPriceScore,
+                experienceScore: experienceScore,
+                thumbsUp: [],
+                thumbsDown: [],
+                image: image,
+                userId: user._id
+            }
+
+            console.log('saving ', newRestaurant)
+
+            // Jos url-kenttää ei ole jätetty tyhjäksi, tarkistus onko url validi
+            if (image.length === 0 || isValidUrl(image) ) {
+                console.log('url ok')
+                // Jos url ok, lähetys palvelimelle
+                resService
+                    .create(newRestaurant)
+                    .then(response => {
+                        console.log('success')
+
+                        // Jos arvostelussa mukana kommentti, tallennetaan se toiseen tauluun
+                        if (newComment.trim().length > 0) {
+                            // Kommentti-olio
+                            const Comment = {
+                                restaurantId: response.id, // Ravintolan id = responsen palauttama id
+                                username: username,
+                                userId: user._id,
+                                content: newComment
+                            }
+                            console.log('comment ', Comment)
+
+                            // Kommentin tallennus palvelimelle
+                            commentService.create(Comment)
+                                .then(response => {
+                                    console.log('comment saved ', response)
+                                })
+                                .catch(error => {
+                                    console.log('comment error ', error)
+                                })
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error)
+                })
+                console.log('saving ', newRestaurant)
+                closeForm()
+                update(newRestaurant)
+            } else {
+                // Jos url ei ole validissa muodossa, näytä virheilmoitus
+                document.getElementById('addNewForm').querySelector('.warningText').style.opacity = '1'
+            }
+    }
+
+    /**
+     * Nimi-muuttujan päivitys nimikentän muuttuessa (pakollinen kenttä)
+     */
+    const handleNameChange = (event) => {
+        console.log(event.target.value)
+        setNewName(event.target.value)
+
+        // Tarkista muut pakolliset kentät
+        checkFields()
+    }
+
+    /**
+     * Osoite-muuttujan päivitys osoitekentän muuttuessa (pakollinen kenttä)
+     */
+    const handleAddressChange = (event) => {
+        console.log(event.target.value)
+        setNewAddress(event.target.value)
+
+        // Tarkista muut pakolliset kentät
+        checkFields()
+    }
+
+    /**
+     * Url-muuttujan päivitys url-kentän muuttuessa
+     */
+    const handleImageChange = (event) => {
+        console.log(event.target.value)
+        setImage(event.target.value)
+    }
+
+    /**
+     * Kommentin päivitys kommenttikentän muuttuessa
+     */
+    const handleCommentChange = (event) => {
+        console.log(event.target.value)
+        setNewComment(event.target.value)
+    }
+
+    /**
+     * "Kahvila"-arvon vaihtaminen nappia painettaessa
+     */
+    const handleCafeChange = (event) => {
+        setCafe(!cafe)
+    }
+
+    /**
+     * "Pikaruoka"-arvon vaihtaminen nappia painettaessa
+     */
+    const handleFastFoodChange = (event) => {
+        setFastFood(!fastFood)
+    }
+
+    /**
+     * "Lounas"-arvon vaihtaminen nappia painettaessa
+     */
+    const handleLunchChange = (event) => {
+        setLunch(!lunch)
+    }
+
+    /**
+     * "Brunssi"-arvon vaihtaminen nappia painettaessa
+     */
+    const handleBrunchChange = (event) => {
+        setBrunch(!brunch)
+    }
+
+    /**
+     * "Kasvisvaihtoehtoja"-arvon vaihtaminen nappia painettaessa
+     */
+    const handleVegetarianChange = (event) => {
+        setVegetarian(!vegetarian)
+    }
+
+    /**
+     * "Liikuntaesteetön"-arvon vaihtaminen nappia painettaessa
+     */
+    const handleAccessibleChange = (event) => {
+        setAccessible(!accessible)
+    }
+
+    /**
+     * "Takeaway"-arvon vaihtaminen nappia painettaessa
+     */
+    const handleTakeAwayChange = (event) => {
+        setTakeAway(!takeAway)
+    }
+
+    /**
+     * Ruoka-arvosanan päivitys sliderin arvon muuttuessa
+     */
+    const handleFoodScoreChange = (event) => {
+        console.log('food ', event.target.value)
+        setFoodScore(event.target.value)
+    }
+
+    /**
+     * Hinta-laatu-suhde -arvosanan päivitys sliderin arvon muuttuessa
+     */
+    const handlequalityPriceScoreChange = (event) => {
+        console.log('quality price ', event.target.value)
+        setqualityPriceScore(event.target.value)
+    }
+
+    /**
+     * Kokemus-arvosanan päivitys sliderin arvon muuttuessa
+     */
+    const handleExperienceScoreChange = (event) => {
+        console.log('experience ', event.target.value)
+        setExperienceScore(event.target.value)
+    }
+
+    /**
+     * Tarkistaa onko merkkijono validi url
+     * @param {string} url - tarkistettava merkkijono
+     * @return {boolean} - true, jos url on validi
+     */
+    const isValidUrl = url => {
+        try { 
+            return Boolean(new URL(url)); 
+        }
+        catch(e){ 
+            return false; 
+        }
+    }
+
+    return (
+        &lt;div id="addNewForm" className="visuallyhidden popup addNewForm">
+            &lt;header className="formHeader">
+                &lt;h2>Lisää arvostelu&lt;/h2>
+                &lt;button onClick={closeForm} className="closeButton">
+                    &lt;Icon />
+                &lt;/button>
+            &lt;/header>
+            &lt;form onSubmit={saveForm} action="/images/" method="POST" enctype="multipart/form-data">
+                &lt;div className="formFields">
+
+                    &lt;div className="required">
+                        &lt;label>&lt;p>Ravintolan nimi&lt;/p>&lt;/label>
+                        &lt;input value={newName} onChange={handleNameChange} className="formInput"/>
+                    &lt;/div>
+                    &lt;div className="required">
+                        &lt;label>&lt;p>Osoite&lt;/p>&lt;/label>
+                        &lt;input value={newAddress} onChange={handleAddressChange} className="formInput"/>
+                    &lt;/div>
+        
+                    &lt;section>
+                        &lt;div className="sliderContainer">
+                            &lt;label>{scores.food.title}&lt;/label>
+                            &lt;div className="sliderWrapper">
+                                &lt;span className="sliderValue">0&lt;/span>
+                                &lt;input type="range" min="0" max="100" value={foodScore} className="slider" onChange={handleFoodScoreChange} />
+                                &lt;span className="sliderValue">{scores.food.max}&lt;/span>
+                            &lt;/div>
+                        &lt;/div>
+                        &lt;div className="sliderContainer">
+                            &lt;label>{scores.qualityPrice.title}&lt;/label>
+                            &lt;div className="sliderWrapper">
+                                &lt;span className="sliderValue">0&lt;/span>
+                                &lt;input type="range" min="0" max="100" value={qualityPriceScore} className="slider" onChange={handlequalityPriceScoreChange} />
+                                &lt;span className="sliderValue">{scores.qualityPrice.max}&lt;/span>
+                            &lt;/div>                        &lt;/div>
+                        &lt;div className="sliderContainer">
+                            &lt;label>{scores.experience.title}&lt;/label>
+                            &lt;div className="sliderWrapper">
+                                &lt;span className="sliderValue">0&lt;/span>
+                                &lt;input type="range" min="0" max="100" value={experienceScore} className="slider" onChange={handleExperienceScoreChange} />
+                                &lt;span className="sliderValue">{scores.experience.max}&lt;/span>
+                            &lt;/div>
+                        &lt;/div>
+                    &lt;/section>
+
+                    &lt;section>
+                    &lt;div className="formCheckboxContainer">
+                        &lt;Checkbox label="Kahvila" onChange={handleCafeChange} checked={cafe} />
+                        &lt;Checkbox label="Pikaruoka" onChange={handleFastFoodChange} checked={fastFood} />
+                        &lt;Checkbox label="Lounas" onChange={handleLunchChange} checked={lunch} />
+                        &lt;Checkbox label="Brunssi" onChange={handleBrunchChange} checked={brunch} />
+                        &lt;Checkbox label="Kasvisvaihtoehtoja" onChange={handleVegetarianChange} checked={vegetarian} />
+                        &lt;Checkbox label="Liikuntaesteetön" onChange={handleAccessibleChange} checked={accessible} />
+                        &lt;Checkbox label="Take away" onChange={handleTakeAwayChange} checked={takeAway} />
+                    &lt;/div>
+                    &lt;/section>
+
+                    &lt;div>
+                        &lt;label>&lt;p>Kommentti&lt;/p>&lt;/label>
+                        &lt;textarea value={newComment} onChange={handleCommentChange} className="formInput" rows="4"/>
+                    &lt;/div>
+                    &lt;section>
+                        &lt;h2>Lisää kuva&lt;/h2>
+                        &lt;div>
+                            &lt;label>&lt;p>URL&lt;/p>&lt;/label>
+                            &lt;input value={image} onChange={handleImageChange} className="formInput"/>
+                        &lt;/div>
+                        &lt;p className='warningText'>Virheellinen URL&lt;/p>
+                    &lt;/section>
+                &lt;/div>
+            &lt;button type="submit" className="button center unclickable" id="formSubmitButton">Tallenna&lt;/button>
+            &lt;/form>
+        &lt;/div>
+    )
+}
+
+export default AddNewForm</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AddNewLogin.html">AddNewLogin</a></li><li><a href="AddNewUser.html">AddNewUser</a></li><li><a href="Navigation.html">Navigation</a></li><li><a href="Profile.html">Profile</a></li><li><a href="ProfileBoxOne.html">ProfileBoxOne</a></li><li><a href="ProfileBoxThree.html">ProfileBoxThree</a></li><li><a href="ProfileBoxTwo.html">ProfileBoxTwo</a></li><li><a href="RestaurantPageTags.html">RestaurantPageTags</a></li><li><a href="ResultsAmount.html">ResultsAmount</a></li><li><a href="Score.html">Score</a></li><li><a href="Scores.html">Scores</a></li><li><a href="SearchBar.html">SearchBar</a></li><li><a href="Tag.html">Tag</a></li><li><a href="Tags.html">Tags</a></li><li><a href="ThumbsUpButtons.html">ThumbsUpButtons</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AddNewForm">AddNewForm</a></li><li><a href="global.html#Address">Address</a></li><li><a href="global.html#ColorThemes">ColorThemes</a></li><li><a href="global.html#Comments">Comments</a></li><li><a href="global.html#Confirm">Confirm</a></li><li><a href="global.html#ConfirmDeleteReview">ConfirmDeleteReview</a></li><li><a href="global.html#Creators">Creators</a></li><li><a href="global.html#FormCheckbox">FormCheckbox</a></li><li><a href="global.html#FormCheckboxContainer">FormCheckboxContainer</a></li><li><a href="global.html#LoginPrompt">LoginPrompt</a></li><li><a href="global.html#Report">Report</a></li><li><a href="global.html#create">create</a></li><li><a href="global.html#deleteByRestaurant">deleteByRestaurant</a></li><li><a href="global.html#deleteComment">deleteComment</a></li><li><a href="global.html#deleteRestaurant">deleteRestaurant</a></li><li><a href="global.html#getAll">getAll</a></li><li><a href="global.html#getByRestaurant">getByRestaurant</a></li><li><a href="global.html#getByUser">getByUser</a></li><li><a href="global.html#getProfile">getProfile</a></li><li><a href="global.html#getRestaurant">getRestaurant</a></li><li><a href="global.html#getUser">getUser</a></li><li><a href="global.html#handleLogout">handleLogout</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#updateProfile">updateProfile</a></li><li><a href="global.html#updateRestaurant">updateRestaurant</a></li><li><a href="global.html#useData">useData</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun May 07 2023 22:45:54 GMT+0300 (Itä-Euroopan kesäaika)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: client/raflareviewer/src/components/Profile.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: client/raflareviewer/src/components/Profile.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from "react"
+import { useState, useEffect } from "react"
+import UserDefaultAvatar from "../images/UserDefaultAvatar"
+import userService from "../services/users";
+import Logout from "../images/Logout";
+import useData from '../hooks/useData'
+import commentService from "../services/comments"
+
+/**
+ * Komponentti käyttäjän tietojen muutokseen.
+ * @param user - Käyttäjä objekti.
+ * @param setFName - Funktio, jolla laitetaan etunimi.
+ * @param setLName - Funktio, jolla laitetaan sukunimi.
+ * @returns {JSX.Element}
+ * @constructor
+ */
+const ProfileBoxOne = ({ user, setFName , setLName }) => {
+    const [firstname, setFirstName] = useState("")
+    const [lastname, setLastName] = useState("")
+
+    /**
+     * Hoitaa lomakkeen syötön muutoksen.
+     * @param event
+     */
+    const handleChange = (event) => {
+        const {name, value} = event.target
+
+        if (name === "firstName") {
+            setFirstName(value)
+        } else if (name === "lastName") {
+            setLastName(value)
+        }
+    }
+
+    /**
+     * Hoitaa lomakkeen tietojen tallentamisen.
+     * @param event
+     * @returns {Promise&lt;void>}
+     */
+    const handleSubmit = async (event) => {
+        event.preventDefault()
+
+        if (firstname === "" || lastname === "") {
+            alert("Täytä kentät")
+            return
+        }
+
+        try {
+            await userService.updateProfile(user._id, {firstname, lastname})
+            console.log('User data updated successfully.' , user._id)
+            setFName(firstname)
+            setLName(lastname)
+            alert("Tiedot vaihdettu")
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    return (
+        &lt;div className="profile-box-one">
+            &lt;header className="boxFormHeaderOne">
+                &lt;h2>Vaihda tietoja&lt;/h2>
+            &lt;/header>
+            &lt;div className="profileFormContOne">
+                &lt;form onSubmit={handleSubmit}>
+                    &lt;div>
+                        &lt;input type="text" name="firstName" value={firstname} onChange={handleChange} className="formInput" placeholder="Etunimi"/>
+                    &lt;/div>
+                    &lt;div>
+                        &lt;input type="text" name="lastName" value={lastname} onChange={handleChange} className="formInput" placeholder="Sukunimi"/>
+                    &lt;/div>
+                    &lt;button className="button" type="submit">Tallenna&lt;/button>
+                &lt;/form>
+            &lt;/div>
+        &lt;/div>
+    )
+}
+
+/**
+ * Komponentti, joka näyttää käyttäjän etu, sukunimen ja avatarin.
+ * @param user - Käyttäjä objekti.
+ * @param setIsLoggedIn - Funktio, jolla päivitetään kirjautumis status.
+ * @param fname - Käyttäjän etunimi.
+ * @param lname - Käyttäjän sukunimi.
+ * @returns {JSX.Element}
+ * @constructor
+ */
+const ProfileBoxTwo = ({ user, setIsLoggedIn, fname, lname }) => {
+
+    /**
+     * Hoitaa käyttäjän kirjautumisen ulos.
+     * @param event
+     * @returns {Promise&lt;void>}
+     */
+    const logout = async (event) => {
+        event.preventDefault();
+        try {
+            await userService.handleLogout();
+            console.log("kirjautui")
+            setIsLoggedIn(false)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    return (
+        &lt;div className="profile-box-two">
+            &lt;div className="avatar-container">
+                &lt;UserDefaultAvatar/>
+            &lt;/div>
+            &lt;h3>{user.username}&lt;/h3>
+            {fname === "" &amp;&amp; lname === "" ? (
+                &lt;h3>{user.firstname} {user.lastname}&lt;/h3>
+            ) : (
+                &lt;h3>{fname} {lname}&lt;/h3>
+            )}
+            &lt;button onClick={logout} className="logoutBtn">
+                &lt;Logout />
+                &lt;span>Kirjaudu Ulos&lt;/span>
+            &lt;/button>
+        &lt;/div>
+    )
+}
+
+/**
+ * Komponentti käyttäjän salasanan muutokseen.
+ * @param user - Käyttäjä objekti.
+ * @returns {JSX.Element}
+ * @constructor
+ */
+const ProfileBoxThree = ({ user }) => {
+    const [oldPassword, setOldPassword] = useState("")
+    const [newPassword, setNewPassword] = useState("")
+    const [confirmPassword, setConfirmPassword] = useState("")
+
+    /**
+     * Hoitaa lomakkeen muutoksen.
+     * @param event
+     */
+    const handleChange = (event) => {
+        const { name, value } = event.target
+
+        if (name === "oldPassword") {
+            setOldPassword(value)
+        } else if (name === "newPassword") {
+            setNewPassword(value)
+        } else if (name === "confirmPassword") {
+            setConfirmPassword(value)
+        }
+    }
+
+    /**
+     * Hoitaa lomakkeen tietojen tallentamisen.
+     * @param event
+     * @returns {Promise&lt;void>}
+     */
+    const handleSubmit = async (event) => {
+        event.preventDefault()
+
+        if (newPassword === "" &amp;&amp; confirmPassword === "") {
+            alert("Täytä kohdat")
+            return;
+        }
+
+        if (newPassword !== confirmPassword) {
+            console.log('Passwords do not match')
+            alert("Salasanat eivät ole samat")
+            return;
+        }
+
+        try {
+            await userService.updateProfile(user._id, {
+                oldPassword,
+                newPassword,
+            })
+            console.log('Password changed successfully.')
+            setOldPassword('')
+            setNewPassword('')
+            setConfirmPassword('')
+        } catch (error) {
+            console.log(error)
+            alert("Vanha salasana on väärä")
+        }
+    }
+
+    return (
+        &lt;div className="profile-box-three">
+            &lt;header className="boxFormHeaderThree">
+                &lt;h2>Vaihda salasanaa&lt;/h2>
+            &lt;/header>
+            &lt;div className="profileFormContThree">
+                &lt;form onSubmit={handleSubmit}>
+                    &lt;input type="password" name="oldPassword" value={oldPassword} onChange={handleChange} className="formInput" placeholder="Vanha salsana"/>
+                    &lt;input type="password" name="newPassword" value={newPassword} onChange={handleChange} className="formInput" placeholder="Uusi salasana"/>
+                    &lt;input type="password" name="confirmPassword" value={confirmPassword} onChange={handleChange} className="formInput" placeholder="Salasana uudestaan"/>
+                    &lt;button type="submit" className="button" >Tallenna&lt;/button>
+                &lt;/form>
+            &lt;/div>
+        &lt;/div>
+    )
+}
+
+const ProfileBoxComments = ({ user }) => {
+    const [comments, setComments] = useState([])
+
+    useEffect(() => {
+        commentService.getByUser(user._id)
+            .then(response => {
+                console.log(response)
+                if (response.status === 200 &amp;&amp; response.data) {
+                    setComments(response.data);
+                }
+            })
+            .catch(error => console.log(error))
+    }, [user])
+
+    console.log(comments, "HAHA")
+
+    return (
+        &lt;div>
+            &lt;h2>Comments&lt;/h2>
+            {!comments ? (
+                &lt;p>Loading comments...&lt;/p>
+            ) : comments.length === 0 ? (
+                &lt;p>No comments found.&lt;/p>
+            ) : (
+                &lt;ul>
+                    {comments.map((comment) => (
+                        &lt;li key={comment.id}>{comment.content}&lt;/li>
+                    ))}
+                &lt;/ul>
+            )}
+        &lt;/div>
+    )
+}
+
+/**
+ * Komponentti, jolla luodaan käyttäjän profiili.
+ * @param setIsLoggedIn - - Funktio, jolla päivitetään kirjautumis status.
+ * @returns {JSX.Element}
+ * @constructor
+ */
+const Profile = ({ setIsLoggedIn }) => {
+    const user = useData()
+    const [fname, setFName] = useState("")
+    const [lname, setLName] = useState("")
+
+    if (!user) {
+        return (
+            &lt;div>
+                Ladataan käyttäjää
+            &lt;/div>
+        )
+    }
+
+    return (
+        &lt;div className="profile">
+            &lt;h1>Profiili&lt;/h1>
+            {user &amp;&amp; (
+                &lt;>
+                    &lt;div className="profile-box-one box-style">
+                        &lt;ProfileBoxOne user={user} setFName={setFName} setLName={setLName}/>
+                    &lt;/div>
+                    &lt;div className="profile-box-two box-style">
+                        &lt;ProfileBoxTwo user={user} setIsLoggedIn={setIsLoggedIn} fname={fname} lname={lname} setFName={setFName} setLName={setLName}/>
+                    &lt;/div>
+                    &lt;div className="profile-box-three box-style">
+                        &lt;ProfileBoxThree user={user} />
+                    &lt;/div>
+                    &lt;div>
+                        &lt;ProfileBoxComments user={user} />
+                    &lt;/div>
+                &lt;/>
+            )}
+        &lt;/div>
+    )
+}
+
+
+export default Profile
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AddNewLogin.html">AddNewLogin</a></li><li><a href="AddNewUser.html">AddNewUser</a></li><li><a href="Navigation.html">Navigation</a></li><li><a href="Profile.html">Profile</a></li><li><a href="ProfileBoxOne.html">ProfileBoxOne</a></li><li><a href="ProfileBoxThree.html">ProfileBoxThree</a></li><li><a href="ProfileBoxTwo.html">ProfileBoxTwo</a></li><li><a href="RestaurantPageTags.html">RestaurantPageTags</a></li><li><a href="ResultsAmount.html">ResultsAmount</a></li><li><a href="Score.html">Score</a></li><li><a href="Scores.html">Scores</a></li><li><a href="SearchBar.html">SearchBar</a></li><li><a href="Tag.html">Tag</a></li><li><a href="Tags.html">Tags</a></li><li><a href="ThumbsUpButtons.html">ThumbsUpButtons</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AddNewForm">AddNewForm</a></li><li><a href="global.html#Address">Address</a></li><li><a href="global.html#ColorThemes">ColorThemes</a></li><li><a href="global.html#Comments">Comments</a></li><li><a href="global.html#Confirm">Confirm</a></li><li><a href="global.html#ConfirmDeleteReview">ConfirmDeleteReview</a></li><li><a href="global.html#Creators">Creators</a></li><li><a href="global.html#FormCheckbox">FormCheckbox</a></li><li><a href="global.html#FormCheckboxContainer">FormCheckboxContainer</a></li><li><a href="global.html#LoginPrompt">LoginPrompt</a></li><li><a href="global.html#Report">Report</a></li><li><a href="global.html#create">create</a></li><li><a href="global.html#deleteByRestaurant">deleteByRestaurant</a></li><li><a href="global.html#deleteComment">deleteComment</a></li><li><a href="global.html#deleteRestaurant">deleteRestaurant</a></li><li><a href="global.html#getAll">getAll</a></li><li><a href="global.html#getByRestaurant">getByRestaurant</a></li><li><a href="global.html#getByUser">getByUser</a></li><li><a href="global.html#getProfile">getProfile</a></li><li><a href="global.html#getRestaurant">getRestaurant</a></li><li><a href="global.html#getUser">getUser</a></li><li><a href="global.html#handleLogout">handleLogout</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#updateProfile">updateProfile</a></li><li><a href="global.html#updateRestaurant">updateRestaurant</a></li><li><a href="global.html#useData">useData</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun May 07 2023 22:49:44 GMT+0300 (Itä-Euroopan kesäaika)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

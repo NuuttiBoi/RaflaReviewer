@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: client/raflareviewer/src/components/Navigation.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: client/raflareviewer/src/components/Navigation.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { NavLink } from 'react-router-dom'
+import AddNewUser from "./AddNewUser"
+import AddNewLogin from "./AddNewLogin"
+import Hamburger from '../images/Hamburger'
+import UserIcon from "../images/UserIcon"
+import {useState} from "react";
+import {useEffect} from "react"
+import useData from '../hooks/useData'
+import React from 'react';
+import Logo from '../images/Logo.js'
+
+/**
+ * Navigaatio komponentti, joka näyttää linkkejä eri sivuihin.
+ * Mobiili menu nappi, jota painamalla näkee linkit.
+ *
+ * @param isLoggedIn - Boolean, joka näyttää että onko käyttäjä kirjautunut.
+ * @param setIsLoggedIn - Funktio, jolla päivitetään kirjautumis status.
+ * @returns {JSX.Element}
+ * @constructor
+ */
+const Navigation = ({isLoggedIn, setIsLoggedIn}) => {
+    const user = useData(isLoggedIn) || {}
+
+    /**
+     * Funktio, jolla avataan käyttäjän kirjautuminen.
+     * @param event - Klick eventti.
+     */
+    const openLogin = (event) => {
+        event.preventDefault()
+        document.getElementById("addNewLogin").classList.remove("visuallyhidden")
+        console.log("open form")
+    }
+
+    /**
+     * Funktio, jolla avataan mobiili menu.
+     * @param event
+     */
+    const toggleMenu = (event) => {
+        event.preventDefault()
+        document.getElementById('main-nav-links').classList.toggle('hideOnMobile')
+    }
+
+    /**
+     * Funktio, jolla näytetään "Ladataan..." jos username ei ole saatavilla.
+     * @returns {JSX.Element|string} - Käyttäjä icon ja käyttäjänimi tai "Ladataan..."
+     */
+    const renderUsername = () => {
+        if (user.username &amp;&amp; user.username.length > 0) {
+            return (
+                &lt;>
+                    &lt;UserIcon />
+                    {user.username}
+                &lt;/>
+            )
+        } else {
+            return 'Ladataan..'
+        }
+    }
+
+    return (
+        &lt;nav className="main-nav">
+             &lt;div className="nav-wrapper">
+                &lt;div className="nav-header">
+                    &lt;NavLink to="/" className="title-wrapper">
+                        &lt;Logo />
+                        &lt;span className="title">RaflaReviewer&lt;/span>
+                    &lt;/NavLink>
+                    &lt;button id="mobileMenu" className="mobileMenu" onClick={toggleMenu}>&lt;Hamburger />&lt;/button>
+                &lt;/div>
+                &lt;ul id="main-nav-links" className="hideOnMobile">
+                    &lt;li>
+                        &lt;NavLink to="/" className="navlink">Hae ravintoloita&lt;/NavLink>
+                    &lt;/li>
+                    &lt;li>
+                        &lt;NavLink to="/Map" className="navlink">Kartta&lt;/NavLink>
+                    &lt;/li>
+                    &lt;li>
+                        &lt;NavLink to="/Creators" className="navlink mobileOnly">Tietoa&lt;/NavLink>
+                    &lt;/li>
+                    &lt;li>
+                        {isLoggedIn ? (
+                            &lt;NavLink to="/profile" className="loginButton loggedIn navlink">
+                                {renderUsername()}
+                            &lt;/NavLink>
+                        ) : (
+                            &lt;NavLink to="/AddNewLogin" className="loginButton navlink" role="button" onClick={openLogin}>
+                                &lt;UserIcon/>Kirjaudu
+                            &lt;/NavLink>
+                        )}
+                        &lt;AddNewLogin setIsLoggedIn={setIsLoggedIn}/>
+                        &lt;AddNewUser setIsLoggedIn={setIsLoggedIn}/>
+                    &lt;/li>
+                &lt;/ul>
+            &lt;/div>
+        &lt;/nav>
+    )
+}
+
+export default Navigation
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AddNewLogin.html">AddNewLogin</a></li><li><a href="AddNewUser.html">AddNewUser</a></li><li><a href="Navigation.html">Navigation</a></li><li><a href="Profile.html">Profile</a></li><li><a href="ProfileBoxOne.html">ProfileBoxOne</a></li><li><a href="ProfileBoxThree.html">ProfileBoxThree</a></li><li><a href="ProfileBoxTwo.html">ProfileBoxTwo</a></li><li><a href="RestaurantPageTags.html">RestaurantPageTags</a></li><li><a href="ResultsAmount.html">ResultsAmount</a></li><li><a href="Score.html">Score</a></li><li><a href="Scores.html">Scores</a></li><li><a href="SearchBar.html">SearchBar</a></li><li><a href="Tag.html">Tag</a></li><li><a href="Tags.html">Tags</a></li><li><a href="ThumbsUpButtons.html">ThumbsUpButtons</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AddNewForm">AddNewForm</a></li><li><a href="global.html#Address">Address</a></li><li><a href="global.html#ColorThemes">ColorThemes</a></li><li><a href="global.html#Comments">Comments</a></li><li><a href="global.html#Confirm">Confirm</a></li><li><a href="global.html#ConfirmDeleteReview">ConfirmDeleteReview</a></li><li><a href="global.html#Creators">Creators</a></li><li><a href="global.html#FormCheckbox">FormCheckbox</a></li><li><a href="global.html#FormCheckboxContainer">FormCheckboxContainer</a></li><li><a href="global.html#LoginPrompt">LoginPrompt</a></li><li><a href="global.html#Report">Report</a></li><li><a href="global.html#create">create</a></li><li><a href="global.html#deleteByRestaurant">deleteByRestaurant</a></li><li><a href="global.html#deleteComment">deleteComment</a></li><li><a href="global.html#deleteRestaurant">deleteRestaurant</a></li><li><a href="global.html#getAll">getAll</a></li><li><a href="global.html#getByRestaurant">getByRestaurant</a></li><li><a href="global.html#getByUser">getByUser</a></li><li><a href="global.html#getProfile">getProfile</a></li><li><a href="global.html#getRestaurant">getRestaurant</a></li><li><a href="global.html#getUser">getUser</a></li><li><a href="global.html#handleLogout">handleLogout</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#updateProfile">updateProfile</a></li><li><a href="global.html#updateRestaurant">updateRestaurant</a></li><li><a href="global.html#useData">useData</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun May 07 2023 22:49:44 GMT+0300 (Itä-Euroopan kesäaika)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
