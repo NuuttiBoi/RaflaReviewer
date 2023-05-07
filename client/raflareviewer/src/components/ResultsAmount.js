@@ -1,3 +1,11 @@
+/**
+ * Komponentti, joka renderöi hakutulosten määrän.
+ * @param number - hakutulosten määrä
+ * @param filterWords - hakufiltterit
+ * @returns {JSX.Element|null}
+ * @constructor
+ *
+ */
 const ResultsAmount = ({ number, filterWords }) => {
     let tulos = (number === 1) ? 'tulos' : 'tulosta'
 
