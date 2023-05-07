@@ -1678,7 +1678,7 @@ p:not(:last-child) {
 .userIcon {
   width: 2rem;
   height: 2rem;
-  margin-right: 5px;
+  margin-bottom: 10px;
 }
 
 .loginFields {
