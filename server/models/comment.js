@@ -16,8 +16,7 @@ mongoose.connect(url)
         restaurantId: String,
         username: String,
         userId: String,
-        content: String,
-        date: Date
+        content: String
     })
 
     commentSchema.set('toJSON', {

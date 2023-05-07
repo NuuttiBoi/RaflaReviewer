@@ -14,7 +14,7 @@ import MapBoxMap from './Map/MapBoxMap';
 import useData from "../hooks/useData";
 import userService from '../services/users'
 import ConfirmDeleteReview from './ConfirmDeleteReview'
-import ReviewImage from './ReviewImage'
+import Report from './Report'
 
 const RestaurantPage = ({isLoggedIn}) => {
     let location = useLocation();
@@ -23,7 +23,6 @@ const RestaurantPage = ({isLoggedIn}) => {
     const [comments, setComments] = useState([])
     const [reviewedBy, setReviewedBy] = useState(null)
     const [restaurant, setRestaurant] = useState(null)
-    const [defaultImage, setDefaultImage] = useState(true);
 
      // Tykänneiden käyttäjien id:t taulukoissa
      const [thumbs, setThumbs] = useState({
@@ -84,6 +83,7 @@ const RestaurantPage = ({isLoggedIn}) => {
           })
     }, [])
 
+    console.log('upid ',state.upId)
     const likeBtn = document.getElementById(state.upId)
     const dislikeBtn = document.getElementById(state.downId)
 
@@ -291,18 +291,18 @@ const RestaurantPage = ({isLoggedIn}) => {
         document.getElementById('confirmDeletePopup').classList.add('visuallyhidden')
         document.querySelector('body').classList.remove('locked')
     }
-
-    console.log('default img? ', defaultImage)
-
-    const url = defaultImage ? 'https://users.metropolia.fi/~matleek/star_b_full.png' : state.restaurant.image
     
+    const sendReport = () => {
+      console.log('ilmoita virheellinen id')
+    }
+
     return (
         <div className="container">
             <NavLink to="/" className="back-icon"><Back /></NavLink>
             <section>
                 <h1>{state.restaurant.name}</h1>
-                <p className='small italic'>Arvostelun lähettänyt <span className='username'>{reviewedBy}</span></p>
                 <RestaurantPageTags tags={state.restaurant.tags} />
+                <p className='small italic'>Arvostelun lähettänyt <span className='username'>{reviewedBy}</span></p>
             </section>
 
             <section className='image-scores'>
@@ -339,7 +339,9 @@ const RestaurantPage = ({isLoggedIn}) => {
                 </div>
                 <Comments comments={comments} update={updatePage} isLoggedIn={isLoggedIn}/>
             </section>
-            <button>Ilmoita virheellisistä tiedoista</button>
+            <section>
+              <Report onClick={sendReport} />
+            </section>
             <Confirm />
             <ConfirmDeleteReview onClick={confirmDelete} />
         </div>

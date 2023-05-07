@@ -85,12 +85,6 @@ const Navigation = ({isLoggedIn, setIsLoggedIn}) => {
                         <AddNewLogin setIsLoggedIn={setIsLoggedIn}/>
                         <AddNewUser setIsLoggedIn={setIsLoggedIn}/>
                     </li>
-                    <li>
-                        <div className={`App ${theme}`}>
-                            <button id="darkmodeBtn" onClick={toggleTheme} className="navlink">
-                                Darkmode</button>
-                        </div>
-                    </li>
                 </ul>
             </div>
         </nav>

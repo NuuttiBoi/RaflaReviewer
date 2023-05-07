@@ -133,8 +133,7 @@ app.post('/api/v1/comments', (request, response) => {
         restaurantId: body.restaurantId,
         userId: body.userId,
         username: body.username,
-        content: body.content,
-        date: new Date()
+        content: body.content
     })
 
     comment.save().then(savedComment => {

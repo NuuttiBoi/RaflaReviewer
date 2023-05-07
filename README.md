@@ -50,3 +50,5 @@
 /api/v1/restaurants/[id]
 
 /api/v1/comments/[id]
+
+/api/v1/comments/restaurant/[id]

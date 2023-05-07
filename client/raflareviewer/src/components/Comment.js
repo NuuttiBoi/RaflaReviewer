@@ -4,7 +4,7 @@ import Confirm from './Confirm'
 import commentService from '../services/comments'
 import useData from '../hooks/useData'
 
-const Comment = ({ userId, username, id, content, date, update, isLoggedIn }) => {  
+const Comment = ({ userId, username, id, content, update, isLoggedIn }) => {  
 
     // Onko kommentin jättänyt käyttäjä kirjautuneena sisään
     const user = useData() || {}
@@ -56,7 +56,6 @@ const Comment = ({ userId, username, id, content, date, update, isLoggedIn }) =>
             <p className="comment__content">{content}</p>
             <div className="comment__info">
                 <p className="username">{username}</p>
-                <p className="comment__date">{date}</p>
             </div>
             <div className="comment__buttons">
                 { authorLoggedIn ? <button onClick={confirmDelete} className="commentButton" title="Poista"><Delete /></button> :                 <button onClick={reportComment} className="commentButton" title="Ilmoita asiaton kommentti"><Flag /></button>}

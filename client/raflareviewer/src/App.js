@@ -23,6 +23,8 @@ function App() {
     }, []);
 
   return (
+    <>
+    <div className="bg"></div>
     <div className="main-layout">
       <Navigation isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} darkMode={darkMode} setDarkMode={setDarkMode}/>
       <Routes>
@@ -38,6 +40,7 @@ function App() {
       </Routes>
       <Footer />
     </div>
+    </>
   );
 }
 

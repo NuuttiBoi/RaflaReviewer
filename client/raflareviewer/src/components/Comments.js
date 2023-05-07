@@ -3,7 +3,7 @@ import Comment from './Comment'
 const Comments = ({ comments, update, isLoggedIn }) => {
     const commentList = comments.map(comment => {
         return (
-            <Comment key={comment.id} id={comment.id} userId={comment.userId} username={comment.username} content={comment.content} date={comment.date} update={update} isLoggedIn={isLoggedIn} />
+            <Comment key={comment.id} id={comment.id} userId={comment.userId} username={comment.username} content={comment.content} update={update} isLoggedIn={isLoggedIn} />
         )
     })
     
