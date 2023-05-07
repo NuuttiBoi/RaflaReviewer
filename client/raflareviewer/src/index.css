@@ -7,7 +7,7 @@
 
 :root {
   /* Teemabuttoneissa näkyvät värit  */
-  --clr-light-primary:hsl(114, 20%, 32%);
+  --clr-light-primary:#456241;
   --clr-light-secondary:#f3f3f3;
   --clr-dark-primary: #1f1f1f;
   --clr-dark-secondary: #4b4298;
@@ -158,6 +158,10 @@
   --clr-light: #fff;
   --clr-icon: #fff;
   color: #fff;
+}
+
+.darkTheme .thumbsUpButtons p {
+  color: var(--clr-light);
 }
 
 /* Värit kolmannessa teemassa */

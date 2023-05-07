@@ -60,6 +60,7 @@ const AddNewForm = ({ update, isLoggedIn }) => {
         console.log('close')
         document.getElementById('addNewForm').classList.add('visuallyhidden')
         document.querySelector('body').classList.remove('locked')
+        document.getElementById('addNewForm').querySelector('.warningText').style.opacity = '0'
         setNewName("")
         setNewAddress("")
         setNewComment("")

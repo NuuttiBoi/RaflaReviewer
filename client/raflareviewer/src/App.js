@@ -8,8 +8,6 @@ import {Routes, Route, Navigate} from 'react-router-dom'
 import Profile from "./components/Profile"
 import {useState, useEffect} from "react"
 import AddNewLogin from "./components/AddNewLogin";
-import './components/Darkmode/darkmode.css'
-import DarkMode from './components/Darkmode/DarkMode'
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false)

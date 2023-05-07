@@ -349,7 +349,7 @@ const RestaurantPage = ({isLoggedIn}) => {
     }
     
     const sendReport = () => {
-      console.log('ilmoita virheellinen id')
+      console.log('ilmoita id ', state.restaurant.id)
     }
 
     return (
