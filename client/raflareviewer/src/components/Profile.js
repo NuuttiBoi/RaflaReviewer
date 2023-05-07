@@ -5,7 +5,7 @@ import userService from "../services/users";
 import Logout from "../images/Logout";
 import useData from '../hooks/useData'
 
-const ProfileBoxOne = ({ user }) => {
+const ProfileBoxOne = ({ user, setFName , setLName }) => {
     const [firstname, setFirstName] = useState("")
     const [lastname, setLastName] = useState("")
 
@@ -19,6 +19,7 @@ const ProfileBoxOne = ({ user }) => {
         }
     }
 
+
     const handleSubmit = async (event) => {
         event.preventDefault()
 
@@ -30,6 +31,8 @@ const ProfileBoxOne = ({ user }) => {
         try {
             await userService.updateProfile(user._id, {firstname, lastname})
             console.log('User data updated successfully.' , user._id)
+            setFName(firstname)
+            setLName(lastname)
             alert("Tiedot vaihdettu")
         } catch (error) {
             console.log(error)
@@ -55,7 +58,7 @@ const ProfileBoxOne = ({ user }) => {
         </div>
     )
 }
-const ProfileBoxTwo = ({ user, setIsLoggedIn, firstname, lastname }) => {
+const ProfileBoxTwo = ({ user, setIsLoggedIn, fname, lname }) => {
     const logout = async (event) => {
         event.preventDefault();
         try {
@@ -73,7 +76,11 @@ const ProfileBoxTwo = ({ user, setIsLoggedIn, firstname, lastname }) => {
                 <UserDefaultAvatar/>
             </div>
             <h3>{user.username}</h3>
-            <h3>{firstname} {lastname}</h3>
+            {fname === "" && lname === "" ? (
+                <h3>{user.firstname} {user.lastname}</h3>
+            ) : (
+                <h3>{fname} {lname}</h3>
+            )}
             <button onClick={logout} className="logoutBtn">
                 <Logout />
                 <span>Kirjaudu Ulos</span>
@@ -147,6 +154,8 @@ const ProfileBoxThree = ({ user }) => {
 
 const Profile = ({ setIsLoggedIn }) => {
     const user = useData()
+    const [fname, setFName] = useState("")
+    const [lname, setLName] = useState("")
 
     if (!user) {
         return (
@@ -162,10 +171,10 @@ const Profile = ({ setIsLoggedIn }) => {
             {user && (
                 <>
                     <div className="profile-box-one box-style">
-                        <ProfileBoxOne user={user} />
+                        <ProfileBoxOne user={user} setFName={setFName} setLName={setLName}/>
                     </div>
                     <div className="profile-box-two box-style">
-                        <ProfileBoxTwo user={user} setIsLoggedIn={setIsLoggedIn} firstname={user.firstname} lastname={user.lastname}/>
+                        <ProfileBoxTwo user={user} setIsLoggedIn={setIsLoggedIn} fname={fname} lname={lname} setFName={setFName} setLName={setLName}/>
                     </div>
                     <div className="profile-box-three box-style">
                         <ProfileBoxThree user={user} />
