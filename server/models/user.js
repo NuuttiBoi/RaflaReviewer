@@ -4,6 +4,9 @@ const bcrypt = require("bcrypt");
 const url = process.env.DB_HOST
 console.log('connecting to ', url)
 
+/**
+ * Yhdistää MongoDB:hen käyttäen muutujassa DB_HOST URL:ia
+ */
 mongoose.connect(url)
     .then(result => {
         console.log("connected to MongoDB");
@@ -12,6 +15,16 @@ mongoose.connect(url)
         console.log("error connecting to MongoDB: ", error.message);
     })
 
+/**
+ * Mongoose-käyttäjämalli tallennettavalle käyttäjäoliolle
+ *
+ * @typedef User
+ * @property username - Käyttäjänimi.
+ * @property password - Salasana.
+ * @property [firstname] - Etunimi.
+ * @property [lastname] - Sukunimi.
+ * @property [avatar] - Avatar-kuvan URL.
+ */
     const userSchema = new mongoose.Schema({
         username: {type: String, required: true, unique: true},
         password: {type: String, required: true},
@@ -20,6 +33,9 @@ mongoose.connect(url)
         avatar: String
     })
 
+/**
+ * Suoritetaan ennen tallennusta: Hashaa käyttäjän salasanan bcrypt-algoritmilla.
+ */
     userSchema.pre("save", async function (next){
         const user = this;
         if (!user.isModified("password")){
@@ -30,11 +46,19 @@ mongoose.connect(url)
         next()
     })
 
+/**
+ * Vertaa käyttäjän syöttämää salasanaa tallennetun salasanan kanssa bcrypt-algoritmilla.
+ * @param password - Käyttäjän salasana.
+ * @returns {Promise<void|*|NodeJS.Global.Promise>}
+ */
     userSchema.methods.comparePassword = async function (password) {
         return await bcrypt.compare(password, this.password)
     }
 
-    userSchema.set("toJSON", {
+/**
+ * Muuntaa Mongoose-käyttäjämallin JavaScript-objektiksi ja poistaa salasanan.
+ */
+userSchema.set("toJSON", {
         transform: function (doc, ret, options){
             delete ret.password
             return ret

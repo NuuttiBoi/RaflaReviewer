@@ -13,12 +13,18 @@ const session = require('express-session')
 
 app.use(express.json())
 
+/**
+ * Käyttäjän sessio.
+ */
 app.use(session ({
     secret: 'jkeakuj31jhJ2LHJ2jhk',
     resave: false,
     saveUninitialized: true
 }))
 
+/**
+ * Middleware funktio, joka asetta HTTP-otsikot.
+ */
 /* CORS ongelman korjaamiseen */
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -26,15 +32,24 @@ app.use(function(req, res, next) {
     next();
 });
 
+/**
+ * GET - Hakee pääsivun.
+ */
 /* / ja /api vievät pääsivulle */
 app.get('/', (request, response) => {
     response.render('index.ejs');
 })
 
+/**
+ * GET - Hakee pääsivun.
+ */
 app.get('/api', (request, response) => {
     response.render('index.ejs');
 })
 
+/**
+ * GET - Hakee ravintolat, käyttäjät ja kommentit.
+ */
 /* v1 (ravintolat, käyttäjät, kommentit) */
 app.get('/api/v1', (request, response) => {
     response.render('api_v1.ejs');
@@ -42,6 +57,9 @@ app.get('/api/v1', (request, response) => {
 
 // Ravintolat
 
+/**
+ * GET - Hakee kaikki ravintolat.
+ */
 // Hakee kaikki ravintolat
 app.get('/api/v1/restaurants', (request, response) => {
     Restaurant.find({}).then(restaurants => {
@@ -49,6 +67,9 @@ app.get('/api/v1/restaurants', (request, response) => {
     })
 })
 
+/**
+ * POST - Tallentaa ravintolan.
+ */
 // Ravintolan tallennus
 app.post('/api/v1/restaurants', (request, response) => {
     const body = request.body
@@ -78,6 +99,9 @@ app.post('/api/v1/restaurants', (request, response) => {
     })
 })
 
+/**
+ * GET - Hakee yksittäisen ravintolan sen ID:n avulla.
+ */
 // Hakee yksittäisen ravintolan
 app.get('/api/v1/restaurants/:id', (request, response) => {
     Restaurant.findById(request.params.id).then(restaurant => {
@@ -85,6 +109,9 @@ app.get('/api/v1/restaurants/:id', (request, response) => {
     })
 })
 
+/**
+ * GET - Hakee ravintolan kommentit.
+ */
 // Hakee kaikki ravintolan kommentit
 app.get('/api/v1/restaurants/comment/:comment', (request, response) => {
     Restaurant.find({ comment: request.params.comment} ).then(restaurant => {
@@ -94,6 +121,9 @@ app.get('/api/v1/restaurants/comment/:comment', (request, response) => {
 
 // Ravintolan muokkaus
 
+/**
+ * PATCH - Muokkaa ravintolan tietoja sen ID:n avulla.
+ */
 app.patch('/api/v1/restaurants/:id', (request, response, next) => {
     const body = request.body
     const thumbs = {
@@ -108,6 +138,9 @@ app.patch('/api/v1/restaurants/:id', (request, response, next) => {
       .catch(error => next(error))
   })
 
+/**
+ * DELETE - Poistaa ravintolan sen ID:n avulla.
+ */
   // Ravintolan poistaminen
 app.delete('/api/v1/restaurants/:id', (request, response, next) => {
     Restaurant.findByIdAndRemove(request.params.id)
@@ -119,6 +152,9 @@ app.delete('/api/v1/restaurants/:id', (request, response, next) => {
 
 // Kommentit
 
+/**
+ * GET - Hakee kaikki kommentit.
+ */
 // Hakee kaikki kommentit
 app.get('/api/v1/comments', (request, response) => {
     Comment.find({}).then(comments => {
@@ -126,6 +162,9 @@ app.get('/api/v1/comments', (request, response) => {
     })
 })
 
+/**
+ * POST - Luo kommentin.
+ */
 app.post('/api/v1/comments', (request, response) => {
     const body = request.body
 
@@ -142,6 +181,9 @@ app.post('/api/v1/comments', (request, response) => {
     })
 })
 
+/**
+ * GET - Hakee yksittäisen kommentin sen ID:n avulla.
+ */
 // Hakee yksittäisen kommentin
 app.get('/api/v1/comments/:id', (request, response) => {
     Comment.findById(request.params.id).then(comment => {
@@ -149,6 +191,9 @@ app.get('/api/v1/comments/:id', (request, response) => {
     })
 })
 
+/**
+ * GET - Hakee ravintolan kommentit sen ID:llä.
+ */
 // Hakee kaikki ravintolan kommentit
 app.get('/api/v1/comments/restaurant/:restaurantId', (request, response) => {
     Comment.find({ restaurantId: request.params.restaurantId } ).then(comments => {
@@ -156,6 +201,9 @@ app.get('/api/v1/comments/restaurant/:restaurantId', (request, response) => {
     })
 })
 
+/**
+ * DELETE - Poistaa tietyn kommentin ID:llä.
+ */
 // Kommentin poistaminen
 app.delete('/api/v1/comments/:id', (request, response, next) => {
     Comment.findByIdAndRemove(request.params.id)
@@ -165,6 +213,9 @@ app.delete('/api/v1/comments/:id', (request, response, next) => {
       .catch(error => next(error))
 })
 
+/**
+ * DELETE - Poistaa ravintolan kommentit sen ID:en avulla.
+ */
 // Poistaa kaikki ravintolan kommentit
 app.delete('/api/v1/comments/restaurant/:restaurantId', (request, response) => {
     Comment.deleteMany({ restaurantId: request.params.restaurantId } ).then(result => {
@@ -173,6 +224,9 @@ app.delete('/api/v1/comments/restaurant/:restaurantId', (request, response) => {
 })
 
 // Käyttäjän rekisteröinti ja kirjautuminen
+/**
+ * POST - Tekee uuden käyttäjän.
+ */
 app.post('/users', async (request, response) => {
     try {
         const { username, password, firstname, lastname } = request.body;
@@ -191,6 +245,9 @@ app.post('/users', async (request, response) => {
     }
 })
 
+/**
+ * POST - Kirjaa käyttäjän sisään.
+ */
 app.post('/login', async (request, response) => {
     try {
         const { username, password } = request.body;
@@ -213,6 +270,9 @@ app.post('/login', async (request, response) => {
     }
 })
 
+/**
+ * PUT - Muuttaa käyttäjän tietoja ID:en avulla.
+ */
 app.put('/users/:id', requireAuth ,async (request, response) => {
     const userId = request.params.id
     const { firstname, lastname, oldPassword, newPassword} = request.body
@@ -248,6 +308,9 @@ app.put('/users/:id', requireAuth ,async (request, response) => {
     }
 })
 
+/**
+ * GET - Hakee käyttäjät.
+ */
 app.get('/users', async (request,response) => {
     try {
         const users = await User.find({});
@@ -257,6 +320,9 @@ app.get('/users', async (request,response) => {
     }
 })
 
+/**
+ * GET - Hakee kirjautuneet.
+ */
 app.get('/login', (request,response) => {
 
     User.find({}).then(users => {
@@ -264,6 +330,9 @@ app.get('/login', (request,response) => {
     })
 })
 
+/**
+ * GET - Hakee käyttäjän tiedot, jos käyttäjä on todennettu.
+ */
 app.get('/profile',requireAuth, async (request, response) => {
     try {
         const user = request.user;
@@ -275,11 +344,17 @@ app.get('/profile',requireAuth, async (request, response) => {
     }
 })
 
+/**
+ * POST - Kirjaa käyttäjän ulos.
+ */
 app.post('/logout', (request, response) => {
     request.session.destroy()
     response.json({ message: 'Logged out' });
 })
 
+/**
+ * DELETE - Poistaa käyttäjän kirjautuneista ID:en avulla
+ */
 app.delete('/login/:id', async (request, response) => {
     User.findByIdAndRemove(request.params.id)
         .then(result => {
@@ -288,6 +363,9 @@ app.delete('/login/:id', async (request, response) => {
         .catch(error => next(error))
 })
 
+/**
+ * GET - Hakee tietyn käyttäjän ID:llä.
+ */
 app.get('/users/:id', (request, response) => {
     User.findById(request.params.id).then(user => {
       response.json(user)
