@@ -28,13 +28,13 @@
 
 /api/v1/comments/restaurant/[id]&emsp;&emsp;- kaikki ravintolan kommentit ravintolan id:llä
 
-/users&emsp;&emsp;&emsp;
+/users&emsp;&emsp;&emsp;- hakee kaikki käyttäjät
 
-/users/[id]&emsp;&emsp;&emsp;
+/users/[id]&emsp;&emsp;&emsp;- hakee käyttäjän id:llä
 
-/profile
+/profile;&emsp;&emsp;&emsp;- hakee käyttäjän tiedot
 
-/login
+/login&emsp;&emsp;&emsp;- hakee kirjautuneet
 
 <br />
 
@@ -44,11 +44,11 @@
 
 /api/v1/comments&emsp;&emsp;- lisää uuden kommentin
 
-/users
+/users&emsp;&emsp;- lisää uuden käyttäjän
 
-/login
+/login&emsp;&emsp;- lisää uuden kirjautumisen
 
-/logout
+/logout&emsp;&emsp;- kirjaa käyttäjän ulos
 
 <br />
 
@@ -66,10 +66,10 @@
 
 /api/v1/comments/restaurant/[id]&emsp;&emsp;- poistaa kaikki ravintolan kommentit ravintolan id:llä
 
-/login/[id]
+/login/[id]&emsp;&emsp;- poistaa kirjautuneen id:llä
 
 <br />
 
 ## PUT
 
-/users/[id]
+/users/[id] &emsp;&emsp;- päivittää käyttäjän tietoja
