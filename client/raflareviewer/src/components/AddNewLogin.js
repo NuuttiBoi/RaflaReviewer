@@ -119,7 +119,7 @@ const AddNewLogin = ({setIsLoggedIn}) => {
                     />
                 </div>
                 <button type="button" onClick={openUser} className="userBtn"> Luo tili</button>
-                <button id="submitBtn" type="submit" className="button center">Tallenna</button>
+                <button id="submitBtn" type="submit" className="button center">Kirjaudu sisään</button>
             </form>
             </div>
         </div>

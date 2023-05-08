@@ -73,3 +73,48 @@
 ## PUT
 
 /users/[id] &emsp;&emsp;- päivittää käyttäjän tietoja
+
+<br />
+
+# Käyttöesimerkkejä
+
+
+## POST
+
+### /api/v1/restaurants
+
+{
+
+    "name": "Kotipizza",
+    "address": "Uunitie 20, 02300 Espoo",
+    "foodScore": "80",
+    "qualityPriceScore": "20",
+    "experienceScore": "55",
+    "tags": ["Pikaruoka", "Takeaway", "Kasvisvaihtoehtoja"],
+    "thumbsUp": ["123", "456", "789", "256"],
+    "thumbsDown": ["987", "321"],
+    "image": "https://kotipizza.fi/pizza.jpg",
+    "userId": "3447473928"
+}
+
+### /api/v1/comments
+
+{
+
+        "restaurantId": "6367362736827",
+        "username": "pizzafani",
+        "userId": "2635563",
+        "content": "Paras pizzapaikka!"
+}
+
+## PATCH
+
+### /api/v1/restaurants/6456f41202a15926335b7f2a
+
+{
+    
+        "thumbsUp": ["123", "456", "789"],
+        "thumbsDown": ["120"]
+}
+
+

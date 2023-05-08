@@ -56,12 +56,10 @@ const Restaurant = ({ restaurant, isLoggedIn }) => {
          var image = new Image();
          image.onload = function() {
            if (this.width > 0) {
-             console.log(restaurant.name, " image exists");
              setImage(url)
            }
          }
          image.onerror = function() {
-           console.log(restaurant.name, "image doesn't exist");
            setImage(defaultImage)
          }
          image.src = url

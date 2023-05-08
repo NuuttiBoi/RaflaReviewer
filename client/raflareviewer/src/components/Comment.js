@@ -41,8 +41,13 @@ const Comment = ({ userId, username, id, content, update, isLoggedIn }) => {
         closePopup()
     }
 
-    function reportComment() {
+    /**
+     * Ei oikeasti tee mitään, vaan pieni ylimääräinen juttu rekvisiitaksi
+     */
+    const reportComment = () => {
         console.log('report ', id)
+        document.getElementById("reportReceived").classList.remove('visuallyhidden')
+        document.querySelector('body').classList.add('locked')
     }
 
     /**
@@ -58,8 +63,6 @@ const Comment = ({ userId, username, id, content, update, isLoggedIn }) => {
             <p className="comment__content">{content}</p>
             <div className="comment__info">
                 <p className="username">{username}</p>
-            </div>
-            <div className="comment__buttons">
                 { authorLoggedIn ? <button onClick={confirmDelete} className="commentButton" title="Poista"><Delete /></button> :                 <button onClick={reportComment} className="commentButton" title="Ilmoita asiaton kommentti"><Flag /></button>}
             </div>
             <Confirm id={id} onClick={deleteComment} />

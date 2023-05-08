@@ -15,6 +15,7 @@ import useData from "../hooks/useData";
 import userService from '../services/users'
 import ConfirmDeleteReview from './ConfirmDeleteReview'
 import Report from './Report'
+import ReportReceived from './ReportReceived'
 
 const RestaurantPage = ({isLoggedIn}) => {
     let location = useLocation();
@@ -56,14 +57,17 @@ const RestaurantPage = ({isLoggedIn}) => {
             .getRestaurant(state.restaurant.id)
             .then(response => {
                 setRestaurant(response)
-
                 setThumbs({
                     thumbsUp: response.thumbsUp,
                     thumbsDown: response.thumbsDown
                   })
             })
             .catch(error => {
-            console.log(error)
+              //console.log(error)
+              setThumbs({
+                thumbsUp: [],
+                thumbsDown: []
+              })
             })
     }, [])
 
@@ -77,7 +81,7 @@ const RestaurantPage = ({isLoggedIn}) => {
             setReviewedBy(response.username)
         })
         .catch(error => {
-        console.log(error)
+        //console.log(error)
         })
     }, [])
 
@@ -92,7 +96,8 @@ const RestaurantPage = ({isLoggedIn}) => {
               setComments(response)
           })
           .catch(error => {
-            console.log(error)
+            //console.log(error)
+            setComments([])
           })
     }, [])
 
@@ -348,8 +353,13 @@ const RestaurantPage = ({isLoggedIn}) => {
         document.querySelector('body').classList.remove('locked')
     }
     
+    /**
+     * Ei oikeasti tee mitään, vaan pieni ylimääräinen juttu rekvisiitaksi
+     */
     const sendReport = () => {
       console.log('ilmoita id ', state.restaurant.id)
+      document.getElementById("reportReceived").classList.remove('visuallyhidden')
+      document.querySelector('body').classList.add('locked')
     }
 
     return (
@@ -398,6 +408,7 @@ const RestaurantPage = ({isLoggedIn}) => {
             </section>
             <Confirm />
             <ConfirmDeleteReview onClick={confirmDelete} />
+            <ReportReceived />
         </div>
     )
 }

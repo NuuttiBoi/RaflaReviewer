@@ -9,13 +9,13 @@ function Creators() {
       <h1>Tietoa</h1>
       <section className="about">
         <h2>Mikä on RaflaReviewer?</h2>
-        <p>RaflaReviewer-sovelluksesta löydät arvosteluja ravintoloista. Etsi ravintoloita eri kategorioista, tarkista ravintolan sijainti kartalla, kommentoi muiden käyttäjien lisäämiä arvosteluja ja lisää oma arvostelusi.</p>
+        <p>RaflaReviewer-sovelluksesta löydät arvosteluja ravintoloista. Etsi ravintoloita eri kategorioista, tarkista ravintolan sijainti kartalla, kommentoi muiden käyttäjien arvosteluja ja lisää oma arvostelusi.</p>
       </section>
 
       <section className="full-width-mobile about">
         <div>
         <h2>Tarvitsenko käyttäjätunnuksen?</h2>
-        <p>Arvostelun lisääminen ja tykkäysten antaminen muiden käyttäjien lisäämille arvosteluille vaatii rekisteröitymisen. Arvosteluja voi kommentoida joko kirjautuneena käyttäjänimellä tai vierailijana.</p>
+        <p>Arvostelun lisääminen ja tykkäysten antaminen vaatii rekisteröitymisen. Arvosteluja voi kommentoida joko kirjautuneena käyttäjänimellä tai vierailijana.</p>
         </div>
       </section>
 
